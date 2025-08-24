@@ -4,17 +4,15 @@ Prueba de concepto de Kubeflow Stack, que incluye Kubeflow Pipelines + MLflow + 
 
 ## Caracteristicas VM
 
-### VM Specifications
-
-| Component       | Specification                                                                 |
+| Componente       | Especificación                                                                 |
 |-----------------|-------------------------------------------------------------------------------|
-| **Operating System** | Ubuntu Server 24.04.3 LTS                                                    |
-| **ISO Image**   | `ubuntu-24.04.3-live-server-amd64.iso`                                        |
-| **Download Link** | [Ubuntu 24.04.3 Server ISO](https://ubuntu.com/download/server/thank-you?version=24.04.3&architecture=amd64&lts=true) |
-| **Virtualization** | QEMU / KVM                                                                 |
+| **Sistema Operativo** | Ubuntu Server 24.04.3 LTS                                                    |
+| **Imagen ISO**   | `ubuntu-24.04.3-live-server-amd64.iso`                                        |
+| **Enlace de Descarga** | [Ubuntu 24.04.3 Server ISO](https://ubuntu.com/download/server/thank-you?version=24.04.3&architecture=amd64&lts=true) |
+| **Virtualización** | QEMU / KVM                                                                 |
 | **vCPUs**       | 2                                                                             |
-| **Memory**      | 4096 MiB (4 GB)                                                               |
-| **Disk Size**   | 25 GB                                                                         |
+| **Memoria**      | 4096 MiB (4 GB)                                                               |
+| **Tamaño de Disco**   | 25 GB                                                                         |
 
 ## Instalación
 ### Pasos
@@ -35,7 +33,7 @@ python3 -m venv icc115-venv
 ```
 source icc115-venv/bin/activate
 ```
-> *Nota*: Para desactivar el entorno.
+> **Nota**: Para desactivar el entorno.
 ```
 deactivate
 ```
