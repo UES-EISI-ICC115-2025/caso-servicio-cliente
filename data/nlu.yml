@@ -1,91 +1,41 @@
 version: "3.1"
-
 nlu:
-- intent: greet
+- intent: soporte_tecnico
   examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+    - No tengo internet
+    - Se me fue la señal
+    - No funciona el servicio
+    - Tengo problemas con el router
+    - Se cayó la conexión
 
-- intent: goodbye
+- intent: info_planes
   examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+    - Quiero saber sobre los planes de internet
+    - ¿Cuánto vale el plan de 50 megas?
+    - Me interesa el plan más rápido
+    - Necesito información sobre paquetes de internet
+    - ¿Qué opciones de fibra óptica tienen?
 
-- intent: affirm
+- intent: nuevo_cliente
   examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+    - Quiero contratar internet
+    - Me interesa ser cliente
+    - Quiero unirme a su servicio
+    - Deseo registrarme
+    - Me gustaría poner internet en mi casa
 
-- intent: deny
+- intent: otros
   examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+    - Hola
+    - Buenas tardes
+    - Gracias
+    - Adiós
+    - ¿Hay promociones?
 
-- intent: mood_great
+- intent: dar_datos
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - Mi nombre es [Andrea Monterrosa](nombre)
+    - Soy [Carlos Pérez](nombre)
+    - Mi correo es [carlos@email.com](email)
+    - Me llamo [María López](nombre)
+    - Mi número es [7777-8888](telefono)
