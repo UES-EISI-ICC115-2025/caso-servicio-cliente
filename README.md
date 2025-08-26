@@ -19,7 +19,7 @@ Prueba de concepto de Kubeflow Stack, que incluye Kubeflow Pipelines + MLflow + 
 1. Dar permisos de ejecución al archivo init.sh y asignar el usuario actual como propietario
 ```
 sudo chown $USER init.sh
-sudo u+x init.sh
+sudo chmod u+x init.sh
 ```
 2. Ejecutar el archivo
 ```
