@@ -1,0 +1,5 @@
+Planes de Internet:
+- Plan 50 Mbps: ideal para hogares pequeños.
+- Plan 100 Mbps: uso intensivo, streaming HD.
+- Plan 300 Mbps: múltiples dispositivos y teletrabajo.
+Velocidad mínima garantizada: 25 Mbps en horarios no pico (8:00-18:00).

@@ -1,2 +1,33 @@
 # Entorno de python
 icc115-venv/
+rag-venv/
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Modelos entrenados de Rasa
+/models/
+
+# Caché de Rasa y logs
+/.rasa/cache/
+.rasa/
+logs/
+*.log
+
+# Archivos temporales
+# *.db
+# *.sqlite
+# *.sqlite3
+
+# Configuración de editor/IDE
+# .vscode/
+
+# Configuración del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints
