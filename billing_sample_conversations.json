@@ -1,0 +1,179 @@
+[
+  {
+    "satisfaccion": 5,
+    "cliente": {
+      "nombre_completo": "Ana María Pérez Rodríguez",
+      "telefono": "7890-1234"
+    },
+    "historial": [
+      {
+        "sender": "cliente",
+        "text": "Hola, llamo por la factura de este mes. Creo que hay un error en el monto."
+      },
+      {
+        "sender": "agente",
+        "text": "Buenos días, Sra. Ana María. Para verificar su facturación, por favor, indíqueme su DUI."
+      },
+      {
+        "sender": "cliente",
+        "text": "Claro, es 01234567-8. ¿Qué tipo de error puede ser?"
+      },
+      {
+        "sender": "agente",
+        "text": "Gracias. Veo que tiene un cobro por un servicio adicional que fue activado el mes pasado. ¿Recuerda haber solicitado esta activación?"
+      },
+      {
+        "sender": "cliente",
+        "text": "Ah, sí, ya recuerdo. No pensé que se aplicaría el cargo tan rápido. Gracias por aclararlo."
+      },
+      {
+        "sender": "agente",
+        "text": "De nada, estamos a su servicio."
+      }
+    ]
+  },
+  {
+    "satisfaccion": 2,
+    "cliente": {
+      "nombre_completo": "Carlos Antonio Flores Escobar",
+      "telefono": "6543-2109"
+    },
+    "historial": [
+      {
+        "sender": "cliente",
+        "text": "Buenas tardes, mi factura no me ha llegado. Ya es fin de mes y no la he recibido en mi correo."
+      },
+      {
+        "sender": "agente",
+        "text": "Buenas tardes, Sr. Flores. Para verificar el problema, necesito que me proporcione el número de DUI del titular."
+      },
+      {
+        "sender": "cliente",
+        "text": "Claro, mi DUI es 87654321-0. Ya he revisado mi bandeja de spam y no aparece."
+      },
+      {
+        "sender": "agente",
+        "text": "Gracias. Estoy verificando su cuenta... He confirmado que su dirección de correo está correcta, pero no se ha registrado el envío de la última factura. Generaré un ticket de soporte para que el área técnica revise el problema."
+      },
+      {
+        "sender": "cliente",
+        "text": "Por favor, hágalo lo antes posible. La necesito para pagar."
+      },
+      {
+        "sender": "agente",
+        "text": "Ticket creado. Le enviaremos la factura al correo en cuanto se resuelva. ¿Necesita alguna otra cosa?"
+      }
+    ],
+    "support_ticket": {
+      "problema": "Factura no enviada a correo electrónico",
+      "descripcion": "El cliente Carlos Antonio Flores Escobar, con teléfono 6543-2109, no ha recibido su factura de este mes en el correo electrónico asociado a su cuenta. Se verificó la dirección y es correcta. Se necesita revisión por parte del equipo técnico.",
+      "estado": "Nuevo",
+      "prioridad": "Media"
+    }
+  },
+  {
+    "satisfaccion": 5,
+    "cliente": {
+      "nombre_completo": "Marta Isabel Hernández García",
+      "telefono": "9876-5432"
+    },
+    "historial": [
+      {
+        "sender": "agente",
+        "text": "Buen día, gracias por comunicarse. ¿En qué podemos ayudarle?"
+      },
+      {
+        "sender": "cliente",
+        "text": "Hola, llamo para solicitar un comprobante de pago de la factura del mes pasado. No lo encuentro."
+      },
+      {
+        "sender": "agente",
+        "text": "Con gusto, Sra. Hernández. Para su seguridad, ¿podría confirmar su DUI?"
+      },
+      {
+        "sender": "cliente",
+        "text": "Es 12345678-9. Gracias, ¿me lo pueden enviar por correo?"
+      },
+      {
+        "sender": "agente",
+        "text": "Sí, en un momento lo reenviamos a su correo electrónico registrado. ¿Algo más en que podamos servirle?"
+      },
+      {
+        "sender": "cliente",
+        "text": "Eso es todo, gracias por su ayuda."
+      }
+    ]
+  },
+  {
+    "satisfaccion": 1,
+    "cliente": {
+      "nombre_completo": "Jorge Luis Meléndez Rivas",
+      "telefono": "7012-3456"
+    },
+    "historial": [
+      {
+        "sender": "cliente",
+        "text": "Estoy harto. Me han cortado el servicio y mi factura ya está pagada. ¿Qué está pasando?"
+      },
+      {
+        "sender": "agente",
+        "text": "Entiendo su frustración, Sr. Meléndez. Para verificar el estado de su pago, necesito que me indique el DUI del titular."
+      },
+      {
+        "sender": "cliente",
+        "text": "Mi DUI es 98765432-1. Revisa bien, porque pagué hace dos días."
+      },
+      {
+        "sender": "agente",
+        "text": "Estoy revisando su historial. Efectivamente, veo el pago reflejado. Al parecer, hubo un problema de sincronización en el sistema. Generaré un ticket de soporte de máxima prioridad para que se reactive su servicio inmediatamente."
+      },
+      {
+        "sender": "cliente",
+        "text": "Más les vale. No es la primera vez que pasa."
+      },
+      {
+        "sender": "agente",
+        "text": "Lamentamos mucho el inconveniente. El ticket de soporte ya está en marcha."
+      }
+    ],
+    "support_ticket": {
+      "problema": "Servicio suspendido tras pago exitoso",
+      "descripcion": "El cliente Jorge Luis Meléndez Rivas, con teléfono 7012-3456, reporta la suspensión de su servicio a pesar de haber realizado el pago hace dos días. El pago está reflejado en el sistema, pero el servicio fue suspendido. Se necesita reactivación inmediata.",
+      "estado": "En Progreso",
+      "prioridad": "Alta"
+    }
+  },
+  {
+    "satisfaccion": 5,
+    "cliente": {
+      "nombre_completo": "Claudia Patricia Sánchez Vásquez",
+      "telefono": "6098-7654"
+    },
+    "historial": [
+      {
+        "sender": "agente",
+        "text": "Hola, ¿en qué le podemos ayudar?"
+      },
+      {
+        "sender": "cliente",
+        "text": "Hola, quiero saber si es posible cambiar la fecha de vencimiento de mi factura."
+      },
+      {
+        "sender": "agente",
+        "text": "Claro, Sra. Sánchez. Le informo que ese tipo de trámite es posible si su cuenta no presenta mora. Para verificar, por favor, indíqueme su número de teléfono."
+      },
+      {
+        "sender": "cliente",
+        "text": "Es el 6098-7654. La factura está al día."
+      },
+      {
+        "sender": "agente",
+        "text": "Perfecto. Voy a generar la solicitud y le estaremos contactando para informarle los pasos a seguir. ¿Hay algo más en lo que pueda ayudarla?"
+      },
+      {
+        "sender": "cliente",
+        "text": "No, eso sería todo. Muchas gracias."
+      }
+    ]
+  }
+]

@@ -1,0 +1,185 @@
+[
+    {
+        "cliente": {
+            "nombre_completo": "José Fernando Solís Castillo",
+            "telefono": "7788-9900"
+        },
+        "historial": [
+            {
+                "sender": "cliente",
+                "text": "Hola, mi internet está fallando de forma intermitente desde hace dos días. Se desconecta y reconecta solo."
+            },
+            {
+                "sender": "agente",
+                "text": "Buenas tardes, Sr. Solís. Lamento el inconveniente. Para iniciar, ¿podría, por favor, reinicializar su router? Apáguelo, espere 30 segundos y vuelva a encenderlo."
+            },
+            {
+                "sender": "cliente",
+                "text": "Ya lo hice esta mañana y el problema persiste. Me desconecto a cada rato y es imposible trabajar."
+            },
+            {
+                "sender": "agente",
+                "text": "Entiendo. Ya que el reinicio no funcionó, vamos a agendar una visita técnica para revisar su conexión en sitio. Le enviaré un ticket de soporte con los detalles."
+            }
+        ],
+        "support_ticket": {
+            "problema": "Conexión a internet intermitente",
+            "descripcion": "El cliente reporta intermitencia en su servicio de internet. Ya se realizó el reinicio del router sin éxito. Se agendó visita técnica para revisión en domicilio. El cliente necesita el servicio estable para trabajar.",
+            "estado": "Nuevo",
+            "prioridad": "Alta"
+        },
+        "visita_tecnica": {
+            "fecha_visita": "2025-10-08",
+            "tecnico": "Carlos Pineda"
+        },
+        "satisfaccion": 4,
+        "feedback": {
+            "rating": 4,
+            "comentarios": "El agente fue amable y agendó la visita rápidamente. El técnico llegó puntual y resolvió el problema. El internet funciona bien ahora."
+        }
+    },
+    {
+        "cliente": {
+            "nombre_completo": "María Elena Durán Rosales",
+            "telefono": "6543-1098"
+        },
+        "historial": [
+            {
+                "sender": "cliente",
+                "text": "Mi internet se va y viene. La luz del router parpadea y luego se apaga. ¿Pueden ayudarme?"
+            },
+            {
+                "sender": "agente",
+                "text": "Hola, Sra. Durán. Lamento los inconvenientes. Para verificar su situación, ¿me podría indicar su DUI?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Sí, es 09876543-2. Es bastante frustrante, ya he intentado desconectarlo y conectarlo varias veces."
+            },
+            {
+                "sender": "agente",
+                "text": "Gracias. He verificado su conexión y detecto una posible inestabilidad en la señal que le llega. Vamos a necesitar una revisión en sitio por un técnico. Le asignaré una cita lo antes posible."
+            }
+        ],
+        "support_ticket": {
+            "problema": "Señal de internet inestable y parpadeo de router",
+            "descripcion": "La cliente María Elena Durán Rosales reporta intermitencia y luz del router parpadeando. Ya intentó reiniciar. Se necesita revisión por técnico para evaluar la señal y la conexión.",
+            "estado": "En Progreso",
+            "prioridad": "Media"
+        },
+        "visita_tecnica": {
+            "fecha_visita": "2025-10-10",
+            "tecnico": "Ana Melara"
+        },
+        "satisfaccion": 4,
+        "feedback": {
+            "rating": 3,
+            "comentarios": "El técnico fue un poco tardado, pero resolvió el problema. Mi conexión ahora es estable, aunque la espera fue larga."
+        }
+    },
+    {
+        "cliente": {
+            "nombre_completo": "Pedro Antonio Lemos Mendoza",
+            "telefono": "7012-5678"
+        },
+        "historial": [
+            {
+                "sender": "cliente",
+                "text": "Mi internet se cae cada 10 minutos. He intentado de todo y sigue igual. Por favor, ayúdenme."
+            },
+            {
+                "sender": "agente",
+                "text": "Hola, Sr. Lemos. Entiendo la urgencia. Para darle seguimiento, ¿podría, por favor, indicarme su DUI?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Sí, es 12345678-9. Necesito el internet para mi trabajo."
+            },
+            {
+                "sender": "agente",
+                "text": "Gracias. He verificado y su zona está experimentando una congestión de red. Vamos a enviar a un técnico para que revise su conexión interna y el cableado, y así descartar problemas locales. Le agendaremos una visita para mañana."
+            }
+        ],
+        "support_ticket": {
+            "problema": "Cortes frecuentes de internet",
+            "descripcion": "El cliente reporta cortes de internet cada 10 minutos. Se detecta congestión en su área. Se programa visita técnica para revisar la conexión y el cableado en su domicilio.",
+            "estado": "Nuevo",
+            "prioridad": "Alta"
+        },
+        "visita_tecnica": {
+            "fecha_visita": "2025-10-07",
+            "tecnico": "Luis Sánchez"
+        },
+        "satisfaccion": 4,
+        "feedback": {
+            "rating": 5,
+            "comentarios": "El técnico fue muy profesional y solucionó el problema rápidamente. Estoy muy satisfecho con el servicio y la rapidez. El internet ya no se cae."
+        }
+    },
+    {
+        "cliente": {
+            "nombre_completo": "José Fernando Solís Castillo",
+            "telefono": "7788-9900"
+        },
+        "historial": [
+            {
+                "sender": "cliente",
+                "text": "Hola, mi internet está fallando de forma intermitente. Se desconecta y reconecta solo, pero no he reiniciado el router aún."
+            },
+            {
+                "sender": "agente",
+                "text": "Buenas tardes, Sr. Solís. Para empezar con el diagnóstico, por favor, intente reinicializar su router. Apáguelo, espere 30 segundos y vuelva a encenderlo."
+            },
+            {
+                "sender": "cliente",
+                "text": "De acuerdo, lo estoy haciendo ahora. ... La luz de internet se puso fija de nuevo. Parece que ya está estable. ¿Eso era todo?"
+            },
+            {
+                "sender": "agente",
+                "text": "Así es, Sr. Solís. A veces, la conexión necesita un reinicio para solucionar fallos temporales. Estaremos monitoreando su línea por las próximas 24 horas. Si el problema persiste, no dude en llamarnos nuevamente."
+            }
+        ],
+        "satisfaccion": 4,
+        "feedback": {
+            "rating": 5,
+            "comentarios": "El agente fue muy amable y el problema se resolvió rápidamente con un simple reinicio. No fue necesaria una visita técnica, lo cual es excelente."
+        }
+    },
+    {
+        "cliente": {
+            "nombre_completo": "María Elena Durán Rosales",
+            "telefono": "6543-1098"
+        },
+        "historial": [
+            {
+                "sender": "cliente",
+                "text": "Mi internet está lento y a veces se cae por unos segundos. He reiniciado el router varias veces y no se arregla."
+            },
+            {
+                "sender": "agente",
+                "text": "Hola, Sra. Durán. Lamento los inconvenientes. Para asistirle, ¿podría, por favor, indicar el número de su DUI?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Sí, es 09876543-2. ¿Podrían revisar si hay algún problema en su lado?"
+            },
+            {
+                "sender": "agente",
+                "text": "Gracias. Estoy realizando un diagnóstico remoto de su línea. He detectado que su router estaba en un canal Wi-Fi saturado. He cambiado el canal de forma remota a uno menos congestionado. ¿Puede probar la velocidad ahora?"
+            },
+            {
+                "sender": "cliente",
+                "text": "¡Uhm, sí! Parece que la velocidad mejoró. Se siente mucho más fluido. Muchas gracias."
+            },
+            {
+                "sender": "agente",
+                "text": "Me alegra que se haya resuelto, Sra. Durán. Cualquier otra consulta, estamos a su servicio."
+            }
+        ],
+        "satisfaccion": 4,
+        "feedback": {
+            "rating": 5,
+            "comentarios": "El agente resolvió el problema sin necesidad de una visita. Hizo un cambio en la configuración de mi router de forma remota y el internet mejoró. Muy buena atención."
+        }
+    }
+]
