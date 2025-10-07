@@ -1,0 +1,41 @@
+version: "3.1"
+nlu:
+- intent: soporte_tecnico
+  examples: |
+    - No tengo internet
+    - Se me fue la señal
+    - No funciona el servicio
+    - Tengo problemas con el router
+    - Se cayó la conexión
+
+- intent: info_planes
+  examples: |
+    - Quiero saber sobre los planes de internet
+    - ¿Cuánto vale el plan de 50 megas?
+    - Me interesa el plan más rápido
+    - Necesito información sobre paquetes de internet
+    - ¿Qué opciones de fibra óptica tienen?
+
+- intent: nuevo_cliente
+  examples: |
+    - Quiero contratar internet
+    - Me interesa ser cliente
+    - Quiero unirme a su servicio
+    - Deseo registrarme
+    - Me gustaría poner internet en mi casa
+
+- intent: otros
+  examples: |
+    - Hola
+    - Buenas tardes
+    - Gracias
+    - Adiós
+    - ¿Hay promociones?
+
+- intent: dar_datos
+  examples: |
+    - Mi nombre es [Andrea Monterrosa](nombre)
+    - Soy [Carlos Pérez](nombre)
+    - Mi correo es [carlos@email.com](email)
+    - Me llamo [María López](nombre)
+    - Mi número es [7777-8888](telefono)

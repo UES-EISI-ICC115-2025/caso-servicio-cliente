@@ -1,0 +1,13 @@
+version: "3.1"
+
+intents:
+  - soporte_tecnico
+  - info_planes
+  - nuevo_cliente
+  - otros
+  - dar_datos
+
+entities:
+  - nombre
+  - email
+  - telefono
