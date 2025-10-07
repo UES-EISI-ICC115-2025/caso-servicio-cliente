@@ -1,0 +1,187 @@
+[
+    {
+        "cliente": {
+            "nombre_completo": "Laura Patricia Vásquez Orellana",
+            "telefono": "7987-6543"
+        },
+        "satisfaccion": 5,
+        "historial": [
+            {
+                "sender": "cliente",
+                "text": "Hola, estoy interesada en contratar un plan de internet residencial. ¿Qué opciones tienen?"
+            },
+            {
+                "sender": "agente",
+                "text": "¡Buenos días, Sra. Vásquez! Tenemos varios planes residenciales con diferentes velocidades. Para poderle dar la mejor recomendación, ¿podría indicarme su DUI para verificar la cobertura en su área?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Sí, claro. Mi DUI es 09876543-2. Vivo en la Colonia Escalón."
+            },
+            {
+                "sender": "agente",
+                "text": "Gracias. He verificado y su zona cuenta con cobertura de fibra óptica. Le recomiendo nuestro plan de 100 Mbps, que incluye una instalación gratuita por promoción. ¿Le gustaría que le brinde más detalles?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Me parece muy bien. Sí, por favor, envíeme la información completa al correo electrónico."
+            },
+            {
+                "sender": "agente",
+                "text": "Con gusto, Sra. Vásquez. El paquete con los detalles de la oferta ya ha sido enviado a su correo. Cualquier otra consulta, estamos a la orden."
+            }
+        ]
+    },
+    {
+        "cliente": {
+            "nombre_completo": "Roberto Antonio Castro García",
+            "telefono": "6756-8901"
+        },
+        "satisfaccion": 2,
+        "historial": [
+            {
+                "sender": "cliente",
+                "text": "Buenas tardes, quiero contratar internet, pero he estado llamando por días y no me atienden. ¿Hay algún problema?"
+            },
+            {
+                "sender": "agente",
+                "text": "Buenas tardes, Sr. Castro. Le ofrezco una disculpa por el inconveniente. Para ayudarle a procesar su solicitud, ¿me podría indicar su DUI?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Es 10987654-3. Quisiera saber los planes que tienen y si hay alguna opción sin contrato forzoso."
+            },
+            {
+                "sender": "agente",
+                "text": "Gracias. Le confirmo que sí tenemos planes prepago. Para evitar futuras fallas en la comunicación, voy a crear un ticket de soporte para que el equipo técnico revise el problema de las llamadas entrantes."
+            },
+            {
+                "sender": "cliente",
+                "text": "Ok, pero lo que más me interesa es la contratación. ¿Me puede ayudar con eso ahora mismo?"
+            },
+            {
+                "sender": "agente",
+                "text": "Sí, claro. Voy a transferirle con un agente de ventas para que le brinde la información de los planes prepago. Él ya tendrá su información. ¿Le parece bien?"
+            }
+        ],
+        "support_ticket": {
+            "problema": "Problema con llamadas entrantes para nuevos clientes",
+            "descripcion": "El cliente Roberto Antonio Castro García, con teléfono 6756-8901, reporta fallas al intentar comunicarse por teléfono para contratar un servicio. Ha intentado en varias ocasiones sin éxito. Se solicita al equipo técnico revisar el problema con las líneas de atención a clientes nuevos.",
+            "estado": "Nuevo",
+            "prioridad": "Media"
+        }
+    },
+    {
+        "cliente": {
+            "nombre_completo": "Daniela Sofía López Mendoza",
+            "telefono": "6012-3456"
+        },
+        "satisfaccion": 4,
+        "historial": [
+            {
+                "sender": "agente",
+                "text": "Buen día, gracias por contactarnos. ¿En qué podemos ayudarle?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Hola, llamo para consultar si hay cobertura de su servicio de internet en la dirección que quiero. Es en San Francisco Gotera."
+            },
+            {
+                "sender": "agente",
+                "text": "Para verificar la cobertura en su dirección, Sra. López, necesito su DUI y la dirección exacta, por favor."
+            },
+            {
+                "sender": "cliente",
+                "text": "Mi DUI es 12345678-0. La dirección es Calle Principal, Casa #5, San Francisco Gotera, Morazán."
+            },
+            {
+                "sender": "agente",
+                "text": "Muchas gracias. Después de revisar nuestro sistema, le confirmo que tenemos cobertura en su área. Tenemos un plan de 50 Mbps ideal para residencias. ¿Le interesa conocer los precios?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Sí, por favor. ¿Cuál es el costo mensual?"
+            },
+            {
+                "sender": "agente",
+                "text": "El plan tiene un costo mensual de $35.99. Si lo contrata hoy, la instalación es gratis."
+            }
+        ]
+    },
+    {
+        "cliente": {
+            "nombre_completo": "Fernando José Rivera Coto",
+            "telefono": "7543-2109"
+        },
+        "satisfaccion": 1,
+        "historial": [
+            {
+                "sender": "cliente",
+                "text": "Llamo por el servicio de internet. Ya solicité la instalación hace una semana y todavía no han venido. ¿Qué pasa?"
+            },
+            {
+                "sender": "agente",
+                "text": "Entiendo su frustración, Sr. Rivera. Para revisar el estado de su solicitud, por favor, indíqueme su DUI."
+            },
+            {
+                "sender": "cliente",
+                "text": "Mi DUI es 98765432-1. Me dijeron que la instalación era en tres días hábiles."
+            },
+            {
+                "sender": "agente",
+                "text": "Gracias. Reviso su caso... Veo que la orden de instalación se quedó pendiente por un error en el sistema. Le ofrezco una disculpa. Voy a crear un ticket de máxima prioridad para que se reprograme su instalación para mañana mismo. ¿Le parece bien?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Más les vale que sea mañana. He perdido días de trabajo esperando."
+            },
+            {
+                "sender": "agente",
+                "text": "Lamento mucho el inconveniente. El técnico se pondrá en contacto con usted para confirmar la hora. El ticket de soporte ya está en marcha."
+            }
+        ],
+        "support_ticket": {
+            "problema": "Instalación de internet residencial pendiente",
+            "descripcion": "El cliente Fernando José Rivera Coto, con teléfono 7543-2109, ha esperado más de una semana por la instalación de su servicio de internet. Se detectó un error en el sistema que detuvo el proceso. Se solicita una reprogramación de alta prioridad para mañana.",
+            "estado": "En Progreso",
+            "prioridad": "Alta"
+        }
+    },
+    {
+        "cliente": {
+            "nombre_completo": "Carmen Elena Portillo Ramos",
+            "telefono": "6879-1234"
+        },
+        "satisfaccion": 5,
+        "historial": [
+            {
+                "sender": "agente",
+                "text": "Hola, ¿en qué podemos ayudarle?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Hola, quiero información sobre el servicio de internet y teléfono fijo en paquete. Vi una promoción en su página web."
+            },
+            {
+                "sender": "agente",
+                "text": "Claro, Sra. Portillo. Tenemos un paquete que incluye internet de alta velocidad y telefonía ilimitada. ¿Podría confirmarme su DUI para verificar si aplica en su zona?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Mi DUI es 23456789-0. La promoción dice que es para nuevas contrataciones."
+            },
+            {
+                "sender": "agente",
+                "text": "Gracias. En efecto, usted califica para la promoción. Le explico los detalles... el paquete tiene un costo de $45.99 mensual y la instalación es gratuita. ¿Le gustaría proceder con la contratación?"
+            },
+            {
+                "sender": "cliente",
+                "text": "Sí, me interesa. ¿Qué documentos necesito?"
+            },
+            {
+                "sender": "agente",
+                "text": "Solo necesitamos una copia de su DUI. Le enviaremos un correo con la solicitud para que pueda completarla en línea. ¿Algo más en que pueda servirle?"
+            }
+        ]
+    }
+]

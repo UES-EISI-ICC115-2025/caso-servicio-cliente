@@ -1,0 +1,4 @@
+nombre,descripcion,velocidad_bajada_mbps,velocidad_subida_mbps,precio_mensual,beneficios,creado_en
+"Básico Hogar","Ideal para 1-2 usuarios, navegación, redes sociales y streaming en calidad estándar.",50,15,35.00,"Conexión estable y confiable, router Wi-Fi básico incluido, instalación gratuita, soporte técnico 24/7.","2024-10-15 00:00:00"
+"Familiar Estándar","Ideal para 3-5 usuarios, teletrabajo, clases en línea, streaming en HD y juegos en línea casuales.",150,50,55.00,"Mayor velocidad para múltiples dispositivos, router Wi-Fi de doble banda incluido, instalación gratuita, soporte técnico prioritario 24/7.","2024-10-15 00:00:00"
+"Ultra Premium","Ideal para más de 5 usuarios, familias numerosas, streaming en 4K, juegos en línea de alta demanda y descargas pesadas.",500,150,80.00,"Velocidad ultrarrápida, router Wi-Fi de alta gama incluido, instalación gratuita, soporte técnico VIP 24/7, acceso a un servicio de streaming de regalo.","2024-10-15 00:00:00"

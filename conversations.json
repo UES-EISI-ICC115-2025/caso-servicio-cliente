@@ -1,0 +1,472 @@
+[
+  {
+    "conversation_id": "c1",
+    "customer_id": 17,
+    "messages": [
+      {
+        "sender": "bot",
+        "text": "Hello! Can you provide your email or phone so I can identify you?",
+        "timestamp": "2025-08-15T13:37:48.455656"
+      },
+      {
+        "sender": "customer",
+        "text": "megan12@example.net",
+        "timestamp": "2025-08-15T13:37:53.455656"
+      },
+      {
+        "sender": "bot",
+        "text": "Welcome back, Michael Roy! How can I help you today?",
+        "timestamp": "2025-08-15T13:37:54.455656"
+      },
+      {
+        "sender": "customer",
+        "text": "Can I cancel anytime?",
+        "timestamp": "2025-08-15T13:38:54.455656"
+      },
+      {
+        "sender": "bot",
+        "text": "The premium plan costs $80/month.",
+        "timestamp": "2025-08-15T13:41:54.455656"
+      },
+      {
+        "sender": "customer",
+        "text": "My service is down since this morning.",
+        "timestamp": "2025-08-15T13:42:54.455656"
+      },
+      {
+        "sender": "bot",
+        "text": "I see, let me check that for you.",
+        "timestamp": "2025-08-15T13:44:54.455656"
+      }
+    ],
+    "status": "closed"
+  },
+  {
+    "conversation_id": "c2",
+    "customer_id": 17,
+    "messages": [
+      {
+        "sender": "bot",
+        "text": "Hello! Can you provide your email or phone so I can identify you?",
+        "timestamp": "2025-08-08T17:37:48.455768"
+      },
+      {
+        "sender": "customer",
+        "text": "megan12@example.net",
+        "timestamp": "2025-08-08T17:37:53.455768"
+      },
+      {
+        "sender": "bot",
+        "text": "Welcome back, Michael Roy! How can I help you today?",
+        "timestamp": "2025-08-08T17:37:54.455768"
+      },
+      {
+        "sender": "customer",
+        "text": "Can I cancel anytime?",
+        "timestamp": "2025-08-08T17:38:54.455768"
+      },
+      {
+        "sender": "bot",
+        "text": "Yes, you can upgrade anytime.",
+        "timestamp": "2025-08-08T17:41:54.455768"
+      },
+      {
+        "sender": "customer",
+        "text": "I\u2019m interested in becoming a customer.",
+        "timestamp": "2025-08-08T17:45:54.455768"
+      },
+      {
+        "sender": "agent",
+        "text": "Hello, I\u2019ll take over from here.",
+        "timestamp": "2025-08-08T17:49:54.455768"
+      },
+      {
+        "sender": "customer",
+        "text": "Hi, I want to know your internet plans.",
+        "timestamp": "2025-08-08T17:52:54.455768"
+      },
+      {
+        "sender": "bot",
+        "text": "I\u2019m escalating your issue to a support specialist.",
+        "timestamp": "2025-08-08T17:54:54.455768"
+      }
+    ],
+    "status": "closed"
+  },
+  {
+    "conversation_id": "c3",
+    "customer_id": 7,
+    "messages": [
+      {
+        "sender": "bot",
+        "text": "Hello! Can you provide your email or phone so I can identify you?",
+        "timestamp": "2025-08-13T18:37:48.455842"
+      },
+      {
+        "sender": "customer",
+        "text": "brentwright@example.net",
+        "timestamp": "2025-08-13T18:37:53.455842"
+      },
+      {
+        "sender": "bot",
+        "text": "Welcome back, Brandon Lopez! How can I help you today?",
+        "timestamp": "2025-08-13T18:37:54.455842"
+      },
+      {
+        "sender": "customer",
+        "text": "Can I upgrade my package?",
+        "timestamp": "2025-08-13T18:38:54.455842"
+      },
+      {
+        "sender": "bot",
+        "text": "The premium plan costs $80/month.",
+        "timestamp": "2025-08-13T18:40:54.455842"
+      },
+      {
+        "sender": "customer",
+        "text": "My service is down since this morning.",
+        "timestamp": "2025-08-13T18:41:54.455842"
+      },
+      {
+        "sender": "bot",
+        "text": "I see, let me check that for you.",
+        "timestamp": "2025-08-13T18:44:54.455842"
+      },
+      {
+        "sender": "customer",
+        "text": "I need help with my bill.",
+        "timestamp": "2025-08-13T18:48:54.455842"
+      },
+      {
+        "sender": "agent",
+        "text": "We\u2019ll send a technician tomorrow.",
+        "timestamp": "2025-08-13T18:50:54.455842"
+      },
+      {
+        "sender": "customer",
+        "text": "I\u2019m interested in becoming a customer.",
+        "timestamp": "2025-08-13T18:53:54.455842"
+      },
+      {
+        "sender": "bot",
+        "text": "Please provide your account number.",
+        "timestamp": "2025-08-13T18:55:54.455842"
+      }
+    ],
+    "status": "closed"
+  },
+  {
+    "conversation_id": "c4",
+    "customer_id": 24,
+    "messages": [
+      {
+        "sender": "bot",
+        "text": "Hello! Can you provide your email or phone so I can identify you?",
+        "timestamp": "2025-08-24T17:37:48.455928"
+      },
+      {
+        "sender": "customer",
+        "text": "mackjohn@example.net",
+        "timestamp": "2025-08-24T17:37:53.455928"
+      },
+      {
+        "sender": "bot",
+        "text": "Welcome back, Crystal Chapman! How can I help you today?",
+        "timestamp": "2025-08-24T17:37:54.455928"
+      },
+      {
+        "sender": "customer",
+        "text": "My service is down since this morning.",
+        "timestamp": "2025-08-24T17:38:54.455928"
+      },
+      {
+        "sender": "bot",
+        "text": "Sure! We offer Basic, Plus, and Premium.",
+        "timestamp": "2025-08-24T17:40:54.455928"
+      },
+      {
+        "sender": "customer",
+        "text": "Hi, I want to know your internet plans.",
+        "timestamp": "2025-08-24T17:43:54.455928"
+      },
+      {
+        "sender": "bot",
+        "text": "Yes, you can cancel anytime.",
+        "timestamp": "2025-08-24T17:48:54.455928"
+      }
+    ],
+    "status": "closed"
+  },
+  {
+    "conversation_id": "c5",
+    "customer_id": 8,
+    "messages": [
+      {
+        "sender": "bot",
+        "text": "Hello! Can you provide your email or phone so I can identify you?",
+        "timestamp": "2025-08-09T15:37:48.455986"
+      },
+      {
+        "sender": "customer",
+        "text": "sfuller@example.com",
+        "timestamp": "2025-08-09T15:37:53.455986"
+      },
+      {
+        "sender": "bot",
+        "text": "Welcome back, Jeffrey Berry! How can I help you today?",
+        "timestamp": "2025-08-09T15:37:54.455986"
+      },
+      {
+        "sender": "customer",
+        "text": "My service is down since this morning.",
+        "timestamp": "2025-08-09T15:38:54.455986"
+      },
+      {
+        "sender": "bot",
+        "text": "The premium plan costs $80/month.",
+        "timestamp": "2025-08-09T15:41:54.455986"
+      },
+      {
+        "sender": "customer",
+        "text": "How much is the premium plan?",
+        "timestamp": "2025-08-09T15:45:54.455986"
+      },
+      {
+        "sender": "bot",
+        "text": "Yes, you can upgrade anytime.",
+        "timestamp": "2025-08-09T15:48:54.455986"
+      }
+    ],
+    "status": "closed"
+  },
+  {
+    "conversation_id": "c6",
+    "customer_id": 3,
+    "messages": [
+      {
+        "sender": "bot",
+        "text": "Hello! Can you provide your email or phone so I can identify you?",
+        "timestamp": "2025-07-29T13:37:48.456043"
+      },
+      {
+        "sender": "customer",
+        "text": null,
+        "timestamp": "2025-07-29T13:37:53.456043"
+      },
+      {
+        "sender": "bot",
+        "text": "Welcome back, Carla Ruiz! How can I help you today?",
+        "timestamp": "2025-07-29T13:37:54.456043"
+      },
+      {
+        "sender": "customer",
+        "text": "My service is down since this morning.",
+        "timestamp": "2025-07-29T13:38:54.456043"
+      },
+      {
+        "sender": "bot",
+        "text": "The premium plan costs $80/month.",
+        "timestamp": "2025-07-29T13:41:54.456043"
+      },
+      {
+        "sender": "customer",
+        "text": "My service is down since this morning.",
+        "timestamp": "2025-07-29T13:45:54.456043"
+      },
+      {
+        "sender": "bot",
+        "text": "Sure! We offer Basic, Plus, and Premium.",
+        "timestamp": "2025-07-29T13:46:54.456043"
+      },
+      {
+        "sender": "customer",
+        "text": "Can I cancel anytime?",
+        "timestamp": "2025-07-29T13:51:54.456043"
+      },
+      {
+        "sender": "bot",
+        "text": "I see, let me check that for you.",
+        "timestamp": "2025-07-29T13:54:54.456043"
+      },
+      {
+        "sender": "customer",
+        "text": "I\u2019m interested in becoming a customer.",
+        "timestamp": "2025-07-29T13:59:54.456043"
+      },
+      {
+        "sender": "bot",
+        "text": "Yes, you can cancel anytime.",
+        "timestamp": "2025-07-29T14:00:54.456043"
+      }
+    ],
+    "status": "closed"
+  },
+  {
+    "conversation_id": "c7",
+    "customer_id": 24,
+    "messages": [
+      {
+        "sender": "bot",
+        "text": "Hello! Can you provide your email or phone so I can identify you?",
+        "timestamp": "2025-08-04T13:37:48.456129"
+      },
+      {
+        "sender": "customer",
+        "text": "mackjohn@example.net",
+        "timestamp": "2025-08-04T13:37:53.456129"
+      },
+      {
+        "sender": "bot",
+        "text": "Welcome back, Crystal Chapman! How can I help you today?",
+        "timestamp": "2025-08-04T13:37:54.456129"
+      },
+      {
+        "sender": "customer",
+        "text": "Hi, I want to know your internet plans.",
+        "timestamp": "2025-08-04T13:38:54.456129"
+      },
+      {
+        "sender": "agent",
+        "text": "We\u2019ll send a technician tomorrow.",
+        "timestamp": "2025-08-04T13:42:54.456129"
+      },
+      {
+        "sender": "customer",
+        "text": "Do you have fiber in my area?",
+        "timestamp": "2025-08-04T13:45:54.456129"
+      },
+      {
+        "sender": "bot",
+        "text": "Please provide your account number.",
+        "timestamp": "2025-08-04T13:48:54.456129"
+      }
+    ],
+    "status": "closed"
+  },
+  {
+    "conversation_id": "c8",
+    "customer_id": 10,
+    "messages": [
+      {
+        "sender": "bot",
+        "text": "Hello! Can you provide your email or phone so I can identify you?",
+        "timestamp": "2025-08-18T09:37:48.456186"
+      },
+      {
+        "sender": "customer",
+        "text": "edwardsjacob@example.net",
+        "timestamp": "2025-08-18T09:37:53.456186"
+      },
+      {
+        "sender": "bot",
+        "text": "Welcome back, Susan Smith! How can I help you today?",
+        "timestamp": "2025-08-18T09:37:54.456186"
+      },
+      {
+        "sender": "customer",
+        "text": "Do you have fiber in my area?",
+        "timestamp": "2025-08-18T09:38:54.456186"
+      },
+      {
+        "sender": "agent",
+        "text": "I\u2019m creating a ticket for your issue.",
+        "timestamp": "2025-08-18T09:42:54.456186"
+      },
+      {
+        "sender": "customer",
+        "text": "Do you have fiber in my area?",
+        "timestamp": "2025-08-18T09:46:54.456186"
+      },
+      {
+        "sender": "bot",
+        "text": "The premium plan costs $80/month.",
+        "timestamp": "2025-08-18T09:47:54.456186"
+      }
+    ],
+    "status": "closed"
+  },
+  {
+    "conversation_id": "c9",
+    "customer_id": 9,
+    "messages": [
+      {
+        "sender": "bot",
+        "text": "Hello! Can you provide your email or phone so I can identify you?",
+        "timestamp": "2025-08-24T19:37:48.456241"
+      },
+      {
+        "sender": "customer",
+        "text": "andrew25@example.net",
+        "timestamp": "2025-08-24T19:37:53.456241"
+      },
+      {
+        "sender": "bot",
+        "text": "Welcome back, Lisa Sharp! How can I help you today?",
+        "timestamp": "2025-08-24T19:37:54.456241"
+      },
+      {
+        "sender": "customer",
+        "text": "Hi, I want to know your internet plans.",
+        "timestamp": "2025-08-24T19:38:54.456241"
+      },
+      {
+        "sender": "agent",
+        "text": "Hello, I\u2019ll take over from here.",
+        "timestamp": "2025-08-24T19:41:54.456241"
+      },
+      {
+        "sender": "customer",
+        "text": "Hi, I want to know your internet plans.",
+        "timestamp": "2025-08-24T19:46:54.456241"
+      },
+      {
+        "sender": "bot",
+        "text": "The premium plan costs $80/month.",
+        "timestamp": "2025-08-24T19:50:54.456241"
+      }
+    ],
+    "status": "closed"
+  },
+  {
+    "conversation_id": "c10",
+    "customer_id": 29,
+    "messages": [
+      {
+        "sender": "bot",
+        "text": "Hello! Can you provide your email or phone so I can identify you?",
+        "timestamp": "2025-08-15T13:37:48.456296"
+      },
+      {
+        "sender": "customer",
+        "text": "georgeross@example.org",
+        "timestamp": "2025-08-15T13:37:53.456296"
+      },
+      {
+        "sender": "bot",
+        "text": "Welcome back, Jon Campbell! How can I help you today?",
+        "timestamp": "2025-08-15T13:37:54.456296"
+      },
+      {
+        "sender": "customer",
+        "text": "How much is the premium plan?",
+        "timestamp": "2025-08-15T13:38:54.456296"
+      },
+      {
+        "sender": "bot",
+        "text": "Yes, you can upgrade anytime.",
+        "timestamp": "2025-08-15T13:42:54.456296"
+      },
+      {
+        "sender": "customer",
+        "text": "Do you have fiber in my area?",
+        "timestamp": "2025-08-15T13:44:54.456296"
+      },
+      {
+        "sender": "agent",
+        "text": "I\u2019m creating a ticket for your issue.",
+        "timestamp": "2025-08-15T13:48:54.456296"
+      }
+    ],
+    "status": "closed"
+  }
+]
