@@ -1,0 +1,51 @@
+version: "3.1"
+rules:
+  - rule: Saludar al usuario
+    steps:
+      - intent: saludo
+      - action: utter_saludo
+
+  - rule: Despedirse del usuario
+    steps:
+      - intent: despedida
+      - action: utter_despedida
+
+  - rule: Identificar cliente
+    steps:
+      - intent: identificar_cliente
+      - action: utter_identificar_cliente
+
+  - rule: Proveer soporte técnico
+    steps:
+      - intent: soporte_tecnico
+      - action: utter_soporte_tecnico
+
+  - rule: Proveer información sobre productos y servicios
+    steps:
+      - intent: nuevo_cliente
+      - action: utter_nuevo_cliente
+
+  - rule: procesar quejas
+    steps:
+      - intent: quejas
+      - action: utter_quejas
+
+  - rule: agradecimiento
+    steps:
+      - intent: agradecimiento
+      - action: utter_agradecimiento
+
+  - rule: afirmar
+    steps:
+      - intent: afirmar
+      - action: utter_afirmar
+
+  - rule: negar
+    steps:
+      - intent: negar
+      - action: utter_negar
+
+  - rule: Manejar fallback de NLU
+    steps:
+      - intent: nlu_fallback
+      - action: utter_default

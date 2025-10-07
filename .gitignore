@@ -1,5 +1,6 @@
 # Entorno de python
 icc115-venv/
+rasa_env/
 
 # Archivos compilados de Python
 __pycache__/

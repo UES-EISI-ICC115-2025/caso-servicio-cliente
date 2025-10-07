@@ -3,6 +3,7 @@
         "ms-python.black-formatter",
         "cweijan.vscode-database-client2",
         "ms-toolsai.jupyter",
-        "alexcvzz.vscode-sqlite"
+        "alexcvzz.vscode-sqlite",
+        "redhat.vscode-yaml"
     ]
 }
