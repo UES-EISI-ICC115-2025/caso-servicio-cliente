@@ -1,3 +1,4 @@
+-- SQLBook: Code
 CREATE DATABASE icc115
 	CHARACTER SET utf8mb4
 	COLLATE utf8mb4_spanish_ci;
@@ -11,13 +12,24 @@ CREATE TABLE users (
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE productos (
+    producto_id BINARY(16) PRIMARY KEY DEFAULT (UUID_TO_BIN(UUID())),
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(500) NOT NULL,
+    velocidad_bajada_mbps INT NOT NULL,
+    velocidad_subida_mbps INT NOT NULL,
+    precio_mensual DECIMAL(10, 2) NOT NULL,
+    beneficios VARCHAR(1000) NOT NULL,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE billing_data (
     billing_id BINARY(16) PRIMARY KEY DEFAULT (UUID_TO_BIN(UUID())),
     user_id BINARY(16),
+    producto_id BINARY(16),
     fecha_factura DATE,
     monto REAL,
     estado varchar(25),
-    servicio varchar(50),
     FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 
@@ -72,4 +84,3 @@ CREATE TABLE feedback (
     FOREIGN KEY(session_id) REFERENCES conversations(session_id),
     FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
-
