@@ -19,14 +19,4 @@
             "password": "icc115"
         }
     ],
-    "extensions": [
-        "cweijan.vscode-mysql-client2",
-        "Oracle.mysql-shell-for-vs-code",
-        "ms-python.black-formatter",
-        "ms-python.isort",
-        "ms-toolsai.jupyter",
-        "ms-toolsai.vscode-jupyter-powertoys",
-        "ms-python.python",
-        "mtxr.sqltools"
-    ]
 }

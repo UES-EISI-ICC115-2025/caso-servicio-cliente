@@ -2,6 +2,7 @@
 icc115-venv/
 rag-venv/
 rasa_env/
+langchain_env/
 
 # Archivos compilados de Python
 __pycache__/
