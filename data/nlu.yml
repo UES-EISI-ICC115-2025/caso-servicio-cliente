@@ -29,288 +29,296 @@ nlu:
     - Vaya, qué onda, pues
     - ¡Qué onda!
     - hola
-- intent: despedida
-  examples: |
-    - Adiós
-    - Chao
-    - Nos vemos
-    - Hasta luego
-    - ¡Cuídate!
-    - Que le vaya bien
-    - ¡Ahí nos vemos!
-    - Vaya, pues
-    - Chao, nos vemos
-    - ¡Chivo, adiós!
-    - Vaya, pues, adiós
-    - Hasta la próxima
-    - Vaya, ahí nos vemos, maje
-    - Con permiso
-    - Hasta mañana
-    - Que tengas un buen día
-    - ¡Púyale, pues!
-    - Me voy, pues
-    - Que te vaya bonito
-    - ¡Andamos viendo, pues!
-    - Ahí nos vemos, pues
-    - Que esté bien
-    - ¡Nos vemos, chele!
-    - Saludos, pues
-    - ¡Hasta el rato!
-    - ¡Nos estamos viendo, pues!
-    - Me despido, pues
-- intent: dar_calificacion
-  examples: |
-    - Quiero dar una calificación
-    - Quiero calificar el servicio
-    - Le doy 5 estrellas
-    - Mi calificación es 4 de 5
-    - Quiero dejar mi puntuación
-    - Quiero evaluar la atención
-    - Le pongo una calificación de 3
-    - Mi puntuación para el servicio es 2
-    - Quiero dar mi opinión sobre el servicio
-    - Quiero dejar una reseña
-    - Mi experiencia fue excelente, le doy 5
-    - No me gustó, le doy 1 estrella
-    - Quiero calificar la visita técnica
-    - ¿Dónde puedo dejar mi calificación?
-    - Quiero dar feedback sobre el servicio
-- intent: nuevo_cliente
-  examples: |
-    - Quiero saber sobre los planes de internet
-    - ¿Cuánto vale el [plan](necesidad) de 50 megas?
-    - Me interesa el [plan](necesidad) más rápido
-    - Necesito información sobre paquetes de internet
-    - ¿Qué opciones de fibra óptica tienen?
-    - Quiero contratar internet
-    - Me interesa ser cliente
-    - Quiero unirme a su servicio
-    - Deseo registrarme
-    - Me gustaría poner internet en mi casa
-    - Quiero contratar un [plan](necesidad) para mi casa
-    - Vendo internet
-    - Quiero cotizar un [plan](necesidad)
-    - Necesito información para contratar
-    - Me interesa su servicio de fibra
-    - ¿Qué [plan](necesidad)es hay para nuevas casas?
-    - Quiero ponerme con ustedes
-    - ¿Qué oferta tienen para clientes nuevos?
-    - Quisiera contratar internet de fibra
-    - Quiero saber los precios de los planes
-    - Quiero la instalación de internet
-    - ¿Cómo hago para contratar?
-    - Quiero saber cómo me instalan el internet
-    - Quisiera saber el costo de un [plan](necesidad)
-    - Vengo a preguntar por los planes de internet
-    - Me gustaría poner internet, ¿me echan la mano?
-    - Quiero cambiar de compañía
-    - ¿Qué promociones hay?
-    - Me interesa, ¿qué ofrecen?
-    - soy nuevo aquí
-    - acabo de llegar
-    - soy cliente nuevo
-    - quiero un nuevo servicio
-    - quiero un nuevo [plan](necesidad)
-    - quiero un nuevo paquete
-    - quiero un nuevo internet
-    - quiero un nuevo contrato
-    - quiero un nuevo registro
-- intent: proporcionar_datos
-  examples: |
-    - Mi nombre es [Andrea Monterrosa](nombre)
-    - Soy [Carlos Pérez](nombre)
-    - Mi correo es [carlos@email.com](email)
-    - Me llamo [María López](nombre)
-    - Mi número es [7777-8888](telefono)
-    - Mi nombre es [Juan Carlos](nombre)
-    - Me puede buscar por mi correo [correo@gmail.com](email)
-    - Soy [Sofía Flores](nombre)
-    - Mi teléfono es [8888-9999](telefono)
-    - Le doy mi nombre, [Ricardo Sánchez](nombre)
-    - Mi correo, para que lo tenga, es [ricky@correo.net](email)
-    - Me llamo [Ana Meléndez](nombre)
-    - Le dejo mi número, es [7070-1234](telefono)
-    - Mi nombre es [Luis Mendoza](nombre)
-    - [maria.perez@email.com](email), ese es mi correo
-    - Soy [Claudia Martínez](nombre), del [plan](necesidad) de 50 megas
-    - Mi teléfono es [6543-2109](telefono), por favor
-    - Me llamo [Pedro Ramos](nombre), tengo un problema con el internet
-    - Mi correo es [elmejor@email.org](email)
-    - Mi nombre es [Juana Torres](nombre)
-    - Mi número de teléfono es [7654-3210](telefono)
-    - Me llamo [Ernesto Cruz](nombre)
-    - Mi correo es [ernesto@gmail.com](email)
-    - [Mi nombre es Juan López](nombre) y mi número es [7890-1234](telefono)
-    - Mi correo electrónico es [cliente@email.net](email)
-    - Le puedo dar mi correo, [micorreo@email.com](email)
-    - Me llamo [Roberto Méndez](nombre) y mi teléfono es [6060-7070](telefono)
-    - Mi nombre, por si acaso, [es Manuel Hernández](nombre)
-    - [margarita.rodriguez@email.com](email) es mi correo
-    - Soy [José Antonio](nombre)
-    - Le doy mi nombre, [[Ricardo Sánche]{"entity": "nombre", "value": "Ricardo S\u00e1nchez"}z](nombre), te[léfono es]{"entity": "telefono", "value": "6543-2109"} [6543-21[09](telefono), c]{"entity": "email", "value": "ricky@correo.net"}orreo [r[icky@corre]{"entity": "dui", "value": "4354958490"}o.net](email) y  DUI 4354958490
-- intent: afirmar
-  examples: |
-    - Sí
-    - Sí, por favor
-    - Sí, hagámoslo
-    - Claro que sí
-    - Con gusto
-    - De acuerdo
-    - Exacto
-    - Así es
-    - Ándale
-    - ¡Ándale, pues!
-    - ¡Agüevo!
-    - ¡A huevo, sí!
-    - ¡Qué chivo!
-    - Vaya, pues, sí
-    - Correcto
-    - Definitivamente
-    - Por supuesto
-    - Vaya
-    - Dale
-    - Eso mero
-    - Dale, sí
-    - Sí, eso quiero
-    - Sí, eso es
-    - ¡Qué onda!
-    - Así mero
-    - Eso mismo
-    - Por supuesto que sí
-    - Claro
-    - Sí, está bien
-    - Sí, adelante
-    - [si](respuesta) porfa
-    - [si](respuesta)
-- intent: negar
-  examples: |
-    - No
-    - No, gracias
-    - No, no quiero
-    - No, no es así
-    - Negativo
-    - Incorrecto
-    - Nada de eso
-    - Para nada
-    - ¡Ah, no!
-    - No, espere
-    - No, la verdad no
-    - No, no, no
-    - No estoy seguro
-    - Eso no
-    - No, no me parece
-    - ¡Ni a palos!
-    - No es eso
-    - No, eso no es
-    - De ninguna manera
-    - No, no me interesa
-    - Vaya, no
-    - No, no quiero eso
-    - Ni modo
-    - No, no te preocupes
-    - No, de verdad no
-    - No, no me funciona
-    - No lo quiero
-    - No, no es así como lo dices
-    - No, no estoy de acuerdo
-    - no, solamente
-- intent: agradecimiento
-  examples: |
-    - Gracias
-    - Muchas gracias
-    - Gracias, qué amable
-    - Te agradezco
-    - Mil gracias
-    - Gracias por la ayuda
-    - Qué chivo, gracias
-    - Vaya, qué bien, gracias
-    - Gracias, vos
-    - Gracias, muy amable
-    - Gracias por todo
-    - ¡Qué buena onda, gracias!
-    - Me ayudaste un montón, gracias
-    - Gracias, se te agradece
-    - Gracias, por la atención
-    - Gracias, qué rápido
-    - Vaya, gracias
-    - Muchas gracias por la información
-    - ¡Chivo! Gracias
-    - Gracias, ya estoy
-    - Gracias por la respuesta
-    - Te lo agradezco mucho
-    - Se lo agradezco, de verdad
-    - Gracias por tu tiempo
-    - ¡Gracias, maje!
-    - Gracias, gracias
-    - Muy agradecido
-    - Gracias por atenderme
-    - Gracias, me sirvió de mucho
-    - Gracias, buen servicio
-    - gracias
-- intent: escalar_humano
-  examples: |
-    - Quiero hablar con un agente
-    - Me puede pasar con alguien
-    - Necesito que me atienda una persona
-    - Hablar con un humano
-    - Quiero hablar con un asesor
-    - Necesito ayuda de una persona
-    - Hablemos con un humano, por favor
-    - Me puedes transferir con alguien
-    - ¿Hay alguien disponible para atenderme?
-    - Necesito que me ayude un humano
-    - El chatbot no me entiende
-    - Quiero hablar con una persona, no con un robot
-    - ¿Me pasas a un agente?
-    - Quiero que me atienda una persona, porfa
-    - Necesito un agente humano
-    - ¿Puedo hablar con alguien que me entienda?
-    - ¡Ayuda, necesito un humano!
-    - Me puedes pasar con un representante
-    - Necesito que me ayuden de forma personal
-    - Quiero que un humano me resuelva
-    - Con un agente, por favor
-    - ¿Hay alguien que me pueda ayudar mejor?
-    - No me has ayudado, necesito hablar con un humano
-    - Por favor, pásame con alguien
-    - Quiero la ayuda de un ser humano
-    - Me puedes poner con un supervisor
-    - Habla con un humano de verdad
-    - Necesito la asistencia de una persona
-    - Ya no quiero hablar contigo, con un humano, porfa
-    - Me puedes transferir, por favor
-- intent: quejas
-  examples: |
-    - Tengo una queja
-    - Quiero poner una queja
-    - Estoy muy molesto con el servicio
-    - Mi queja es sobre el internet
-    - No estoy conforme con el servicio
-    - Tuve una mala experiencia
-    - El servicio es pésimo
-    - ¡Estoy enojado!
-    - No me gustó el servicio que me dieron
-    - Quiero reclamar algo
-    - Me quejo de la atención
-    - Esto está mal
-    - La instalación quedó mal hecha
-    - No me solucionaron nada
-    - Me han cobrado de más
-    - Hay un error en mi factura
-    - Estoy muy insatisfecho
-    - Quejas sobre el servicio
-    - No estoy contento con lo que pasó
-    - Me quejo del internet
-    - ¿Qué pasó con mi reclamo?
-    - Esto es un desastre
-    - El servicio es una porquería
-    - Me siento insatisfecho
-    - Tengo un reclamo que hacer
-    - Estoy decepcionado con el servicio
-    - Esto no me gusta nada
-    - Se quejó un montón de veces
-    - El servicio de atención al cliente es malísimo
-    - No estoy de acuerdo con lo que me hicieron
+# - intent: despedida
+#   examples: |
+#     - Adiós
+#     - Chao
+#     - Nos vemos
+#     - Hasta luego
+#     - ¡Cuídate!
+#     - Que le vaya bien
+#     - ¡Ahí nos vemos!
+#     - Vaya, pues
+#     - Chao, nos vemos
+#     - ¡Chivo, adiós!
+#     - Vaya, pues, adiós
+#     - Hasta la próxima
+#     - Vaya, ahí nos vemos, maje
+#     - Con permiso
+#     - Hasta mañana
+#     - Que tengas un buen día
+#     - ¡Púyale, pues!
+#     - Me voy, pues
+#     - Que te vaya bonito
+#     - ¡Andamos viendo, pues!
+#     - Ahí nos vemos, pues
+#     - Que esté bien
+#     - ¡Nos vemos, chele!
+#     - Saludos, pues
+#     - ¡Hasta el rato!
+#     - ¡Nos estamos viendo, pues!
+#     - Me despido, pues
+# - intent: calificar
+#   examples: |
+#     - Le doy [5](calificacion) estrellas
+#     - Mi calificación es 4 de 5
+#     - Le pongo una calificación de [3](calificacion)
+#     - Mi puntuación para el servicio es [2](calificacion)
+#     - Mi experiencia fue excelente, le doy [5](calificacion)
+#     - No me gustó, le doy [1](calificacion) estrella
+#     - [5](calificacion)
+#     - Quiero dar una calificación
+#     - Quiero calificar el servicio
+#     - Le doy 5 estrellas
+#     - Mi calificación es [4](calificacion) de 5
+#     - Quiero dejar mi puntuación
+#     - Quiero evaluar la atención
+#     - Le pongo una calificación de [3](calificacion)
+#     - Mi puntuación para el servicio es [2](calificacion)
+#     - Quiero dar mi opinión sobre el servicio
+#     - Quiero dejar una reseña
+#     - Mi experiencia fue excelente, le doy [5](calificacion)
+#     - No me gustó, le doy [1](calificacion) estrella
+#     - Quiero calificar la visita técnica
+#     - ¿Dónde puedo dejar mi calificación?
+#     - Quiero dar feedback sobre el servicio
+# - intent: nuevo_cliente
+#   examples: |
+#     - Quiero saber sobre los planes de internet
+#     - ¿Cuánto vale el [plan](necesidad) de 50 megas?
+#     - Me interesa el [plan](necesidad) más rápido
+#     - Necesito información sobre paquetes de internet
+#     - ¿Qué opciones de fibra óptica tienen?
+#     - Quiero contratar internet
+#     - Me interesa ser cliente
+#     - Quiero unirme a su servicio
+#     - Deseo registrarme
+#     - Me gustaría poner internet en mi casa
+#     - Quiero contratar un [plan](necesidad) para mi casa
+#     - Vendo internet
+#     - Quiero cotizar un [plan](necesidad)
+#     - Necesito información para contratar
+#     - Me interesa su servicio de fibra
+#     - ¿Qué [plan](necesidad)es hay para nuevas casas?
+#     - Quiero ponerme con ustedes
+#     - ¿Qué oferta tienen para clientes nuevos?
+#     - Quisiera contratar internet de fibra
+#     - Quiero saber los precios de los planes
+#     - Quiero la instalación de internet
+#     - ¿Cómo hago para contratar?
+#     - Quiero saber cómo me instalan el internet
+#     - Quisiera saber el costo de un [plan](necesidad)
+#     - Vengo a preguntar por los planes de internet
+#     - Me gustaría poner internet, ¿me echan la mano?
+#     - Quiero cambiar de compañía
+#     - ¿Qué promociones hay?
+#     - Me interesa, ¿qué ofrecen?
+#     - soy nuevo aquí
+#     - acabo de llegar
+#     - soy cliente nuevo
+#     - quiero un nuevo servicio
+#     - quiero un nuevo [plan](necesidad)
+#     - quiero un nuevo paquete
+#     - quiero un nuevo internet
+#     - quiero un nuevo contrato
+#     - quiero un nuevo registro
+# - intent: proporcionar_datos
+#   examples: |
+#     - Mi nombre es [Andrea Monterrosa](nombre)
+#     - Soy [Carlos Pérez](nombre)
+#     - Mi correo es [carlos@email.com](email)
+#     - Me llamo [María López](nombre)
+#     - Mi número es [7777-8888](telefono)
+#     - Mi nombre es [Juan Carlos](nombre)
+#     - Me puede buscar por mi correo [correo@gmail.com](email)
+#     - Soy [Sofía Flores](nombre)
+#     - Mi teléfono es [8888-9999](telefono)
+#     - Le doy mi nombre, [Ricardo Sánchez](nombre)
+#     - Mi correo, para que lo tenga, es [ricky@correo.net](email)
+#     - Me llamo [Ana Meléndez](nombre)
+#     - Le dejo mi número, es [7070-1234](telefono)
+#     - Mi nombre es [Luis Mendoza](nombre)
+#     - [maria.perez@email.com](email), ese es mi correo
+#     - Soy [Claudia Martínez](nombre), del [plan](necesidad) de 50 megas
+#     - Mi teléfono es [6543-2109](telefono), por favor
+#     - Me llamo [Pedro Ramos](nombre), tengo un problema con el internet
+#     - Mi correo es [elmejor@email.org](email)
+#     - Mi nombre es [Juana Torres](nombre)
+#     - Mi número de teléfono es [7654-3210](telefono)
+#     - Me llamo [Ernesto Cruz](nombre)
+#     - Mi correo es [ernesto@gmail.com](email)
+#     - [Mi nombre es Juan López](nombre) y mi número es [7890-1234](telefono)
+#     - Mi correo electrónico es [cliente@email.net](email)
+#     - Le puedo dar mi correo, [micorreo@email.com](email)
+#     - Me llamo [Roberto Méndez](nombre) y mi teléfono es [6060-7070](telefono)
+#     - Mi nombre, por si acaso, [es Manuel Hernández](nombre)
+#     - [margarita.rodriguez@email.com](email) es mi correo
+#     - Soy [José Antonio](nombre)
+#     - Le doy mi nombre [Ricardo Sánchez](nombre), teléfono es [6543-2109](telefono), correo [ricky@correo.net](email) y  DUI [4354958490](dui)
+#     - Mi número es [7777-8888](telefono), [Juan Carlos](nombre), [correo@gmail.com](email) y mi dui es [4354958490](dui)
+# - intent: afirmar
+#   examples: |
+#     - Sí
+#     - Sí, por favor
+#     - Sí, hagámoslo
+#     - Claro que sí
+#     - Con gusto
+#     - De acuerdo
+#     - Exacto
+#     - Así es
+#     - Ándale
+#     - ¡Ándale, pues!
+#     - ¡Agüevo!
+#     - ¡A huevo, sí!
+#     - ¡Qué chivo!
+#     - Vaya, pues, sí
+#     - Correcto
+#     - Definitivamente
+#     - Por supuesto
+#     - Vaya
+#     - Dale
+#     - Eso mero
+#     - Dale, sí
+#     - Sí, eso quiero
+#     - Sí, eso es
+#     - ¡Qué onda!
+#     - Así mero
+#     - Eso mismo
+#     - Por supuesto que sí
+#     - Claro
+#     - Sí, está bien
+#     - Sí, adelante
+#     - [si](respuesta) porfa
+#     - [si](respuesta)
+# - intent: negar
+#   examples: |
+#     - No
+#     - No, gracias
+#     - No, no quiero
+#     - No, no es así
+#     - Negativo
+#     - Incorrecto
+#     - Nada de eso
+#     - Para nada
+#     - ¡Ah, no!
+#     - No, espere
+#     - No, la verdad no
+#     - No, no, no
+#     - No estoy seguro
+#     - Eso no
+#     - No, no me parece
+#     - ¡Ni a palos!
+#     - No es eso
+#     - No, eso no es
+#     - De ninguna manera
+#     - No, no me interesa
+#     - Vaya, no
+#     - No, no quiero eso
+#     - Ni modo
+#     - No, no te preocupes
+#     - No, de verdad no
+#     - No, no me funciona
+#     - No lo quiero
+#     - No, no es así como lo dices
+#     - No, no estoy de acuerdo
+#     - no, solamente
+# - intent: agradecimiento
+#   examples: |
+#     - Gracias
+#     - Muchas gracias
+#     - Gracias, qué amable
+#     - Te agradezco
+#     - Mil gracias
+#     - Gracias por la ayuda
+#     - Qué chivo, gracias
+#     - Vaya, qué bien, gracias
+#     - Gracias, vos
+#     - Gracias, muy amable
+#     - Gracias por todo
+#     - ¡Qué buena onda, gracias!
+#     - Me ayudaste un montón, gracias
+#     - Gracias, se te agradece
+#     - Gracias, por la atención
+#     - Gracias, qué rápido
+#     - Vaya, gracias
+#     - Muchas gracias por la información
+#     - ¡Chivo! Gracias
+#     - Gracias, ya estoy
+#     - Gracias por la respuesta
+#     - Te lo agradezco mucho
+#     - Se lo agradezco, de verdad
+#     - Gracias por tu tiempo
+#     - ¡Gracias, maje!
+#     - Gracias, gracias
+#     - Muy agradecido
+#     - Gracias por atenderme
+#     - Gracias, me sirvió de mucho
+#     - Gracias, buen servicio
+#     - gracias
+# - intent: escalar_humano
+#   examples: |
+#     - Quiero hablar con un agente
+#     - Me puede pasar con alguien
+#     - Necesito que me atienda una persona
+#     - Hablar con un humano
+#     - Quiero hablar con un asesor
+#     - Necesito ayuda de una persona
+#     - Hablemos con un humano, por favor
+#     - Me puedes transferir con alguien
+#     - ¿Hay alguien disponible para atenderme?
+#     - Necesito que me ayude un humano
+#     - El chatbot no me entiende
+#     - Quiero hablar con una persona, no con un robot
+#     - ¿Me pasas a un agente?
+#     - Quiero que me atienda una persona, porfa
+#     - Necesito un agente humano
+#     - ¿Puedo hablar con alguien que me entienda?
+#     - ¡Ayuda, necesito un humano!
+#     - Me puedes pasar con un representante
+#     - Necesito que me ayuden de forma personal
+#     - Quiero que un humano me resuelva
+#     - Con un agente, por favor
+#     - ¿Hay alguien que me pueda ayudar mejor?
+#     - No me has ayudado, necesito hablar con un humano
+#     - Por favor, pásame con alguien
+#     - Quiero la ayuda de un ser humano
+#     - Me puedes poner con un supervisor
+#     - Habla con un humano de verdad
+#     - Necesito la asistencia de una persona
+#     - Ya no quiero hablar contigo, con un humano, porfa
+#     - Me puedes transferir, por favor
+# - intent: quejas
+#   examples: |
+#     - Tengo una queja
+#     - Quiero poner una queja
+#     - Estoy muy molesto con el servicio
+#     - Mi queja es sobre el internet
+#     - No estoy conforme con el servicio
+#     - Tuve una mala experiencia
+#     - El servicio es pésimo
+#     - ¡Estoy enojado!
+#     - No me gustó el servicio que me dieron
+#     - Quiero reclamar algo
+#     - Me quejo de la atención
+#     - Esto está mal
+#     - La instalación quedó mal hecha
+#     - No me solucionaron nada
+#     - Me han cobrado de más
+#     - Hay un error en mi factura
+#     - Estoy muy insatisfecho
+#     - Quejas sobre el servicio
+#     - No estoy contento con lo que pasó
+#     - Me quejo del internet
+#     - ¿Qué pasó con mi reclamo?
+#     - Esto es un desastre
+#     - El servicio es una porquería
+#     - Me siento insatisfecho
+#     - Tengo un reclamo que hacer
+#     - Estoy decepcionado con el servicio
+#     - Esto no me gusta nada
+#     - Se quejó un montón de veces
+#     - El servicio de atención al cliente es malísimo
+#     - No estoy de acuerdo con lo que me hicieron
 - intent: interes_planes
   examples: |
     - Quiero saber sobre los planes de internet
@@ -338,254 +346,245 @@ nlu:
     - quiero saber que [planes](necesidad) hay
     - ¿Tienen promociones para planes familiares?
     - ¿Hay alguna oferta para planes de alta velocidad?
+    - quiero contratar algún [plan](necesidad) de internet
+# - intent: interes_promociones
+#   examples: |
+#     - ¿Qué promociones tienen?
+#     - ¿Tienen alguna oferta especial?
+#     - Me gustaría saber sobre sus descuentos
+#     - ¿Hay alguna promoción vigente?
+#     - Quisiera conocer las ofertas actuales
+#     - ¿Ofrecen algún descuento para nuevos clientes?
+#     - Estoy interesado en sus promociones
+#     - ¿Cuáles son las ofertas del mes?
+#     - ¿Hay algún descuento por contratar en línea?
+#     - Me gustaría aprovechar alguna promoción
+#     - ¿Tienen ofertas para estudiantes?
+#     - ¿Qué promociones hay para clientes leales?
+#     - Quiero saber si hay descuentos disponibles
+#     - ¿Ofrecen alguna promoción por tiempo limitado?
+#     - Estoy buscando una buena oferta
+#     - ¿Tienen promociones especiales para empresas?
+#     - Me interesa saber sobre sus descuentos y promociones
+#     - Quisiera saber si hay promociones para servicios adicionales
+# - intent: aceptar_plan
+#   examples: |
+#     - Quiero ese plan
+#     - Sí, acepto el plan
+#     - Me interesa ese paquete
+#     - Ese plan está bien para mí
+#     - Lo quiero contratar
+#     - Sí, quiero ese servicio
+#     - Me quedo con ese plan
+#     - Ese paquete me gusta
+#     - Sí, ese es el que quiero
+#     - Acepto la oferta
+#     - Me interesa contratar ese plan
+#     - Sí, ese paquete está bien
+#     - Quiero tomar ese plan
+#     - Me gustaría ese servicio
+#     - Sí, ese es el que quiero contratar
+#     - Ese plan me conviene
+#     - Quiero ese paquete de internet
+#     - Sí, quiero la promoción
+#     - Me interesa ese plan de fibra
+#     - Ese es el plan que quiero
+# - intent: rechazar_plan
+#   examples: |
+#     - No me interesa ese plan
+#     - No quiero ese paquete
+#     - Ese plan no me gusta
+#     - No, gracias, no quiero ese servicio
+#     - No, ese plan no es para mí
+#     - No, no quiero contratar ese plan
+#     - No, ese paquete no me conviene
+#     - No, ese plan está muy caro
+#     - No, ese no es el plan que quiero
+#     - No, gracias, no me interesa ese paquete
+#     - No, ese plan no me sirve
+#     - No, ese paquete no es lo que busco
+#     - No, ese plan no es adecuado para mí
+#     - No, ese paquete no me atrae
+#     - No, ese plan no cumple con mis necesidades
+#     - No, ese paquete no es lo que quiero
+#     - No, ese plan no es lo que necesito
+# - intent: confirmar_datos
+#   examples: |
+#     - Sí, esos son mis datos
+#     - Mis datos son correctos
+#     - Sí, envíeme el contrato
+#     - Todo está bien con mis datos
+#     - Los datos están correctos
+#     - Sí, confirme mis datos
+#     - Mis datos están bien
+#     - Sí, esos son los datos correctos
+#     - Puede proceder con esos datos
+#     - Sí, así está bien
+#     - Sí, confirme la información
+#     - Sí, envíe el contrato por favor
+#     - Los datos son correctos, gracias
+#     - Sí, continúe con esos datos
+#     - Sí, esos son los datos que quiero usar
+# - intent: problema_tecnico
+#   examples: |
+#     - No tengo internet
+#     - Se me fue la señal
+#     - No funciona el servicio
+#     - Tengo problemas con el router
+#     - Se cayó la conexión
+#     - La conexión me está fallando
+#     - No tengo señal
+#     - El wifi no me agarra
+#     - Se desconectó mi internet
+#     - El servicio está caído
+#     - Mi internet no sirve
+#     - El router no prende
+#     - La luz del router está en rojo
+#     - El internet está súper lento
+#     - Tengo una emergencia con mi internet
+#     - Falla en el servicio
+#     - ¿Qué onda con la conexión?
+#     - Se traba el internet
+#     - El internet no avanza
+#     - Mi wifi se desconecta a cada rato
+#     - Tengo un problema técnico
+#     - Ayuda, mi internet no funciona
+#     - El internet está inestable
+#     - Mi router no conecta
+#     - Necesito soporte técnico, por favor
+#     - No me funciona nada
+# - intent: problema_facturacion
+#   examples: |
+#     - Tengo un problema con mi factura
+#     - Mi factura está incorrecta
+#     - No entiendo el cobro que me hicieron
+#     - Me cobraron de más este mes
+#     - Hay un error en mi recibo
+#     - Quiero reclamar un cobro
+#     - Mi factura no coincide con el servicio
+#     - ¿Por qué me cobraron extra?
+#     - No recibí mi factura
+#     - El monto de la factura está mal
+#     - Quiero revisar mi facturación
+#     - Necesito ayuda con mi factura
+#     - No me llegó el recibo
+#     - El cobro no corresponde
+#     - Tengo dudas sobre mi factura
+#     - Quiero aclarar mi factura
+#     - ¿Me pueden explicar el cobro?
+#     - Mi factura tiene cargos que no reconozco
+#     - Hay cargos no autorizados en mi factura
+#     - Quiero saber por qué subió mi factura
+# - intent: confirmar_solucion_tecnica
+#   examples: |
+#     - Ya se solucionó el problema
+#     - Mi internet ya funciona
+#     - Todo está bien con el servicio
+#     - El router ya prende
+#     - Ya tengo señal
+#     - El wifi ya agarra
+#     - Gracias, ya está resuelto
+#     - El problema técnico ya se arregló
+#     - Ya no tengo problemas con la conexión
+#     - El servicio ya está normal
+#     - Ya no necesito soporte técnico
+#     - Mi conexión ya está estable
+#     - El internet ya sirve
+#     - Ya no hay fallas
+#     - Todo está funcionando bien ahora
+# - intent: no_confirmar_solucion_tecnica
+#   examples: |
+#     - El problema sigue igual
+#     - No se ha solucionado nada
+#     - Mi internet sigue sin funcionar
+#     - Todavía tengo problemas con la conexión
+#     - El servicio sigue caído
+#     - El router no prende aún
+#     - No tengo señal todavía
+#     - El wifi sigue sin agarrar
+#     - No está resuelto el problema
+#     - Sigo necesitando soporte técnico
+#     - Mi conexión sigue inestable
+#     - El internet sigue sin servir
+#     - Aún hay fallas
+#     - No está funcionando bien todavía
+#     - El problema técnico persiste
+# - intent: confirmar_visita_tecnica
+#   examples: |
+#     - Sí, quiero una visita técnica
+#     - Por favor, envíen a un técnico
+#     - Sí, solicito que venga un técnico
+#     - Quiero que me visiten para revisar el servicio
+#     - Sí, necesito que venga alguien a mi casa
+#     - Sí, quiero agendar una visita técnica
+#     - Sí, por favor, que venga el técnico
+#     - Solicito visita técnica, gracias
+#     - Sí, quiero que revisen el problema en persona
+#     - Sí, quiero que envíen a alguien para revisar el internet
+# - intent: rechazar_visita_tecnica
+#   examples: |
+#     - No, no necesito una visita técnica
+#     - No, gracias, no quiero que venga un técnico
+#     - No, no solicito visita técnica
+#     - No, ya no quiero que me visiten
+#     - No, no es necesario que venga alguien a mi casa
+#     - No, no quiero agendar una visita técnica
+#     - No, gracias, no necesito que venga el técnico
+#     - No, ya no solicito visita técnica
+#     - No, no quiero que revisen el problema en persona
+#     - No, no quiero que envíen a alguien para revisar el internet
+#     - No, ya no es necesario
+# - intent: cancelar_visita_tecnica
+#   examples: |
+#     - Quiero cancelar la visita técnica
+#     - Ya no necesito que venga el técnico
+#     - Por favor, cancelen la visita
+#     - No quiero la visita técnica
+#     - Ya no es necesario que envíen a alguien
+#     - Quiero anular la visita del técnico
+#     - Cancelen la visita, por favor
+#     - No necesito que revisen el servicio en persona
+#     - Ya no quiero agendar la visita técnica
+#     - No quiero que venga el técnico a mi casa
 
-- intent: interes_promociones
-  examples: |
-    - ¿Qué promociones tienen?
-    - ¿Tienen alguna oferta especial?
-    - Me gustaría saber sobre sus descuentos
-    - ¿Hay alguna promoción vigente?
-    - Quisiera conocer las ofertas actuales
-    - ¿Ofrecen algún descuento para nuevos clientes?
-    - Estoy interesado en sus promociones
-    - ¿Cuáles son las ofertas del mes?
-    - ¿Hay algún descuento por contratar en línea?
-    - Me gustaría aprovechar alguna promoción
-    - ¿Tienen ofertas para estudiantes?
-    - ¿Qué promociones hay para clientes leales?
-    - Quiero saber si hay descuentos disponibles
-    - ¿Ofrecen alguna promoción por tiempo limitado?
-    - Estoy buscando una buena oferta
-    - ¿Tienen promociones especiales para empresas?
-    - Me interesa saber sobre sus descuentos y promociones
-    - Quisiera saber si hay promociones para servicios adicionales
-- intent: aceptar_plan
-  examples: |
-    - Quiero ese plan
-    - Sí, acepto el plan
-    - Me interesa ese paquete
-    - Ese plan está bien para mí
-    - Lo quiero contratar
-    - Sí, quiero ese servicio
-    - Me quedo con ese plan
-    - Ese paquete me gusta
-    - Sí, ese es el que quiero
-    - Acepto la oferta
-    - Me interesa contratar ese plan
-    - Sí, ese paquete está bien
-    - Quiero tomar ese plan
-    - Me gustaría ese servicio
-    - Sí, ese es el que quiero contratar
-    - Ese plan me conviene
-    - Quiero ese paquete de internet
-    - Sí, quiero la promoción
-    - Me interesa ese plan de fibra
-    - Ese es el plan que quiero
-- intent: rechazar_plan
-  examples: |
-    - No me interesa ese plan
-    - No quiero ese paquete
-    - Ese plan no me gusta
-    - No, gracias, no quiero ese servicio
-    - No, ese plan no es para mí
-    - No, no quiero contratar ese plan
-    - No, ese paquete no me conviene
-    - No, ese plan está muy caro
-    - No, ese no es el plan que quiero
-    - No, gracias, no me interesa ese paquete
-    - No, ese plan no me sirve
-    - No, ese paquete no es lo que busco
-    - No, ese plan no es adecuado para mí
-    - No, ese paquete no me atrae
-    - No, ese plan no cumple con mis necesidades
-    - No, ese paquete no es lo que quiero
-    - No, ese plan no es lo que necesito
-- intent: confirmar_datos
-  examples: |
-    - Sí, esos son mis datos
-    - Mis datos son correctos
-    - Sí, envíeme el contrato
-    - Todo está bien con mis datos
-    - Los datos están correctos
-    - Sí, confirme mis datos
-    - Mis datos están bien
-    - Sí, esos son los datos correctos
-    - Puede proceder con esos datos
-    - Sí, así está bien
-    - Sí, confirme la información
-    - Sí, envíe el contrato por favor
-    - Los datos son correctos, gracias
-    - Sí, continúe con esos datos
-    - Sí, esos son los datos que quiero usar
-- intent: problema_tecnico
-  examples: |
-    - No tengo internet
-    - Se me fue la señal
-    - No funciona el servicio
-    - Tengo problemas con el router
-    - Se cayó la conexión
-    - La conexión me está fallando
-    - No tengo señal
-    - El wifi no me agarra
-    - Se desconectó mi internet
-    - El servicio está caído
-    - Mi internet no sirve
-    - El router no prende
-    - La luz del router está en rojo
-    - El internet está súper lento
-    - Tengo una emergencia con mi internet
-    - Falla en el servicio
-    - ¿Qué onda con la conexión?
-    - Se traba el internet
-    - El internet no avanza
-    - Mi wifi se desconecta a cada rato
-    - Tengo un problema técnico
-    - Ayuda, mi internet no funciona
-    - El internet está inestable
-    - Mi router no conecta
-    - Necesito soporte técnico, por favor
-    - No me funciona nada
-- intent: problema_facturacion
-  examples: |
-    - Tengo un problema con mi factura
-    - Mi factura está incorrecta
-    - No entiendo el cobro que me hicieron
-    - Me cobraron de más este mes
-    - Hay un error en mi recibo
-    - Quiero reclamar un cobro
-    - Mi factura no coincide con el servicio
-    - ¿Por qué me cobraron extra?
-    - No recibí mi factura
-    - El monto de la factura está mal
-    - Quiero revisar mi facturación
-    - Necesito ayuda con mi factura
-    - No me llegó el recibo
-    - El cobro no corresponde
-    - Tengo dudas sobre mi factura
-    - Quiero aclarar mi factura
-    - ¿Me pueden explicar el cobro?
-    - Mi factura tiene cargos que no reconozco
-    - Hay cargos no autorizados en mi factura
-    - Quiero saber por qué subió mi factura
-- intent: confirmar_solucion_tecnica
-  examples: |
-    - Ya se solucionó el problema
-    - Mi internet ya funciona
-    - Todo está bien con el servicio
-    - El router ya prende
-    - Ya tengo señal
-    - El wifi ya agarra
-    - Gracias, ya está resuelto
-    - El problema técnico ya se arregló
-    - Ya no tengo problemas con la conexión
-    - El servicio ya está normal
-    - Ya no necesito soporte técnico
-    - Mi conexión ya está estable
-    - El internet ya sirve
-    - Ya no hay fallas
-    - Todo está funcionando bien ahora
-- intent: no_confirmar_solucion_tecnica
-  examples: |
-    - El problema sigue igual
-    - No se ha solucionado nada
-    - Mi internet sigue sin funcionar
-    - Todavía tengo problemas con la conexión
-    - El servicio sigue caído
-    - El router no prende aún
-    - No tengo señal todavía
-    - El wifi sigue sin agarrar
-    - No está resuelto el problema
-    - Sigo necesitando soporte técnico
-    - Mi conexión sigue inestable
-    - El internet sigue sin servir
-    - Aún hay fallas
-    - No está funcionando bien todavía
-    - El problema técnico persiste
-- intent: confirmar_visita_tecnica
-  examples: |
-    - Sí, quiero una visita técnica
-    - Por favor, envíen a un técnico
-    - Sí, solicito que venga un técnico
-    - Quiero que me visiten para revisar el servicio
-    - Sí, necesito que venga alguien a mi casa
-    - Sí, quiero agendar una visita técnica
-    - Sí, por favor, que venga el técnico
-    - Solicito visita técnica, gracias
-    - Sí, quiero que revisen el problema en persona
-    - Sí, quiero que envíen a alguien para revisar el internet
-- intent: rechazar_visita_tecnica
-  examples: |
-    - No, no necesito una visita técnica
-    - No, gracias, no quiero que venga un técnico
-    - No, no solicito visita técnica
-    - No, ya no quiero que me visiten
-    - No, no es necesario que venga alguien a mi casa
-    - No, no quiero agendar una visita técnica
-    - No, gracias, no necesito que venga el técnico
-    - No, ya no solicito visita técnica
-    - No, no quiero que revisen el problema en persona
-    - No, no quiero que envíen a alguien para revisar el internet
-    - No, ya no es necesario
-- intent: cancelar_visita_tecnica
-  examples: |
-    - Quiero cancelar la visita técnica
-    - Ya no necesito que venga el técnico
-    - Por favor, cancelen la visita
-    - No quiero la visita técnica
-    - Ya no es necesario que envíen a alguien
-    - Quiero anular la visita del técnico
-    - Cancelen la visita, por favor
-    - No necesito que revisen el servicio en persona
-    - Ya no quiero agendar la visita técnica
-    - No quiero que venga el técnico a mi casa
-- intent: calificar
-  examples: |
-    - Le doy 5 estrellas
-    - Mi calificación es 4 de 5
-    - Le pongo una calificación de 3
-    - Mi puntuación para el servicio es 2
-    - Mi experiencia fue excelente, le doy 5
-    - No me gustó, le doy 1 estrella
-    - [5](calificacion)
-- intent: elegir_plan
-  examples: |
-    - Quiero el [plan](necesidad) [básico](plan_elegido)
-    - Me interesa el [plan](necesidad) [básico](plan_elegido)
-    - Quisiera contratar el [plan](necesidad) [básico](plan_elegido)
-    - El [plan](necesidad) [básico](plan_elegido) está bien para mí
-    - Sí, quiero el [plan](necesidad) [básico](plan_elegido)
-    - Acepto el [plan](necesidad) [básico](plan_elegido)
-    - Ese [plan](necesidad) [básico](plan_elegido) me gusta
-    - Me quedo con el [plan](necesidad) [básico](plan_elegido)
-    - Sí, ese es el [plan](necesidad) que quiero
-    - Ese es el [plan](necesidad) [básico](plan_elegido) que quiero contratar
-    - me interesa el [[plan](necesidad)](necesidad) [basico]([plan](necesidad))
-    - Quiero el [plan](necesidad) [familiar](plan_elegido)
-    - Me interesa el [plan](necesidad) [familiar](plan_elegido)
-    - Quisiera contratar el [plan](necesidad) [familiar](plan_elegido)
-    - El [plan](necesidad) [familiar](plan_elegido) está bien para mí
-    - Sí, quiero el [plan](necesidad) [familiar](plan_elegido)
-    - Acepto el [plan](necesidad) [familiar](plan_elegido)
-    - Ese [plan](necesidad) [familiar](plan_elegido) me gusta
-    - Me quedo con el [plan](necesidad) [familiar](plan_elegido)
-    - que tiene de especial el [[plan](necesidad)](necesidad) [familiar]([plan](necesidad))?
-    - Quiero el [plan](necesidad) [gamer](plan_elegido)
-    - Me interesa el [plan](necesidad) [gamer](plan_elegido)
-    - Quisiera contratar el [plan](necesidad) [gamer](plan_elegido)
-    - El [plan](necesidad) [gamer](plan_elegido) está bien para mí
-    - Sí, quiero el [plan](necesidad) [gamer](plan_elegido)
-    - Acepto el [plan](necesidad) [gamer](plan_elegido)
-    - Ese [plan](necesidad) [gamer](plan_elegido) me gusta
-    - Me quedo con el [plan](necesidad) [gamer](plan_elegido)
-    - Sí, ese es el [plan](necesidad) que quiero
-    - Ese es el [plan](necesidad) [gamer](plan_elegido) que quiero contratar
-    - Quiero el [plan](necesidad) [pro](plan_elegido)
-    - Me interesa el [plan](necesidad) [pro](plan_elegido)
-    - Quisiera contratar el [plan](necesidad) [pro](plan_elegido)
-    - El [plan](necesidad) [pro](plan_elegido) está bien para mí
-    - Sí, quiero el [plan](necesidad) [pro](plan_elegido)
-    - Acepto el [plan](necesidad) [pro](plan_elegido)
-    - Ese [plan](necesidad) [pro](plan_elegido) me gusta
-    - Me quedo con el [plan](necesidad) [pro](plan_elegido)
-    - Sí, ese es el [plan](necesidad) que quiero
-    - Ese es el [plan](necesidad) [pro](plan_elegido) que quiero contratar
+# - intent: elegir_plan
+#   examples: |
+#     - Quiero el [plan](necesidad) [básico](plan_elegido)
+#     - Me interesa el [plan](necesidad) [básico](plan_elegido)
+#     - Quisiera contratar el [plan](necesidad) [básico](plan_elegido)
+#     - El [plan](necesidad) [básico](plan_elegido) está bien para mí
+#     - Sí, quiero el [plan](necesidad) [básico](plan_elegido)
+#     - Acepto el [plan](necesidad) [básico](plan_elegido)
+#     - Ese [plan](necesidad) [básico](plan_elegido) me gusta
+#     - Me quedo con el [plan](necesidad) [básico](plan_elegido)
+#     - Sí, ese es el [plan](necesidad) que quiero
+#     - Ese es el [plan](necesidad) [básico](plan_elegido) que quiero contratar
+#     - me interesa el [plan](necesidad)] [basico](plan)
+#     - Quiero el [plan](necesidad) [familiar](plan_elegido)
+#     - Me interesa el [plan](necesidad) [familiar](plan_elegido)
+#     - Quisiera contratar el [plan](necesidad) [familiar](plan_elegido)
+#     - El [plan](necesidad) [familiar](plan_elegido) está bien para mí
+#     - Sí, quiero el [plan](necesidad) [familiar](plan_elegido)
+#     - Acepto el [plan](necesidad) [familiar](plan_elegido)
+#     - Ese [plan](necesidad) [familiar](plan_elegido) me gusta
+#     - Me quedo con el [plan](necesidad) [familiar](plan_elegido)
+#     - que tiene de especial el [plan](necesidad) [familiar](plan)?
+#     - Quiero el [plan](necesidad) [gamer](plan_elegido)
+#     - Me interesa el [plan](necesidad) [gamer](plan_elegido)
+#     - Quisiera contratar el [plan](necesidad) [gamer](plan_elegido)
+#     - El [plan](necesidad) [gamer](plan_elegido) está bien para mí
+#     - Sí, quiero el [plan](necesidad) [gamer](plan_elegido)
+#     - Acepto el [plan](necesidad) [gamer](plan_elegido)
+#     - Ese [plan](necesidad) [gamer](plan_elegido) me gusta
+#     - Me quedo con el [plan](necesidad) [gamer](plan_elegido)
+#     - Ese es el [plan](necesidad) [gamer](plan_elegido) que quiero contratar
+#     - Quiero el [plan](necesidad) [pro](plan_elegido)
+#     - Me interesa el [plan](necesidad) [pro](plan_elegido)
+#     - Quisiera contratar el [plan](necesidad) [pro](plan_elegido)
+#     - El [plan](necesidad) [pro](plan_elegido) está bien para mí
+#     - Sí, quiero el [plan](necesidad) [pro](plan_elegido)
+#     - Acepto el [plan](necesidad) [pro](plan_elegido)
+#     - Ese [plan](necesidad) [pro](plan_elegido) me gusta
+#     - Me quedo con el [plan](necesidad) [pro](plan_elegido)
+#     - Ese es el [plan](necesidad) [pro](plan_elegido) que quiero contratar
+#     - me gustaría el [plan](necesidad) [básico](plan_elegido)

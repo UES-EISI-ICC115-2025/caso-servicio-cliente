@@ -6,18 +6,18 @@ rules:
       - action: utter_saludo
       - action: utter_ofrecer_ayuda
 
-  - rule: Despedirse del usuario
-    steps:
-      - intent: despedida
-      - action: utter_despedida
+  # - rule: Despedirse del usuario
+  #   steps:
+  #     - intent: despedida
+  #     - action: utter_despedida
 
-  - rule: responder según plan no disponible
-    steps:
-      - intent: elegir_plan
-      - action: action_validar_plan
-      - slot_was_set:
-          - plan_valido: false
-      - action: utter_plan_no_disponible
+  # - rule: responder según plan no disponible
+  #   steps:
+  #     - intent: elegir_plan
+  #     - action: action_validar_plan
+  #     - slot_was_set:
+  #         - plan_valido: false
+  #     - action: utter_plan_no_disponible
 
   - rule: Fallback
     steps:
