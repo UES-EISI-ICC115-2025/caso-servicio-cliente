@@ -11,34 +11,15 @@ rules:
       - intent: despedida
       - action: utter_despedida
 
-  # - rule: Identificar cliente
-  #   steps:
-  #     - intent: identificar_cliente
-  #     # - action: utter_identificar_cliente
-  #     - action: action_generar_respuesta_rag
+  - rule: responder según plan no disponible
+    steps:
+      - intent: elegir_plan
+      - action: action_validar_plan
+      - slot_was_set:
+          - plan_valido: false
+      - action: utter_plan_no_disponible
 
-  # - rule: Proveer soporte técnico
-  #   steps:
-  #     - intent: problema_tecnico
-  #     # - action: utter_soporte_tecnico
-  #     - action: action_generar_respuesta_rag
-
-  # - rule: Proveer información sobre productos y servicios
-  #   steps:
-  #     - intent: nuevo_cliente
-  #     - action: utter_nuevo_cliente
-
-  # - rule: procesar quejas
-  #   steps:
-  #     - intent: quejas
-  #     - action: utter_quejas
-
-  # - rule: agradecimiento
-  #   steps:
-  #     - intent: agradecimiento
-  #     - action: utter_agradecimiento
-
-  - rule: Manejar fallback de NLU
+  - rule: Fallback
     steps:
       - intent: nlu_fallback
       - action: utter_default

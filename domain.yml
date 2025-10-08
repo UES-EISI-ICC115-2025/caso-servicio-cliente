@@ -5,6 +5,26 @@ slots:
     influence_conversation: true
     mappings:
     - type: custom
+  plan_elegido:
+    type: text
+    influence_conversation: false   # no afecta las predicciones
+    mappings:
+    - type: custom
+  necesidad:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+  plan_valido:
+    type: bool
+    influence_conversation: true
+    mappings:
+    - type: custom
+  datos_confirmados:
+    type: bool
+    influence_conversation: true
+    mappings:
+    - type: custom
 intents:
 - aceptar_plan
 - afirmar
@@ -22,6 +42,8 @@ intents:
 - negar
 - no_confirmar_solucion_tecnica
 - nuevo_cliente
+- plan_basico
+- plan_familiar
 - problema_facturacion
 - problema_tecnico
 - proporcionar_datos
@@ -30,25 +52,59 @@ intents:
 - rechazar_visita_tecnica
 - saludo
 entities:
+- respuesta
+- calificacion
+- plan
 - nombre
-- email
-- telefono
-- direccion
 - dui
+- necesidad
+- telefono
+- email
+- direccion
 actions:
+- utter_confirmar_datos_cliente
+- utter_pregunte_cierre
+- utter_agradecimiento
+- utter_pedir_calificacion
+- utter_afirmar
+- utter_solicitar_datos
+- utter_ofrecer_ayuda_extra
+- utter_planes
+- utter_plan_familiar
+- utter_saludo
+- utter_plan_basico
+- utter_ofrecer_plan
+- utter_ofrecer_ayuda
 - utter_despedida
+- uttler_plan_valido
+- utter_agradecer_calificacion
+
+- action_validar_plan
 - action_end
-- action_identificar_cliente
+- action_enviar_contrato
 responses:
+  utter_ofrecer_ayuda_extra:
+  - text: ¿Algo más en lo que pueda ayudarte?
+  utter_pregunte_cierre:
+  - text: ¿Te gustaría contratar el plan {plan_elegido}?
   utter_solicitar_datos:
   - text: Podrías proporcionarme tu número de dui, nombre completo, número de télefono y correo electrónico por favor
   utter_confirmar_datos_cliente:
-  - text: 'Para confirmar tus datos son nombre: [Andrea Carolina Duran Solorzano](nombre), DUI: [5435693505](dui), teléfono: [22994912](telefono) y correo: [andrea@gmail.com](correo). Eso sería correcto?'
+  - text: 'Para confirmar tus datos son nombre: {nombre}, DUI: {dui}, teléfono: {telefono} y correo: {email}. Eso sería correcto?'
+  utter_corregir_datos_cliente:
+  - text: 'Por favor, indícame los datos correctos: nombre, DUI, teléfono y correo.'
+
   utter_ofrecer_ayuda:
   - text: ¿En qué puedo ayudarte hoy?
   - text: ¿Cómo puedo asistirte?
   - text: ¿Qué necesitas?
   - text: ¿En qué te puedo ayudar?
+  - text: ¿Qué puedo hacer por vos?
+  - text: ¿Cómo te puedo servir?
+  - text: ¿Qué te gustaría hacer hoy?
+  - text: ¿En qué puedo serte útil?
+  - text: ¿Qué necesitas que haga por vos?
+
   utter_identificar_cliente:
   - text: Para ayudarte más rápido, ¿me das tu nombre completo y el número de tu contrato o DUI, porfa?
   - text: Necesito confirmar tu identidad. Por favor, dame tu nombre y el número de teléfono con el que contrataste.
@@ -80,6 +136,7 @@ responses:
   - text: Para poder darte un buen servicio, decime tu nombre completo y el número de cuenta.
   - text: ¡Hola! Para poder atenderte mejor, decime tu nombre y número de teléfono.
   - text: ¿Me podrías dar tu nombre y el número del servicio para revisarlo?
+ 
   utter_presentar_planes:
   - text: ¡Qué bueno que te interese! Tenemos varios planes de internet.
   - text: ¡Excelente! Tenemos planes para todos los gustos y presupuestos.
@@ -88,6 +145,7 @@ responses:
   - text: ¡Genial! Tenemos varios planes de internet para vos.
   - text: ¡Qué chivo que te interese! Tenemos planes desde 50 hasta 500 megas.
   - text: ¡Claro que sí! Tenemos planes para todos los gustos y presupuestos.
+
   utter_preguntar_a_fondo:
   - text: Para entender mejor, ¿podrías darme más detalles del problema?
   - text: ¿Me podrías explicar un poco más qué es lo que está pasando?
@@ -95,28 +153,31 @@ responses:
   - text: ¿Podrías darme más información sobre el problema que estás teniendo?
   - text: Para entender bien, ¿me podrías contar más detalles del problema?
   - text: ¿Me podrías explicar un poco más qué es lo que no está funcionando bien?
-  utter_ofrecer_plan:
+
+  utter_plan_no_disponible:
+    - text: "El plan que solicitó no está disponible."
+
+  utter_plan_valido:
+  - text: "El plan {plan_elegido} es válido y ha sido seleccionado."
+
+  utter_mostrar_planes_disponibles:
+  - text: |
+      Los planes disponibles son: {planes_disponibles}
+
+    # - Plan Básico: 50 megas de velocidad, ideal para navegar y redes sociales. Incluye instalación gratis y router WiFi. Precio: $19.99 al mes.
+    # - Plan Familiar: 100 megas de velocidad, perfecto para streaming, videollamadas y varios dispositivos conectados. Incluye instalación y router WiFi doble banda. Precio: $29.99 al mes.
+    # - Plan Gamer: 200 megas de velocidad, baja latencia para juegos en línea y descargas rápidas. Incluye soporte técnico prioritario y router avanzado. Precio: $39.99 al mes.
+    # - Plan Pro: 500 megas de velocidad, pensado para teletrabajo, empresas pequeñas y hogares con muchos dispositivos. Incluye instalación profesional, router WiFi 6 y atención personalizada. Precio: $59.99 al mes.
+
+    # Todos los planes incluyen atención 24/7, sin contratos forzosos y la opción de agregar cable digital o telefonía fija. ¿Te gustaría saber más de alguno en especial?
+
+  utter_pide_elegir_plan:
   - text: ¿Hay algún plan en particular que te interese?
   - text: ¿Querés que te cuente más de algún plan en especial?
   - text: ¿Te gustaría saber más de algún plan específico?
   - text: ¿Hay algún plan que te gustaría conocer mejor?
   - text: ¿Querés que te dé más detalles de algún plan en particular?
-  utter_plan_basico:
-  - text: 'El Plan Básico ofrece 50 megas de velocidad, ideal para navegar y redes sociales. Incluye instalación gratis y router WiFi. Precio: $19.99 al mes.'
-  utter_plan_familiar:
-  - text: 'El Plan Familiar ofrece 100 megas de velocidad, perfecto para streaming, videollamadas y varios dispositivos conectados. Incluye instalación y router WiFi doble banda. Precio: $29.99 al mes.'
-  utter_plan_gamer:
-  - text: 'El Plan Gamer ofrece 200 megas de velocidad, baja latencia para juegos en línea y descargas rápidas. Incluye soporte técnico prioritario y router avanzado. Precio: $39.99 al mes.'
-  utter_plan_pro:
-  - text: 'El Plan Pro ofrece 500 megas de velocidad, pensado para teletrabajo, empresas pequeñas y hogares con muchos dispositivos. Incluye instalación profesional, router WiFi 6 y atención personalizada. Precio: $59.99 al mes.'
-  utter_planes:
-  - text: |
-      - Plan Básico: 50 megas de velocidad, ideal para navegar y redes sociales. Incluye instalación gratis y router WiFi. Precio: $19.99 al mes.
-      - Plan Familiar: 100 megas de velocidad, perfecto para streaming, videollamadas y varios dispositivos conectados. Incluye instalación y router WiFi doble banda. Precio: $29.99 al mes.
-      - Plan Gamer: 200 megas de velocidad, baja latencia para juegos en línea y descargas rápidas. Incluye soporte técnico prioritario y router avanzado. Precio: $39.99 al mes.
-      - Plan Pro: 500 megas de velocidad, pensado para teletrabajo, empresas pequeñas y hogares con muchos dispositivos. Incluye instalación profesional, router WiFi 6 y atención personalizada. Precio: $59.99 al mes.
 
-      Todos los planes incluyen atención 24/7, sin contratos forzosos y la opción de agregar cable digital o telefonía fija. ¿Te gustaría saber más de alguno en especial?
   utter_soporte_tecnico:
   - text: Vaya, entiendo que tenés un problema. ¿Podrías darme más detalles de lo que pasa?
   - text: Ajá, entiendo. Reinicia tu router, porfa, y me decís si se arregla.
@@ -437,6 +498,13 @@ responses:
   - text: Para mejorar, ¿me podrías calificar del 1 al 5?
   - text: ¿Podrías darme una calificación del 1 al 5 sobre el servicio que te ofrecí?
   - text: ¿Me podrías calificar del 1 al 5 por la atención que te di hoy?
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  utter_agradecer_calificacion:
+  - text: ¡Gracias por tu calificación! Siempre estoy para servirte.
+  - text: ¡Qué chivo! Gracias por tu calificación.
+  - text: ¡Perfecto! Agradezco tu calificación.
+  - text: ¡Dale, pues! Gracias por tu calificación.
+  - text: ¡Excelente! Agradezco tu calificación.
+  - text: ¡Chevere! Gracias por tu calificación.
+  - text: ¡Muy bien! Agradezco tu calificación.
+  - text: ¡Chivo! Gracias por tu calificación.
+  - text: ¡Qué bueno! Agradezco tu calificación.

@@ -1,99 +1,103 @@
+
 version: "3.1"
-
 stories:
-
-- story: Cliente nuevo - flujo de venta exitoso
+- story: Brindar información sobre planes
   steps:
-  # - intent: saludo
-  # - action: utter_saludo
-  # - action: utter_identificar_cliente
-  - intent: nuevo_cliente
-  - action: action_identificar_cliente # Esta acción establecerá el slot 'cliente_existente' a false.
-  - slot_was_set:
-    - cliente_existente: false
+  - checkpoint: identificar_necesidad
+  - action: ofrecer_ayuda
+  - intent: interes_planes
+    entities:
+    - necesidad: contratacion
   - action: utter_presentar_planes
-  - action: utter_planes
-  # - action: utter_ofrecer_plan
-  - intent: aceptar_plan
-  # - action: identificar_cliente
-  # - intent: proporcionar_datos
-  # - action: action_mostrar_datos_contrato
-  # - intent: confirmar_datos
-  # - action: action_enviar_contrato
-  # - action: utter_pedir_calificacion
-  # - intent: calificar # Asume que hay un intent para capturar la calificación
-  # - action: action_guardar_calificacion
-  # - action: utter_despedida
+  - checkpoint: elegir_plan
 
-# - story: Cliente nuevo - rechaza el plan
-#   steps:
-#   - intent: saludo
-#   - action: utter_saludo
-#   - intent: identificar_cliente
-#   - action: action_identificar_cliente
-#   - slot_was_set:
-#     - cliente_existente: false
-#   - action: utter_presentar_planes
-#   - intent: rechazar_plan
-#   - action: utter_agradecimiento_despedida # O una despedida específica
+- story: validar plan elegido
+  steps:
+    - checkpoint: elegir_plan
+    - action: utter_mostrar_planes_disponibles
+    - action: utter_pide_elegir_plan
+    - intent: elegir_plan        # el usuario dice un plan
+    - action: action_validar_plan # acción que valida el plan
+    - slot_was_set:
+        - plan_valido: true  # si el plan es válido
+        - plan_elegido: basico  # guarda el plan elegido
+    - action: utter_plan_valido    # si el plan es válido
+    - checkpoint: solicitar_datos_cliente
+    - slot_was_set:
+        - plan_valido: false
+    - action: utter_plan_no_disponible  # si el plan no es válido
+    - checkpoint: elegir_plan
 
-# - story: Cliente existente - problema técnico resuelto
-#   steps:
-#   - intent: saludo
-#   - action: utter_saludo
-#   - intent: identificar_cliente
-#   - action: action_identificar_cliente # Esta acción establecerá el slot 'cliente_existente' a true.
-#   - slot_was_set:
-#     - cliente_existente: true
-#   - intent: problema_tecnico
-#   - action: action_diagnosticar_problema # Esta acción podría pedir más detalles
-#   - intent: resolver_problema # Cuando el cliente dice que el problema se resolvió
-#   - action: utter_confirmacion_problema_resuelto
-#   - action: utter_calificar_atencion
-#   - intent: calificar # Asume que hay un intent para capturar la calificación
-#   - action: action_guardar_calificacion
-#   - action: utter_despedida
+- story: Solicitar datos del cliente
+  steps:
+    - checkpoint: solicitar_datos_cliente
+    - action: utter_solicitar_datos
+    - intent: proporcionar_datos
+      entities:
+        - nombre: Juan Pérez
+        - telefono: 1234-5678
+        - email: juan.perez@correo.com
+        - dui: '012345678'
+    - action: utter_confirmar_datos_cliente
+    - action: utter_afirmar
+    - slot_was_set:
+        - datos_confirmados: false
+    - action: utter_corregir_datos_cliente
+    - checkpoint: solicitar_datos_cliente
+    - slot_was_set:
+        - datos_confirmados: true
+        - necesidad: contratacion
+    - checkpoint: enviar_contrato
+    - slot_was_set:
+        - datos_confirmados: true
+        - necesidad: soporte_tecnico
+    - checkpoint: soporte_tecnico
+    - slot_was_set:
+        - datos_confirmados: true
+        - necesidad: soporte_facturacion
+    - slot_was_set:
+        - datos_confirmados: true
+    - checkpoint: utter_ofrecer_ayuda
+    - checkpoint: soporte_facturacion
 
-# - story: Cliente existente - problema técnico no resuelto
-#   steps:
-#   - intent: saludo
-#   - action: utter_saludo
-#   - intent: identificar_cliente
-#   - action: action_identificar_cliente
-#   - slot_was_set:
-#     - cliente_existente: true
-#   - intent: problema_tecnico
-#   - action: action_diagnosticar_problema
-#   - intent: no_resolver_problema # Cuando el cliente dice que el problema no se resolvió
-#   - action: action_crear_ticket
-#   - action: utter_confirmacion_ticket
-#   - action: utter_despedida
+- story: Cerrar Venta - Contratación
+  steps:
+  - checkpoint: enviar_contrato
+  - slot_was_set:
+    - plan_valido: true  # si el plan es válido
+    - plan_elegido: basico  # guarda el plan elegido
+    - datos_confirmados: true
+    - necesidad: contratacion
+  - action: action_enviar_contrato
+  - checkpoint: ofrecer_ayuda_extra
 
-# - story: Cliente existente - problema de facturación
-#   steps:
-#   - intent: saludo
-#   - action: utter_saludo
-#   - intent: identificar_cliente
-#   - action: action_identificar_cliente
-#   - slot_was_set:
-#     - cliente_existente: true
-#   - intent: problema_facturacion
-#   - action: action_consultar_facturacion # Acción personalizada para resolver el problema de facturación
-#   - action: utter_respuesta_facturacion
-#   - action: utter_calificar_atencion
-#   - intent: calificar
-#   - action: action_guardar_calificacion
-#   - action: utter_despedida
+- story: Ofrecer ayuda extra
+  steps:
+    - checkpoint: ofrecer_ayuda_extra
+    - action: utter_ofrecer_ayuda_extra
+    - slot_was_set:
+        - necesidad: soporte_tecnico
+    - checkpoint: soporte_tecnico
+    - slot_was_set:
+        - necesidad: soporte_facturacion
+    - checkpoint: soporte_facturacion
+    - slot_was_set:
+        - necesidad: null
+    - checkpoint: calificacion_servicio
+    - checkpoint: identificar_necesidad
 
-# - story: Cliente existente - problema técnico o de facturación
-#   steps:
-#   - intent: saludo
-#   - action: utter_saludo
-#   - intent: identificar_cliente
-#   - action: action_identificar_cliente
-#   - slot_was_set:
-#     - cliente_existente: true
-#   - or:
-#     - intent: problema_tecnico
-#     - intent: problema_facturacion
-#   - action: utter_confirmacion_solicitud
+- story: Calificación del servicio
+  steps:
+  - checkpoint: calificacion_servicio
+  - action: utter_pedir_calificacion
+  - intent: calificar
+    entities:
+    - calificacion: '5'
+  - action: utter_agradecer_calificacion
+  - checkpoint: despedida
+
+- story: Finalizar conversación
+  steps:
+  - checkpoint: despedida
+  - action: utter_despedida
+  - action: action_end

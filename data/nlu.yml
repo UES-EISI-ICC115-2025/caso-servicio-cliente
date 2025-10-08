@@ -28,6 +28,7 @@ nlu:
     - ¿Qué dice, pues?
     - Vaya, qué onda, pues
     - ¡Qué onda!
+    - hola
 - intent: despedida
   examples: |
     - Adiós
@@ -77,8 +78,8 @@ nlu:
 - intent: nuevo_cliente
   examples: |
     - Quiero saber sobre los planes de internet
-    - ¿Cuánto vale el plan de 50 megas?
-    - Me interesa el plan más rápido
+    - ¿Cuánto vale el [plan](necesidad) de 50 megas?
+    - Me interesa el [plan](necesidad) más rápido
     - Necesito información sobre paquetes de internet
     - ¿Qué opciones de fibra óptica tienen?
     - Quiero contratar internet
@@ -86,12 +87,12 @@ nlu:
     - Quiero unirme a su servicio
     - Deseo registrarme
     - Me gustaría poner internet en mi casa
-    - Quiero contratar un plan para mi casa
+    - Quiero contratar un [plan](necesidad) para mi casa
     - Vendo internet
-    - Quiero cotizar un plan
+    - Quiero cotizar un [plan](necesidad)
     - Necesito información para contratar
     - Me interesa su servicio de fibra
-    - ¿Qué planes hay para nuevas casas?
+    - ¿Qué [plan](necesidad)es hay para nuevas casas?
     - Quiero ponerme con ustedes
     - ¿Qué oferta tienen para clientes nuevos?
     - Quisiera contratar internet de fibra
@@ -99,7 +100,7 @@ nlu:
     - Quiero la instalación de internet
     - ¿Cómo hago para contratar?
     - Quiero saber cómo me instalan el internet
-    - Quisiera saber el costo de un plan
+    - Quisiera saber el costo de un [plan](necesidad)
     - Vengo a preguntar por los planes de internet
     - Me gustaría poner internet, ¿me echan la mano?
     - Quiero cambiar de compañía
@@ -109,7 +110,7 @@ nlu:
     - acabo de llegar
     - soy cliente nuevo
     - quiero un nuevo servicio
-    - quiero un nuevo plan
+    - quiero un nuevo [plan](necesidad)
     - quiero un nuevo paquete
     - quiero un nuevo internet
     - quiero un nuevo contrato
@@ -131,7 +132,7 @@ nlu:
     - Le dejo mi número, es [7070-1234](telefono)
     - Mi nombre es [Luis Mendoza](nombre)
     - [maria.perez@email.com](email), ese es mi correo
-    - Soy [Claudia Martínez](nombre), del plan de 50 megas
+    - Soy [Claudia Martínez](nombre), del [plan](necesidad) de 50 megas
     - Mi teléfono es [6543-2109](telefono), por favor
     - Me llamo [Pedro Ramos](nombre), tengo un problema con el internet
     - Mi correo es [elmejor@email.org](email)
@@ -146,6 +147,7 @@ nlu:
     - Mi nombre, por si acaso, [es Manuel Hernández](nombre)
     - [margarita.rodriguez@email.com](email) es mi correo
     - Soy [José Antonio](nombre)
+    - Le doy mi nombre, [[Ricardo Sánche]{"entity": "nombre", "value": "Ricardo S\u00e1nchez"}z](nombre), te[léfono es]{"entity": "telefono", "value": "6543-2109"} [6543-21[09](telefono), c]{"entity": "email", "value": "ricky@correo.net"}orreo [r[icky@corre]{"entity": "dui", "value": "4354958490"}o.net](email) y  DUI 4354958490
 - intent: afirmar
   examples: |
     - Sí
@@ -178,6 +180,8 @@ nlu:
     - Claro
     - Sí, está bien
     - Sí, adelante
+    - [si](respuesta) porfa
+    - [si](respuesta)
 - intent: negar
   examples: |
     - No
@@ -209,6 +213,7 @@ nlu:
     - No lo quiero
     - No, no es así como lo dices
     - No, no estoy de acuerdo
+    - no, solamente
 - intent: agradecimiento
   examples: |
     - Gracias
@@ -241,6 +246,7 @@ nlu:
     - Gracias por atenderme
     - Gracias, me sirvió de mucho
     - Gracias, buen servicio
+    - gracias
 - intent: escalar_humano
   examples: |
     - Quiero hablar con un agente
@@ -308,11 +314,11 @@ nlu:
 - intent: interes_planes
   examples: |
     - Quiero saber sobre los planes de internet
-    - ¿Cuánto vale el plan de 50 megas?
-    - Me interesa el plan más rápido
+    - ¿Cuánto vale el [plan](necesidad) de 50 megas?
+    - Me interesa el [plan](necesidad) más rápido
     - Necesito información sobre paquetes de internet
     - ¿Qué opciones de fibra óptica tienen?
-    - Quiero cotizar un plan
+    - Quiero cotizar un [plan](necesidad)
     - Necesito información para contratar
     - Me interesa su servicio de fibra
     - ¿Qué planes hay para nuevas casas?
@@ -323,12 +329,16 @@ nlu:
     - Quiero la instalación de internet
     - ¿Cómo hago para contratar?
     - Quiero saber cómo me instalan el internet
-    - Quisiera saber el costo de un plan
+    - Quisiera saber el costo de un [plan](necesidad)
     - Vengo a preguntar por los planes de internet
     - Me gustaría poner internet, ¿me echan la mano?
     - Quiero cambiar de compañía
     - ¿Qué promociones hay?
     - Me interesa, ¿qué ofrecen?
+    - quiero saber que [planes](necesidad) hay
+    - ¿Tienen promociones para planes familiares?
+    - ¿Hay alguna oferta para planes de alta velocidad?
+
 - intent: interes_promociones
   examples: |
     - ¿Qué promociones tienen?
@@ -337,7 +347,6 @@ nlu:
     - ¿Hay alguna promoción vigente?
     - Quisiera conocer las ofertas actuales
     - ¿Ofrecen algún descuento para nuevos clientes?
-    - ¿Tienen promociones para planes familiares?
     - Estoy interesado en sus promociones
     - ¿Cuáles son las ofertas del mes?
     - ¿Hay algún descuento por contratar en línea?
@@ -349,7 +358,6 @@ nlu:
     - Estoy buscando una buena oferta
     - ¿Tienen promociones especiales para empresas?
     - Me interesa saber sobre sus descuentos y promociones
-    - ¿Hay alguna oferta para planes de alta velocidad?
     - Quisiera saber si hay promociones para servicios adicionales
 - intent: aceptar_plan
   examples: |
@@ -538,49 +546,46 @@ nlu:
     - Mi puntuación para el servicio es 2
     - Mi experiencia fue excelente, le doy 5
     - No me gustó, le doy 1 estrella
-- intent: plan_basico
+    - [5](calificacion)
+- intent: elegir_plan
   examples: |
-    - Quiero el plan básico
-    - Me interesa el plan básico
-    - Quisiera contratar el plan básico
-    - El plan básico está bien para mí
-    - Sí, quiero el plan básico
-    - Acepto el plan básico
-    - Ese plan básico me gusta
-    - Me quedo con el plan básico
-    - Sí, ese es el plan que quiero
-    - Ese es el plan básico que quiero contratar
-- intent: plan_familiar
-  examples: |
-    - Quiero el plan familiar
-    - Me interesa el plan familiar
-    - Quisiera contratar el plan familiar
-    - El plan familiar está bien para mí
-    - Sí, quiero el plan familiar
-    - Acepto el plan familiar
-    - Ese plan familiar me gusta
-    - Me quedo con el plan Familiar
-- intent: plan_gamer
-  examples: |
-    - Quiero el plan gamer
-    - Me interesa el plan gamer
-    - Quisiera contratar el plan gamer
-    - El plan gamer está bien para mí
-    - Sí, quiero el plan gamer
-    - Acepto el plan gamer
-    - Ese plan gamer me gusta
-    - Me quedo con el plan gamer
-    - Sí, ese es el plan que quiero
-    - Ese es el plan gamer que quiero contratar
-- intent: plan_pro
-  examples: |
-    - Quiero el plan pro
-    - Me interesa el plan pro
-    - Quisiera contratar el plan pro
-    - El plan pro está bien para mí
-    - Sí, quiero el plan pro
-    - Acepto el plan pro
-    - Ese plan pro me gusta
-    - Me quedo con el plan pro
-    - Sí, ese es el plan que quiero
-    - Ese es el plan pro que quiero contratar
+    - Quiero el [plan](necesidad) [básico](plan_elegido)
+    - Me interesa el [plan](necesidad) [básico](plan_elegido)
+    - Quisiera contratar el [plan](necesidad) [básico](plan_elegido)
+    - El [plan](necesidad) [básico](plan_elegido) está bien para mí
+    - Sí, quiero el [plan](necesidad) [básico](plan_elegido)
+    - Acepto el [plan](necesidad) [básico](plan_elegido)
+    - Ese [plan](necesidad) [básico](plan_elegido) me gusta
+    - Me quedo con el [plan](necesidad) [básico](plan_elegido)
+    - Sí, ese es el [plan](necesidad) que quiero
+    - Ese es el [plan](necesidad) [básico](plan_elegido) que quiero contratar
+    - me interesa el [[plan](necesidad)](necesidad) [basico]([plan](necesidad))
+    - Quiero el [plan](necesidad) [familiar](plan_elegido)
+    - Me interesa el [plan](necesidad) [familiar](plan_elegido)
+    - Quisiera contratar el [plan](necesidad) [familiar](plan_elegido)
+    - El [plan](necesidad) [familiar](plan_elegido) está bien para mí
+    - Sí, quiero el [plan](necesidad) [familiar](plan_elegido)
+    - Acepto el [plan](necesidad) [familiar](plan_elegido)
+    - Ese [plan](necesidad) [familiar](plan_elegido) me gusta
+    - Me quedo con el [plan](necesidad) [familiar](plan_elegido)
+    - que tiene de especial el [[plan](necesidad)](necesidad) [familiar]([plan](necesidad))?
+    - Quiero el [plan](necesidad) [gamer](plan_elegido)
+    - Me interesa el [plan](necesidad) [gamer](plan_elegido)
+    - Quisiera contratar el [plan](necesidad) [gamer](plan_elegido)
+    - El [plan](necesidad) [gamer](plan_elegido) está bien para mí
+    - Sí, quiero el [plan](necesidad) [gamer](plan_elegido)
+    - Acepto el [plan](necesidad) [gamer](plan_elegido)
+    - Ese [plan](necesidad) [gamer](plan_elegido) me gusta
+    - Me quedo con el [plan](necesidad) [gamer](plan_elegido)
+    - Sí, ese es el [plan](necesidad) que quiero
+    - Ese es el [plan](necesidad) [gamer](plan_elegido) que quiero contratar
+    - Quiero el [plan](necesidad) [pro](plan_elegido)
+    - Me interesa el [plan](necesidad) [pro](plan_elegido)
+    - Quisiera contratar el [plan](necesidad) [pro](plan_elegido)
+    - El [plan](necesidad) [pro](plan_elegido) está bien para mí
+    - Sí, quiero el [plan](necesidad) [pro](plan_elegido)
+    - Acepto el [plan](necesidad) [pro](plan_elegido)
+    - Ese [plan](necesidad) [pro](plan_elegido) me gusta
+    - Me quedo con el [plan](necesidad) [pro](plan_elegido)
+    - Sí, ese es el [plan](necesidad) que quiero
+    - Ese es el [plan](necesidad) [pro](plan_elegido) que quiero contratar
