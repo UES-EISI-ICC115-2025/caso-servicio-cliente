@@ -1,0 +1,11 @@
+# version: "3.0"
+# stories:
+#   - story: Proveer soporte técnico
+#     steps:
+#       - intent: suporte_tecnico
+#       - action: action_generar_respuesta_rag
+
+#   - story: Proveer información sobre productos y servicios
+#     steps:
+#       - intent: nuevo_cliente
+#       - action: action_generar_respuesta_rag

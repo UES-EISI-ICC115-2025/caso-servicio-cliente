@@ -16,6 +16,9 @@ entities:
   - email
   - telefono
 
+actions:
+  - action_generar_respuesta_rag
+
 responses:
   utter_identificar_cliente:
     - text: "Para ayudarte más rápido, ¿me das tu nombre completo y el número de tu contrato o DUI, porfa?"

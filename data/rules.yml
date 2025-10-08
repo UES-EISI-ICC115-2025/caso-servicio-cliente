@@ -13,12 +13,14 @@ rules:
   - rule: Identificar cliente
     steps:
       - intent: identificar_cliente
-      - action: utter_identificar_cliente
+      # - action: utter_identificar_cliente
+      - action: action_generar_respuesta_rag
 
   - rule: Proveer soporte técnico
     steps:
       - intent: soporte_tecnico
-      - action: utter_soporte_tecnico
+      # - action: utter_soporte_tecnico
+      - action: action_generar_respuesta_rag
 
   - rule: Proveer información sobre productos y servicios
     steps:
