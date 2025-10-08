@@ -1,11 +1,99 @@
-# version: "3.0"
-# stories:
-#   - story: Proveer soporte técnico
-#     steps:
-#       - intent: suporte_tecnico
-#       - action: action_generar_respuesta_rag
+version: "3.1"
 
-#   - story: Proveer información sobre productos y servicios
-#     steps:
-#       - intent: nuevo_cliente
-#       - action: action_generar_respuesta_rag
+stories:
+
+- story: Cliente nuevo - flujo de venta exitoso
+  steps:
+  # - intent: saludo
+  # - action: utter_saludo
+  # - action: utter_identificar_cliente
+  - intent: nuevo_cliente
+  - action: action_identificar_cliente # Esta acción establecerá el slot 'cliente_existente' a false.
+  - slot_was_set:
+    - cliente_existente: false
+  - action: utter_presentar_planes
+  - action: utter_planes
+  # - action: utter_ofrecer_plan
+  - intent: aceptar_plan
+  # - action: identificar_cliente
+  # - intent: proporcionar_datos
+  # - action: action_mostrar_datos_contrato
+  # - intent: confirmar_datos
+  # - action: action_enviar_contrato
+  # - action: utter_pedir_calificacion
+  # - intent: calificar # Asume que hay un intent para capturar la calificación
+  # - action: action_guardar_calificacion
+  # - action: utter_despedida
+
+# - story: Cliente nuevo - rechaza el plan
+#   steps:
+#   - intent: saludo
+#   - action: utter_saludo
+#   - intent: identificar_cliente
+#   - action: action_identificar_cliente
+#   - slot_was_set:
+#     - cliente_existente: false
+#   - action: utter_presentar_planes
+#   - intent: rechazar_plan
+#   - action: utter_agradecimiento_despedida # O una despedida específica
+
+# - story: Cliente existente - problema técnico resuelto
+#   steps:
+#   - intent: saludo
+#   - action: utter_saludo
+#   - intent: identificar_cliente
+#   - action: action_identificar_cliente # Esta acción establecerá el slot 'cliente_existente' a true.
+#   - slot_was_set:
+#     - cliente_existente: true
+#   - intent: problema_tecnico
+#   - action: action_diagnosticar_problema # Esta acción podría pedir más detalles
+#   - intent: resolver_problema # Cuando el cliente dice que el problema se resolvió
+#   - action: utter_confirmacion_problema_resuelto
+#   - action: utter_calificar_atencion
+#   - intent: calificar # Asume que hay un intent para capturar la calificación
+#   - action: action_guardar_calificacion
+#   - action: utter_despedida
+
+# - story: Cliente existente - problema técnico no resuelto
+#   steps:
+#   - intent: saludo
+#   - action: utter_saludo
+#   - intent: identificar_cliente
+#   - action: action_identificar_cliente
+#   - slot_was_set:
+#     - cliente_existente: true
+#   - intent: problema_tecnico
+#   - action: action_diagnosticar_problema
+#   - intent: no_resolver_problema # Cuando el cliente dice que el problema no se resolvió
+#   - action: action_crear_ticket
+#   - action: utter_confirmacion_ticket
+#   - action: utter_despedida
+
+# - story: Cliente existente - problema de facturación
+#   steps:
+#   - intent: saludo
+#   - action: utter_saludo
+#   - intent: identificar_cliente
+#   - action: action_identificar_cliente
+#   - slot_was_set:
+#     - cliente_existente: true
+#   - intent: problema_facturacion
+#   - action: action_consultar_facturacion # Acción personalizada para resolver el problema de facturación
+#   - action: utter_respuesta_facturacion
+#   - action: utter_calificar_atencion
+#   - intent: calificar
+#   - action: action_guardar_calificacion
+#   - action: utter_despedida
+
+# - story: Cliente existente - problema técnico o de facturación
+#   steps:
+#   - intent: saludo
+#   - action: utter_saludo
+#   - intent: identificar_cliente
+#   - action: action_identificar_cliente
+#   - slot_was_set:
+#     - cliente_existente: true
+#   - or:
+#     - intent: problema_tecnico
+#     - intent: problema_facturacion
+#   - action: utter_confirmacion_solicitud
