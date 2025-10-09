@@ -6,13 +6,10 @@ intents:
 - problema_tecnico
 - problema_facturacion
 # - dar_datos
-- dar_nombre_completo
-- dar_email
-- dar_telefono
-- dar_dui
+- give_nombre_completo
 - inform
-# - afirmar
-# - negar
+- afirmar
+- negar
 # - aceptar_plan
 # - agradecimiento
 # - calificar
@@ -52,14 +49,16 @@ slots:
     - type: from_intent
       intent: negar
       value: false
-  nombre_completo:
+  temp_nombre_completo:
     type: text
     mappings:
-    - type: from_entity
-      entity: nombre_completo
-      # conditions:
-      #  - active_loop: datos_cliente_form
-      #    requested_slot: nombre
+      - type: from_entity
+        entity: nombre_completo
+  nombre_completo:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
   telefono:
     type: text
     mappings:
@@ -125,7 +124,7 @@ slots:
 forms:
   login_form:
     required_slots:
-      - nombre_completo
+      # - nombre_completo
       - email
       - telefono
       - dui
@@ -136,9 +135,12 @@ actions:
 - action_mostrar_planes_disponibles
 - action_set_necesidad
 # - action_validar_datos_cliente
-- utter_solicitar_datos
+# - utter_solicitar_datos
 - utter_invalid_telefono
 - utter_reintentar
+- action_capture_nombre_completo
+- action_confirm_nombre_completo
+- utter_confirmar_nombre_completo
 # - utter_modificar_datos_cliente
 # - action_modificar_datos_cliente
 # - utter_datos_confirmados
@@ -163,8 +165,6 @@ actions:
 # - utter_despedida
 # - utter_plan_valido
 responses:
-  utter_ask_nombre_completo:
-    - text: "Por favor, indícame tu nombre completo."
   utter_ask_email:
     - text: "Por favor, indícame tu correo electrónico."
   utter_ask_telefono:
@@ -175,6 +175,12 @@ responses:
     - text: "¿Son correctos los siguientes datos? \nNombre completo: {nombre_completo}\nDUI: {dui}\nTeléfono: {telefono}\nCorreo Eletrónico: {email}\n"
   utter_invalid_telefono:
     - text: "El número de telefono {telefono} no es válido"
+  utter_ask_nombre_completo:
+    - text: "Por favor, dime tu nombre completo."
+  utter_confirmar_nombre_completo:
+    - text: "¿Tu nombre completo es {temp_nombre_completo}?"
+  utter_pedir_nombre_completo_de_nuevo:
+    - text: "Disculpa, no pude entender tu nombre completo. ¿Podrías escribirlo de nuevo?"
   # utter_confirm_nombre_completo:
   #   - text: "Gracias, {nombre_completo}. Hemos guardado tu nombre."
   # utter_ofrecer_ayuda_extra:

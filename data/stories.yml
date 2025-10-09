@@ -1,6 +1,54 @@
-
+# data/stories.yml
 version: "3.1"
 stories:
+
+- story: Capturar nombre y confirmar
+  steps:
+  # No detecta si le digo el nombre de forma explicita
+  - intent: give_nombre_completo
+    entities:
+      - nombre_completo: "Juan Antonio Moran Garza"
+  - action: action_capture_nombre_completo
+  - slot_was_set:
+    - temp_nombre_completo: "Juan Antonio Moran Garza"
+  - action: utter_confirmar_nombre_completo
+  - intent: afirmar
+  - action: action_confirm_nombre_completo
+  - slot_was_set:
+    - nombre_completo: "Juan Antonio Moran Garza"
+  - action: utter_confirmar_datos
+
+- story: Capturar nombre y negar
+  steps:
+  - intent: give_nombre_completo
+    entities:
+    - nombre_completo: "Juan Antonio Moran Garza"
+  - action: action_capture_nombre_completo
+  - slot_was_set:
+    - temp_nombre_completo: "Juan Antonio Moran Garza"
+  - action: utter_confirmar_nombre_completo
+  - intent: negar
+  # no detecta que dije que no
+  - action: utter_pedir_nombre_completo_de_nuevo
+  # - action: utter_ask_nombre_completo
+
+- story: Capturar nombre y corregir
+  steps:
+  - intent: give_nombre_completo
+    entities:
+    - nombre_completo: "Juan Antonio Moran Garza"
+  - action: action_capture_nombre_completo
+  - slot_was_set:
+    - temp_nombre_completo: "Juan Antonio Moran Garza"
+  - action: utter_confirmar_nombre_completo
+  - intent: give_nombre_completo
+    entities:
+    - nombre_completo: "Juan Antonio Moran Garza"
+  - action: action_capture_nombre_completo
+  - slot_was_set:
+    - nombre_completo: "Juan Antonio Moran Garza"
+  - action: utter_confirmar_nombre_completo
+
 # - story: Brindar información sobre planes
 #   steps:
 #   # - checkpoint: identificar_necesidad

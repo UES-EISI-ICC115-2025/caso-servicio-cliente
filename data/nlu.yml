@@ -41,7 +41,7 @@ nlu:
     - ¡Qué onda!
     - hola
 
-- intent: inform
+- intent: give_nombre_completo
   examples: |
     - [Estefany Ana Gómez Solorzano](nombre_completo)
     - Mi nombre es [Estefany Ana Gómez Solorzano](nombre_completo)
@@ -64,6 +64,8 @@ nlu:
     - Soy [Luisa Fernanda Gonzales Alarcón](nombre_completo)
     - Mi nombre es [María José Estrada Merino](nombre_completo)
     - Me llamo [José Luis Rodríguez Bolaños](nombre_completo)
+- intent: inform
+  examples: |
     - [01234567-8](dui)
     - [012345678](dui)
     - Mi DUI es [012345678](dui)
@@ -217,6 +219,7 @@ nlu:
 
 - intent: afirmar
   examples: |
+    - si
     - Sí
     - Sí, por favor
     - Sí, hagámoslo
@@ -245,10 +248,10 @@ nlu:
     - Sí, está bien
     - Sí, adelante
     - si porfa
-    - si
     
 - intent: negar
   examples: |
+    - no
     - No
     - No, gracias
     - No, no quiero
