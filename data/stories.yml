@@ -1,94 +1,121 @@
 
 version: "3.1"
 stories:
-- story: Brindar información sobre planes
-  steps:
-  # - checkpoint: identificar_necesidad
-  - action: utter_ofrecer_ayuda
-  - intent: interes_planes
-    entities:
-    - necesidad: contratacion
-  - action: action_mostrar_planes_disponibles
-  # - checkpoint: elegir_plan
+# - story: Brindar información sobre planes
+#   steps:
+#   # - checkpoint: identificar_necesidad
+#   - action: utter_ofrecer_ayuda
+#   - intent: interes_planes
+#   - action: action_set_necesidad
+#   - action: action_mostrar_planes_disponibles
+#   # - checkpoint: elegir_plan
 
-- story: Reportar problema técnico
-  steps:
-  # - checkpoint: identificar_necesidad
-  - action: utter_ofrecer_ayuda
-  - intent: problema_facturacion
-    entities:
-    - necesidad: soporte_facturacion
-  - checkpoint: login_cliente
+# - story: Reportar problema facturacion
+#   steps:
+#   # - checkpoint: identificar_necesidad
+#   - action: utter_ofrecer_ayuda
+#   - intent: problema_facturacion
+#   - action: action_set_necesidad
+#   - action: utter_ask_nombre
+#   # - action: datos_cliente_form
 
-- story: Reportar problema técnico
-  steps:
-  # - checkpoint: identificar_necesidad
-  - action: utter_ofrecer_ayuda
-  - intent: problema_tecnico
-    entities:
-    - necesidad: soporte_tecnico
-  - checkpoint: login_cliente
+# - story: Reportar problema técnico
+#   steps:
+#   # - checkpoint: identificar_necesidad
+#   - action: utter_ofrecer_ayuda
+#   - intent: problema_tecnico
+#   - action: action_set_necesidad
+#   - action: utter_ask_nombre
+#   # - action: datos_cliente_form
 
-- story: Login cliente
-  steps:
-  - checkpoint: login_cliente
-  - action: utter_solicitar_datos
-  - checkpoint: dar_datos_cliente
+# - story: Capture full name
+#   steps:
+#     - intent: dar_nombre_completo
+#     - action: action_capture_full_name
+#     - slot_was_set:
+#         - nombre_completo: "Juan Antonio Pérez Calveti" # This is an example value for the slot check
+#     - action: utter_confirm_name
 
-- story: cliente proporciona datos
-  steps:
-  - checkpoint: dar_datos_cliente
-  - intent: proporcionar_datos
-    entities:
-      - nombre: Juan Pérez
-      - telefono: 1234-5678
-      - email: juan.perez@gmail.com
-      - dui: '012345678'
-  - action: action_validar_datos_cliente
-  - checkpoint: validar_datos_cliente
+# - story: solicitar datos del cliente
+#   steps:
+#     # - intent: solicitar_datos
+#     - action: datos_cliente_form
+#     - active_loop: datos_cliente_form
+#     - action: utter_confirmar_datos
 
-- story: Validar datos del cliente - no válidos
-  steps:
-  - checkpoint: validar_datos_cliente
-  - action: action_validar_datos_cliente
-  - slot_was_set:
-      - datos_validos: false
-  - intent: proporcionar_datos
-    entities:
-      - nombre: Juan Pérez
-      - telefono: 1234-5678
-      - email: juan.perez@gmail.com
-      - dui: '012345678'
-  # - checkpoint: validar_datos_cliente
+# - story: datos incorrectos, reintentar
+#   steps:
+#     - intent: negar
+#     - action: utter_reintentar
+#     - action: action_reset_datos_cliente_form
+#     - action: datos_cliente_form
 
-- story: Validar datos del cliente - válidos
-  steps:
-  - checkpoint: validar_datos_cliente
-  - action: action_validar_datos_cliente
-  - slot_was_set:
-      - datos_validos: true
-  - checkpoint: confirmar_datos_cliente
+# - story: datos correctos, continuar
+#   steps:
+#     - intent: afirmar
+#     - action: utter_datos_confirmados
+#     - active_loop: null
 
-- story: Cliente confirma datos
-  steps:
-  - checkpoint: confirmar_datos_cliente
-  - slot_was_set:
-      - datos_validos: true
-  - intent: afirmar
-  - slot_was_set:
-      - datos_confirmados: true
-  - action: utter_datos_confirmados
+# - story: Login cliente
+#   steps:
+#   - checkpoint: login_cliente
+#   - action: utter_solicitar_datos
+#   - checkpoint: dar_datos_cliente
 
-- story: Cliente no confirma datos
-  steps:
-  - checkpoint: confirmar_datos_cliente
-  - slot_was_set:
-      - datos_validos: true
-  - intent: negar
-  - slot_was_set:
-      - datos_confirmados: false
-  - action: utter_reintentar
-  - action: utter_modificar_datos_cliente
+# - story: cliente proporciona datos
+#   steps:
+#   - checkpoint: dar_datos_cliente
+#   - intent: proporcionar_datos
+#     entities:
+#       - nombre: Juan Pérez
+#       - telefono: 1234-5678
+#       - email: juan.perez@gmail.com
+#       - dui: '012345678'
+#   - action: action_validar_datos_cliente
+#   - checkpoint: validar_datos_cliente
+
+# - story: Validar datos del cliente - no válidos
+#   steps:
+#   - checkpoint: validar_datos_cliente
+#   - action: action_validar_datos_cliente
+#   - slot_was_set:
+#       - datos_validos: false
+#   - intent: proporcionar_datos
+#     entities:
+#       - nombre: Juan Pérez
+#       - telefono: 1234-5678
+#       - email: juan.perez@gmail.com
+#       - dui: '012345678'
+#   # - checkpoint: validar_datos_cliente
+
+# - story: Validar datos del cliente - válidos
+#   steps:
+#   - checkpoint: validar_datos_cliente
+#   - action: action_validar_datos_cliente
+#   - slot_was_set:
+#       - datos_validos: true
+#   - checkpoint: confirmar_datos_cliente
+
+# - story: Cliente confirma datos
+#   steps:
+#   - checkpoint: confirmar_datos_cliente
+#   - slot_was_set:
+#       - datos_validos: true
+#   - intent: afirmar
+#   - slot_was_set:
+#       - datos_confirmados: true
+#   - action: utter_datos_confirmados
+
+# - story: Cliente no confirma datos
+#   steps:
+#   - checkpoint: confirmar_datos_cliente
+#   - slot_was_set:
+#       - datos_validos: true
+#   - intent: negar
+#   - slot_was_set:
+#       - datos_confirmados: false
+#   - action: utter_reintentar
+#   - action: utter_modificar_datos_cliente
 
 # - story: validar plan elegido - válido
 #   steps:

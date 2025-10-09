@@ -8,10 +8,11 @@
 # This is a simple example for a custom action which utters "Hello World!"
 
 from typing import Any, Text, Dict, List
-
-from rasa_sdk import Action, Tracker
-from rasa_sdk.events import SlotSet
+from rasa_sdk.types import DomainDict
+from rasa_sdk import Action, Tracker, FormValidationAction
+from rasa_sdk.events import SlotSet, ActiveLoop
 from rasa_sdk.executor import CollectingDispatcher
+import re
 
 
 #
@@ -288,7 +289,7 @@ class ActionValidarDatosCliente(Action):
                 slots.append(SlotSet("email", None))
                 slots.append(SlotSet("datos_validos", False))
             slots.append(SlotSet("email", datos["email"]))
-            
+
             if "teléfono" in campos_faltantes:
                 dispatcher.utter_message(text="Por favor, indícame tu teléfono.")
                 slots.append(SlotSet("telefono", None))
@@ -323,3 +324,146 @@ class ActionValidarDatosCliente(Action):
             dispatcher.utter_message(text=mensaje)
 
         return slots
+
+
+class ValidateDatosClienteForm(FormValidationAction):
+
+    def name(self) -> Text:
+        return "validate_datos_cliente_form"
+
+    def validate_nombre(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        if len(slot_value.split()) >= 2:
+            return {"nombre": slot_value}
+        else:
+            dispatcher.utter_message(text="Por favor, indícame tu nombre completo.")
+            return {"nombre": None}
+
+    def validate_email(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        pattern = r"[^@]+@[^@]+\.[^@]+"
+        if re.match(pattern, slot_value):
+            return {"email": slot_value}
+        else:
+            dispatcher.utter_message(
+                text="Ese correo no parece válido. ¿Podrías repetirlo?"
+            )
+            return {"email": None}
+
+    def validate_telefono(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        pattern = r"^[267][0-9]{7}$"  # ejemplo: números salvadoreños
+        if re.match(pattern, slot_value):
+            return {"telefono": slot_value}
+        else:
+            dispatcher.utter_message(
+                text="El teléfono debe tener 8 dígitos y comenzar con 2, 6 o 7."
+            )
+            return {"telefono": None}
+
+    def validate_dui(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        pattern = r"^\d{8}-\d$"
+        if re.match(pattern, slot_value):
+            return {"dui": slot_value}
+        else:
+            dispatcher.utter_message(
+                text="El DUI debe tener el formato ########-# (por ejemplo, 01234567-8)."
+            )
+            return {"dui": None}
+
+
+class ActionResetDatosClienteForm(Action):
+    def name(self) -> str:
+        return "action_reset_datos_cliente_form"
+
+    def run(self, dispatcher, tracker, domain):
+        # Stop the form and reset slots
+        return [
+            ActiveLoop(None),
+            SlotSet("nombre", None),
+            SlotSet("email", None),
+            SlotSet("telefono", None),
+            SlotSet("dui", None),
+        ]
+
+
+class ActionSetNecesidad(Action):
+    def name(self) -> str:
+        return "action_set_necesidad"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        # Get the current user message as the necesidad value
+        # Get the intent name from the latest message
+        intent_name = tracker.latest_message.get("intent", {}).get("name", "")
+        if intent_name:
+            match intent_name:
+                case "interes_planes":
+                    necesidad_value = "contratacion"
+                case "problema_facturacion":
+                    necesidad_value = "facturacion"
+                case "problema_tecnico":
+                    necesidad_value = "asistencia_tecnica"
+                case _:  # Default case (wildcard)
+                    necesidad_value = None
+
+        # Set the necesidad slot with the current document value
+        return [SlotSet("necesidad", necesidad_value)]
+
+
+class ActionCaptureNombreCompleto(Action):
+    def name(self) -> Text:
+        return "action_capture_full_name"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        # Get the full_name entity from the latest user message
+        full_name_entity = next(tracker.get_latest_entity_values("nombre_completo"), None)
+
+        if full_name_entity:
+            # Palabras separadas por espacios
+            word_count = len(full_name_entity.strip().split())
+            if word_count >= 3:
+                # Set the slot with the extracted entity value
+                return [SlotSet("nombre_completo", full_name_entity)]
+            else:
+                dispatcher.utter_message(
+                    text="Por favor, indícame tu nombre completo (nombre y apellido)."
+                )
+                return []
+        else:
+            # Handle the case where the entity was not extracted
+            dispatcher.utter_message(
+                text="No pude entender tu nombre. Por favor, ¿podrías repetirlo?"
+            )
+            return []

@@ -1,45 +1,107 @@
 version: '3.1'
+
+intents:
+- saludo
+- interes_planes
+- problema_tecnico
+- problema_facturacion
+# - dar_datos
+- dar_nombre_completo
+- dar_email
+- dar_telefono
+- dar_dui
+- inform
+# - afirmar
+# - negar
+# - aceptar_plan
+# - agradecimiento
+# - calificar
+# - cancelar_visita_tecnica
+# - confirmar_datos
+# - confirmar_solucion_tecnica
+# - confirmar_visita_tecnica
+# - despedida
+# - elegir_plan
+# - escalar_humano
+# - interes_promociones
+# - nlu_fallback
+# - no_confirmar_solucion_tecnica
+# - nuevo_cliente
+# - quejas
+# - rechazar_plan
+# - rechazar_visita_tecnica
+
+entities:
+- necesidad
+- dui
+- email
+# - calificacion
+# - plan_elegido
+- telefono
+- nombre_completo
+# - respuesta
+# - plan
+# - direccion
 slots:
-  nombre:
-    type: text
-    influence_conversation: false
+  confirmar:
+    type: bool
     mappings:
-    - type: custom
+    - type: from_intent
+      intent: afirmar
+      value: true
+    - type: from_intent
+      intent: negar
+      value: false
+  nombre_completo:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: nombre_completo
+      # conditions:
+      #  - active_loop: datos_cliente_form
+      #    requested_slot: nombre
   telefono:
     type: text
-    influence_conversation: false
     mappings:
-    - type: custom
+    - type: from_entity
+      entity: telefono
+    # validation:
+    #   rejections:
+    #     - if: not (slots.telefono matches "^(?:\+503\s?)?(?:[267]\d{3}-?\d{4})$")
+    #       utter: utter_invalid_telefono
+    #   refill_utter: "utter_reintentar" # defaults to utter_ask_phone_number
   email:
     type: text
-    influence_conversation: false
     mappings:
-    - type: custom
+    - type: from_entity
+      entity: email
+    
   dui:
     type: text
-    influence_conversation: false
     mappings:
-    - type: custom
-  datos_validos:
-    type: bool
-    influence_conversation: true
-    mappings:
-    - type: custom
-  datos_confirmados:
-    type: bool
-    influence_conversation: true
-    mappings:
-    - type: custom
-  continuar_proceso:
-    type: bool
-    influence_conversation: true
-    mappings:
-    - type: custom
-  campos_invalidos:
-    type: list
-    influence_conversation: true
-    mappings:
-    - type: custom
+    - type: from_entity
+      entity: dui
+
+  # datos_validos:
+  #   type: bool
+  #   influence_conversation: true
+  #   mappings:
+  #   - type: custom
+  # datos_confirmados:
+  #   type: bool
+  #   influence_conversation: true
+  #   mappings:
+  #   - type: custom
+  # continuar_proceso:
+  #   type: bool
+  #   influence_conversation: true
+  #   mappings:
+  #   - type: custom
+  # campos_invalidos:
+  #   type: list
+  #   influence_conversation: true
+  #   mappings:
+  #   - type: custom
   # cliente_existente:
   #   type: bool
   #   influence_conversation: true
@@ -60,57 +122,28 @@ slots:
   #   influence_conversation: true
   #   mappings:
   #   - type: custom
+forms:
+  login_form:
+    required_slots:
+      - nombre_completo
+      - email
+      - telefono
+      - dui
 
-intents:
-- saludo
-- interes_planes
-- problema_tecnico
-- problema_facturacion
-- proporcionar_datos
-- proporcionar_nombre_completo
-- proporcionar_email
-- proporcionar_telefono
-- proporcionar_dui
-- afirmar
-- negar
-# - aceptar_plan
-# - agradecimiento
-# - calificar
-# - cancelar_visita_tecnica
-# - confirmar_datos
-# - confirmar_solucion_tecnica
-# - confirmar_visita_tecnica
-# - despedida
-# - elegir_plan
-# - escalar_humano
-# - interes_promociones
-# - nlu_fallback
-# - no_confirmar_solucion_tecnica
-# - nuevo_cliente
-# - quejas
-# - rechazar_plan
-# - rechazar_visita_tecnica
-entities:
-- necesidad
-- dui
-- email
-# - calificacion
-# - plan_elegido
-- telefono
-- nombre
-# - respuesta
-# - plan
-# - direccion
 actions:
 - utter_saludo
 - utter_ofrecer_ayuda
 - action_mostrar_planes_disponibles
-- action_validar_datos_cliente
+- action_set_necesidad
+# - action_validar_datos_cliente
 - utter_solicitar_datos
-- utter_modificar_datos_cliente
-- action_modificar_datos_cliente
-- utter_datos_confirmados
+- utter_invalid_telefono
 - utter_reintentar
+# - utter_modificar_datos_cliente
+# - action_modificar_datos_cliente
+# - utter_datos_confirmados
+# - utter_reintentar
+# - action_reset_datos_cliente_form
 # - utter_ofrecer_ayuda_extra
 # - utter_plan_valido
 # - utter_negar
@@ -130,20 +163,34 @@ actions:
 # - utter_despedida
 # - utter_plan_valido
 responses:
+  utter_ask_nombre_completo:
+    - text: "Por favor, indícame tu nombre completo."
+  utter_ask_email:
+    - text: "Por favor, indícame tu correo electrónico."
+  utter_ask_telefono:
+    - text: "¿Cuál es tu número de teléfono?"
+  utter_ask_dui:
+    - text: "¿Podrías decirme tu número de DUI?"
+  utter_confirmar_datos:
+    - text: "¿Son correctos los siguientes datos? \nNombre completo: {nombre_completo}\nDUI: {dui}\nTeléfono: {telefono}\nCorreo Eletrónico: {email}\n"
+  utter_invalid_telefono:
+    - text: "El número de telefono {telefono} no es válido"
+  # utter_confirm_nombre_completo:
+  #   - text: "Gracias, {nombre_completo}. Hemos guardado tu nombre."
   # utter_ofrecer_ayuda_extra:
   # - text: ¿Algo más en lo que pueda ayudarte?
   # utter_pregunte_cierre:
   # - text: ¿Te gustaría contratar el plan {plan_elegido}?
-  utter_solicitar_datos:
-  - text: Podrías proporcionarme tu número de dui, nombre completo, número de télefono y correo electrónico por favor
+  # utter_solicitar_datos:
+  # - text: Podrías proporcionarme tu número de dui, nombre completo, número de télefono y correo electrónico por favor
   # utter_confirmar_datos_cliente:
-  # - text: 'Para confirmar tus datos son nombre: {nombre}, DUI: {dui}, teléfono: {telefono} y correo: {email}. Eso sería correcto?'
-  utter_modificar_datos_cliente:
-  - text: 'Por favor, indícame los datos correctos'
+  # - text: 'Para confirmar tus datos son nombre: {nombre_completo}, DUI: {dui}, teléfono: {telefono} y correo: {email}. Eso sería correcto?'
+  # utter_modificar_datos_cliente:
+  # - text: 'Por favor, indícame los datos correctos'
 
-  utter_datos_confirmados:
-  - text: 'Tus datos han sido confirmados.'
-  - text: 'Gracias por confirmar tu información.'
+  # utter_datos_confirmados:
+  # - text: 'Tus datos han sido confirmados.'
+  # - text: 'Gracias por confirmar tu información.'
 
   utter_ofrecer_ayuda:
   - text: ¿En qué puedo ayudarte hoy?
@@ -157,9 +204,7 @@ responses:
   - text: ¿Qué necesitas que haga por vos?
 
   utter_reintentar:
-  - text: Ok, intenté de nuevo, porfa.
   - text: Dale, probá otra vez.
-  - text: Listo, hacelo de nuevo.
   - text: Intentá otra vez.
   - text: Probá de nuevo.
   - text: Dale, intentá otra vez.

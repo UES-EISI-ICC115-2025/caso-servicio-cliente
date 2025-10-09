@@ -1,5 +1,16 @@
 version: "3.1"
 nlu:
+- regex: email
+  examples: |
+    - [a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+
+
+- regex: telefono
+  examples: |
+    - [0-9]{8}
+
+- regex: dui
+  examples: |
+    - [0-9]{8}-[0-9]{1}
 - intent: saludo
   examples: |
     - Hola
@@ -30,32 +41,29 @@ nlu:
     - ¡Qué onda!
     - hola
 
-- intent: proporcionar_nombre_completo
+- intent: inform
   examples: |
-    - [Estefany Ana Gómez Solorzano](nombre)
-    - Mi nombre es [Estefany Ana Gómez Solorzano](nombre)
-    - Soy [Carlos Jose Martínez González](nombre)
-    - Me llamo [Luisa Fernanda Hernandez Castellanos](nombre)
-    - [María José Estrada Monroy](nombre) es mi nombre
-    - [José Luis Rodríguez Quijada](nombre), mucho gusto
-    - Hola, soy [Ana Estela Fernandez Gómez](nombre)
-    - Buenas, me llamo [Carlos Esteban Martínez Quiroz](nombre)
-    - Hola, mi nombre es [Luisa Fernanda Moran Perez](nombre)
-    - Me llamo [María José Estrada Merino](nombre), ¿y usted?
-    - Soy [José Luis Rodríguez Bolaños Cangrejo](nombre), un placer
-    - Hola, soy [Ana Lidia Gómez Estrada](nombre), ¿cómo está?
-    - Buenas, me llamo [Carlos Adrian Martínez Cornejo](nombre), ¿y usted?
-    - Hola, mi nombre es [Luisa Fernanda Gonzales Alarcón](nombre), mucho gusto
-    - Me llamo [María José Estrada Merino](nombre), ¿qué tal?
-    - Soy [José Luis Rodríguez Bolaños](nombre), ¿cómo le va?
-    - Hola, soy [Ana Lidia Gómez Estrada](nombre)
-    - Me llamo [Carlos Adrian Martínez Cornejo](nombre)
-    - Soy [Luisa Fernanda Gonzales Alarcón](nombre)
-    - Mi nombre es [María José Estrada Merino](nombre)
-    - Me llamo [José Luis Rodríguez Bolaños](nombre)
-
-- intent: proporcionar_dui
-  examples: |
+    - [Estefany Ana Gómez Solorzano](nombre_completo)
+    - Mi nombre es [Estefany Ana Gómez Solorzano](nombre_completo)
+    - Soy [Carlos Jose Martínez González](nombre_completo)
+    - Me llamo [Luisa Fernanda Hernandez Castellanos](nombre_completo)
+    - [María José Estrada Monroy](nombre_completo) es mi nombre
+    - [José Luis Rodríguez Quijada](nombre_completo), mucho gusto
+    - Hola, soy [Ana Estela Fernandez Gómez](nombre_completo)
+    - Buenas, me llamo [Carlos Esteban Martínez Quiroz](nombre_completo)
+    - Hola, mi nombre es [Luisa Fernanda Moran Perez](nombre_completo)
+    - Me llamo [María José Estrada Merino](nombre_completo), ¿y usted?
+    - Soy [José Luis Rodríguez Bolaños Cangrejo](nombre_completo), un placer
+    - Hola, soy [Ana Lidia Gómez Estrada](nombre_completo), ¿cómo está?
+    - Buenas, me llamo [Carlos Adrian Martínez Cornejo](nombre_completo), ¿y usted?
+    - Hola, mi nombre es [Luisa Fernanda Gonzales Alarcón](nombre_completo), mucho gusto
+    - Me llamo [María José Estrada Merino](nombre_completo), ¿qué tal?
+    - Soy [José Luis Rodríguez Bolaños](nombre_completo), ¿cómo le va?
+    - Hola, soy [Ana Lidia Gómez Estrada](nombre_completo)
+    - Me llamo [Carlos Adrian Martínez Cornejo](nombre_completo)
+    - Soy [Luisa Fernanda Gonzales Alarcón](nombre_completo)
+    - Mi nombre es [María José Estrada Merino](nombre_completo)
+    - Me llamo [José Luis Rodríguez Bolaños](nombre_completo)
     - [01234567-8](dui)
     - [012345678](dui)
     - Mi DUI es [012345678](dui)
@@ -78,9 +86,6 @@ nlu:
     - Tengo el DUI [789012345](dui), ¿cómo está?
     - Mi documento de identidad es [890123456](dui), un placer
     - El número de mi documento es [901234567](dui), ¿qué tal?
-
-- intent: proporcionar_telefono
-  examples: |
     - [1234-5678](telefono)
     - Mi teléfono es [1234-5678](telefono)
     - El número de mi teléfono es [8765-4321](telefono)
@@ -102,9 +107,6 @@ nlu:
     - Tengo el teléfono [0987-6543](telefono), ¿cómo está?
     - Mi número de contacto es [1098-7654](telefono), un placer
     - El número para llamarme es [2109-8765](telefono), ¿qué tal?
-
-- intent: proporcionar_email
-  examples: |
     - [estefany.gomez@example.com](email)
     - Mi correo es [estefany.gomez@example.com](email)
     - El email que uso es [carlos.martinez@example.com](email)
@@ -208,10 +210,10 @@ nlu:
 #     - quiero un nuevo internet
 #     - quiero un nuevo contrato
 #     - quiero un nuevo registro
-- intent: proporcionar_datos
-  examples: |
-    - Le doy mi nombre [Ricardo Sánchez](nombre), teléfono es [6543-2109](telefono), correo [ricky@correo.net](email) y  DUI [4354958490](dui)
-    - Mi número es [7777-8888](telefono), [Juan Carlos](nombre), [correo@gmail.com](email) y mi dui es [4354958490](dui)
+# - intent: dar_datos
+#   examples: |
+#     - mi correo es [andrea.morales@gmail.com](email), mi teléfono es [22992924](telefono) y mi dui es [44332439-0](dui)
+#     - puedes anotar mi email [juan.perez@ejemplo.com](email), número [78901234](telefono) y dui [01234567-8](dui)
 
 - intent: afirmar
   examples: |

@@ -16,10 +16,13 @@ pipeline:
   - name: SpacyTokenizer
   - name: SpacyFeaturizer
   - name: RegexFeaturizer
+  - name: RegexEntityExtractor
   - name: CountVectorsFeaturizer
     analyzer: char_wb
     min_ngram: 1
     max_ngram: 4
+  - name: SpacyEntityExtractor
+    dimensions: ["PERSON"]
   - name: DIETClassifier
     epochs: 100
   - name: EntitySynonymMapper
