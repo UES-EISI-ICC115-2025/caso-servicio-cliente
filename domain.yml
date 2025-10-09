@@ -6,7 +6,7 @@ intents:
 - problema_tecnico
 - problema_facturacion
 # - dar_datos
-# - give_nombre_completo
+- give_nombre_completo
 - inform
 - afirmar
 - negar
