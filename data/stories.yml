@@ -11,6 +11,85 @@ stories:
   - action: action_mostrar_planes_disponibles
   # - checkpoint: elegir_plan
 
+- story: Reportar problema técnico
+  steps:
+  # - checkpoint: identificar_necesidad
+  - action: utter_ofrecer_ayuda
+  - intent: problema_facturacion
+    entities:
+    - necesidad: soporte_facturacion
+  - checkpoint: login_cliente
+
+- story: Reportar problema técnico
+  steps:
+  # - checkpoint: identificar_necesidad
+  - action: utter_ofrecer_ayuda
+  - intent: problema_tecnico
+    entities:
+    - necesidad: soporte_tecnico
+  - checkpoint: login_cliente
+
+- story: Login cliente
+  steps:
+  - checkpoint: login_cliente
+  - action: utter_solicitar_datos
+  - checkpoint: dar_datos_cliente
+
+- story: cliente proporciona datos
+  steps:
+  - checkpoint: dar_datos_cliente
+  - intent: proporcionar_datos
+    entities:
+      - nombre: Juan Pérez
+      - telefono: 1234-5678
+      - email: juan.perez@gmail.com
+      - dui: '012345678'
+  - action: action_validar_datos_cliente
+  - checkpoint: validar_datos_cliente
+
+- story: Validar datos del cliente - no válidos
+  steps:
+  - checkpoint: validar_datos_cliente
+  - action: action_validar_datos_cliente
+  - slot_was_set:
+      - datos_validos: false
+  - intent: proporcionar_datos
+    entities:
+      - nombre: Juan Pérez
+      - telefono: 1234-5678
+      - email: juan.perez@gmail.com
+      - dui: '012345678'
+  # - checkpoint: validar_datos_cliente
+
+- story: Validar datos del cliente - válidos
+  steps:
+  - checkpoint: validar_datos_cliente
+  - action: action_validar_datos_cliente
+  - slot_was_set:
+      - datos_validos: true
+  - checkpoint: confirmar_datos_cliente
+
+- story: Cliente confirma datos
+  steps:
+  - checkpoint: confirmar_datos_cliente
+  - slot_was_set:
+      - datos_validos: true
+  - intent: afirmar
+  - slot_was_set:
+      - datos_confirmados: true
+  - action: utter_datos_confirmados
+
+- story: Cliente no confirma datos
+  steps:
+  - checkpoint: confirmar_datos_cliente
+  - slot_was_set:
+      - datos_validos: true
+  - intent: negar
+  - slot_was_set:
+      - datos_confirmados: false
+  - action: utter_reintentar
+  - action: utter_modificar_datos_cliente
+
 # - story: validar plan elegido - válido
 #   steps:
 #     - checkpoint: elegir_plan

@@ -6,6 +6,31 @@ rules:
       - action: utter_saludo
       - action: utter_ofrecer_ayuda
 
+  - rule: Brindar Nombre completo
+    steps:
+      - intent: proporcionar_nombre_completo
+        entities:
+          - nombre: Juan Carlos Pérez Moran
+      - action: action_validar_datos_cliente
+  - rule: Brindar Email
+    steps:
+      - intent: proporcionar_email
+        entities:
+          - email: estefany.gomez@example.com
+      - action: action_validar_datos_cliente
+  - rule: Brindar Teléfono
+    steps:
+      - intent: proporcionar_telefono
+        entities:
+          - telefono: 9876-5432
+      - action: action_validar_datos_cliente
+  - rule: Brindar DUI
+    steps:
+      - intent: proporcionar_dui
+        entities:
+          - dui: '987654321'
+      - action: action_validar_datos_cliente
+
   # - rule: Despedirse del usuario
   #   steps:
   #     - intent: despedida

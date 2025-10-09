@@ -29,6 +29,92 @@ nlu:
     - Vaya, qué onda, pues
     - ¡Qué onda!
     - hola
+
+- intent: proporcionar_nombre_completo
+  examples: |
+    - [Estefany Ana Gómez Solorzano](nombre)
+    - Mi nombre es [Estefany Ana Gómez Solorzano](nombre)
+    - Soy [Carlos Jose Martínez González](nombre)
+    - Me llamo [Luisa Fernanda Hernandez Castellanos](nombre)
+    - [María José Estrada Monroy](nombre) es mi nombre
+    - [José Luis Rodríguez Quijada](nombre), mucho gusto
+    - Hola, soy [Ana Estela Fernandez Gómez](nombre)
+    - Buenas, me llamo [Carlos Esteban Martínez Quiroz](nombre)
+    - Hola, mi nombre es [Luisa Fernanda Moran Perez](nombre)
+    - Me llamo [María José Estrada Merino](nombre), ¿y usted?
+    - Soy [José Luis Rodríguez Bolaños Cangrejo](nombre), un placer
+    - Hola, soy [Ana Lidia Gómez Estrada](nombre), ¿cómo está?
+    - Buenas, me llamo [Carlos Adrian Martínez Cornejo](nombre), ¿y usted?
+    - Hola, mi nombre es [Luisa Fernanda Gonzales Alarcón](nombre), mucho gusto
+    - Me llamo [María José Estrada Merino](nombre), ¿qué tal?
+    - Soy [José Luis Rodríguez Bolaños](nombre), ¿cómo le va?
+    - Hola, soy [Ana Lidia Gómez Estrada](nombre)
+    - Me llamo [Carlos Adrian Martínez Cornejo](nombre)
+    - Soy [Luisa Fernanda Gonzales Alarcón](nombre)
+    - Mi nombre es [María José Estrada Merino](nombre)
+    - Me llamo [José Luis Rodríguez Bolaños](nombre)
+
+- intent: proporcionar_dui
+  examples: |
+    - [01234567-8](dui)
+    - [012345678](dui)
+    - Mi DUI es [012345678](dui)
+    - El número de mi DUI es [987654321](dui)
+    - Tengo el DUI [123456789](dui)
+    - Mi documento de identidad es [456789123](dui)
+    - El número de mi documento es [789123456](dui)
+    - Mi DUI es [234567890](dui), ¿y el suyo?
+    - El número de mi DUI es [876543210](dui), mucho gusto
+    - Tengo el DUI [345678901](dui), ¿cómo está?
+    - Mi documento de identidad es [567890123](dui), un placer
+    - El número de mi documento es [678901234](dui), ¿qué tal?
+    - Mi DUI es [098765432](dui)
+    - El número de mi DUI es [123456780](dui)
+    - Tengo el DUI [234567890](dui)
+    - Mi documento de identidad es [345678901](dui)
+    - El número de mi documento es [456789012](dui)
+    - Mi DUI es [567890123](dui), ¿y el suyo?
+    - El número de mi DUI es [678901234](dui), mucho gusto
+    - Tengo el DUI [789012345](dui), ¿cómo está?
+    - Mi documento de identidad es [890123456](dui), un placer
+    - El número de mi documento es [901234567](dui), ¿qué tal?
+
+- intent: proporcionar_telefono
+  examples: |
+    - [1234-5678](telefono)
+    - Mi teléfono es [1234-5678](telefono)
+    - El número de mi teléfono es [8765-4321](telefono)
+    - Tengo el teléfono [2345-6789](telefono)
+    - Mi número de contacto es [9876-5432](telefono)
+    - El número para llamarme es [3456-7890](telefono)
+    - Mi teléfono es [4567-8901](telefono), ¿y el suyo?
+    - El número de mi teléfono es [7654-3210](telefono), mucho gusto
+    - Tengo el teléfono [5678-9012](telefono), ¿cómo está?
+    - Mi número de contacto es [6543-2109](telefono), un placer
+    - El número para llamarme es [7890-1234](telefono), ¿qué tal?
+    - Mi teléfono es [3210-9876](telefono)
+    - El número de mi teléfono es [4321-6789](telefono)
+    - Tengo el teléfono [5432-7890](telefono)
+    - Mi número de contacto es [6543-2109](telefono)
+    - El número para llamarme es [7654-3210](telefono)
+    - Mi teléfono es [8765-4321](telefono), ¿y el suyo?
+    - El número de mi teléfono es [9876-5432](telefono), mucho gusto
+    - Tengo el teléfono [0987-6543](telefono), ¿cómo está?
+    - Mi número de contacto es [1098-7654](telefono), un placer
+    - El número para llamarme es [2109-8765](telefono), ¿qué tal?
+
+- intent: proporcionar_email
+  examples: |
+    - [estefany.gomez@example.com](email)
+    - Mi correo es [estefany.gomez@example.com](email)
+    - El email que uso es [carlos.martinez@example.com](email)
+    - Tengo el email [maria.estrada@example.com](email)
+    - Mi dirección de correo es [jose.rodriguez@example.com](email) 
+    - El email para contactarme es [ana.gomez@example.com](email)
+    - Mi correo es [luisa.fernanda@example.com](email)
+    - El email que uso es [maria.estrada@example.com](email)
+    - Tengo el email [jose.rodriguez@example.com](email)
+    - Mi dirección de correo es [ana.gomez@example.com](email)
 # - intent: despedida
 #   examples: |
 #     - Adiós
@@ -122,106 +208,76 @@ nlu:
 #     - quiero un nuevo internet
 #     - quiero un nuevo contrato
 #     - quiero un nuevo registro
-# - intent: proporcionar_datos
-#   examples: |
-#     - Mi nombre es [Andrea Monterrosa](nombre)
-#     - Soy [Carlos Pérez](nombre)
-#     - Mi correo es [carlos@email.com](email)
-#     - Me llamo [María López](nombre)
-#     - Mi número es [7777-8888](telefono)
-#     - Mi nombre es [Juan Carlos](nombre)
-#     - Me puede buscar por mi correo [correo@gmail.com](email)
-#     - Soy [Sofía Flores](nombre)
-#     - Mi teléfono es [8888-9999](telefono)
-#     - Le doy mi nombre, [Ricardo Sánchez](nombre)
-#     - Mi correo, para que lo tenga, es [ricky@correo.net](email)
-#     - Me llamo [Ana Meléndez](nombre)
-#     - Le dejo mi número, es [7070-1234](telefono)
-#     - Mi nombre es [Luis Mendoza](nombre)
-#     - [maria.perez@email.com](email), ese es mi correo
-#     - Soy [Claudia Martínez](nombre), del [plan](necesidad) de 50 megas
-#     - Mi teléfono es [6543-2109](telefono), por favor
-#     - Me llamo [Pedro Ramos](nombre), tengo un problema con el internet
-#     - Mi correo es [elmejor@email.org](email)
-#     - Mi nombre es [Juana Torres](nombre)
-#     - Mi número de teléfono es [7654-3210](telefono)
-#     - Me llamo [Ernesto Cruz](nombre)
-#     - Mi correo es [ernesto@gmail.com](email)
-#     - [Mi nombre es Juan López](nombre) y mi número es [7890-1234](telefono)
-#     - Mi correo electrónico es [cliente@email.net](email)
-#     - Le puedo dar mi correo, [micorreo@email.com](email)
-#     - Me llamo [Roberto Méndez](nombre) y mi teléfono es [6060-7070](telefono)
-#     - Mi nombre, por si acaso, [es Manuel Hernández](nombre)
-#     - [margarita.rodriguez@email.com](email) es mi correo
-#     - Soy [José Antonio](nombre)
-#     - Le doy mi nombre [Ricardo Sánchez](nombre), teléfono es [6543-2109](telefono), correo [ricky@correo.net](email) y  DUI [4354958490](dui)
-#     - Mi número es [7777-8888](telefono), [Juan Carlos](nombre), [correo@gmail.com](email) y mi dui es [4354958490](dui)
-# - intent: afirmar
-#   examples: |
-#     - Sí
-#     - Sí, por favor
-#     - Sí, hagámoslo
-#     - Claro que sí
-#     - Con gusto
-#     - De acuerdo
-#     - Exacto
-#     - Así es
-#     - Ándale
-#     - ¡Ándale, pues!
-#     - ¡Agüevo!
-#     - ¡A huevo, sí!
-#     - ¡Qué chivo!
-#     - Vaya, pues, sí
-#     - Correcto
-#     - Definitivamente
-#     - Por supuesto
-#     - Vaya
-#     - Dale
-#     - Eso mero
-#     - Dale, sí
-#     - Sí, eso quiero
-#     - Sí, eso es
-#     - ¡Qué onda!
-#     - Así mero
-#     - Eso mismo
-#     - Por supuesto que sí
-#     - Claro
-#     - Sí, está bien
-#     - Sí, adelante
-#     - [si](respuesta) porfa
-#     - [si](respuesta)
-# - intent: negar
-#   examples: |
-#     - No
-#     - No, gracias
-#     - No, no quiero
-#     - No, no es así
-#     - Negativo
-#     - Incorrecto
-#     - Nada de eso
-#     - Para nada
-#     - ¡Ah, no!
-#     - No, espere
-#     - No, la verdad no
-#     - No, no, no
-#     - No estoy seguro
-#     - Eso no
-#     - No, no me parece
-#     - ¡Ni a palos!
-#     - No es eso
-#     - No, eso no es
-#     - De ninguna manera
-#     - No, no me interesa
-#     - Vaya, no
-#     - No, no quiero eso
-#     - Ni modo
-#     - No, no te preocupes
-#     - No, de verdad no
-#     - No, no me funciona
-#     - No lo quiero
-#     - No, no es así como lo dices
-#     - No, no estoy de acuerdo
-#     - no, solamente
+- intent: proporcionar_datos
+  examples: |
+    - Le doy mi nombre [Ricardo Sánchez](nombre), teléfono es [6543-2109](telefono), correo [ricky@correo.net](email) y  DUI [4354958490](dui)
+    - Mi número es [7777-8888](telefono), [Juan Carlos](nombre), [correo@gmail.com](email) y mi dui es [4354958490](dui)
+
+- intent: afirmar
+  examples: |
+    - Sí
+    - Sí, por favor
+    - Sí, hagámoslo
+    - Claro que sí
+    - De acuerdo
+    - Exacto
+    - Así es
+    - Ándale
+    - ¡Ándale, pues!
+    - ¡Agüevo!
+    - ¡A huevo, sí!
+    - Vaya, pues, sí
+    - Correcto
+    - Definitivamente
+    - Por supuesto
+    - Vaya
+    - Dale
+    - Eso mero
+    - Dale, sí
+    - Sí, eso quiero
+    - Sí, eso es
+    - Así mero
+    - Eso mismo
+    - Por supuesto que sí
+    - Claro
+    - Sí, está bien
+    - Sí, adelante
+    - si porfa
+    - si
+    
+- intent: negar
+  examples: |
+    - No
+    - No, gracias
+    - No, no quiero
+    - No, no es así
+    - Negativo
+    - Incorrecto
+    - Nada de eso
+    - Para nada
+    - ¡Ah, no!
+    - No, espere
+    - No, la verdad no
+    - No, no, no
+    - No estoy seguro
+    - Eso no
+    - No, no me parece
+    - ¡Ni a palos!
+    - No es eso
+    - No, eso no es
+    - De ninguna manera
+    - No, no me interesa
+    - Vaya, no
+    - No, no quiero eso
+    - Ni modo
+    - No, no te preocupes
+    - No, de verdad no
+    - No, no me funciona
+    - No lo quiero
+    - No, no es así como lo dices
+    - No, no estoy de acuerdo
+    - no, solamente
+
 # - intent: agradecimiento
 #   examples: |
 #     - Gracias
@@ -425,56 +481,59 @@ nlu:
 #     - Los datos son correctos, gracias
 #     - Sí, continúe con esos datos
 #     - Sí, esos son los datos que quiero usar
-# - intent: problema_tecnico
-#   examples: |
-#     - No tengo internet
-#     - Se me fue la señal
-#     - No funciona el servicio
-#     - Tengo problemas con el router
-#     - Se cayó la conexión
-#     - La conexión me está fallando
-#     - No tengo señal
-#     - El wifi no me agarra
-#     - Se desconectó mi internet
-#     - El servicio está caído
-#     - Mi internet no sirve
-#     - El router no prende
-#     - La luz del router está en rojo
-#     - El internet está súper lento
-#     - Tengo una emergencia con mi internet
-#     - Falla en el servicio
-#     - ¿Qué onda con la conexión?
-#     - Se traba el internet
-#     - El internet no avanza
-#     - Mi wifi se desconecta a cada rato
-#     - Tengo un problema técnico
-#     - Ayuda, mi internet no funciona
-#     - El internet está inestable
-#     - Mi router no conecta
-#     - Necesito soporte técnico, por favor
-#     - No me funciona nada
-# - intent: problema_facturacion
-#   examples: |
-#     - Tengo un problema con mi factura
-#     - Mi factura está incorrecta
-#     - No entiendo el cobro que me hicieron
-#     - Me cobraron de más este mes
-#     - Hay un error en mi recibo
-#     - Quiero reclamar un cobro
-#     - Mi factura no coincide con el servicio
-#     - ¿Por qué me cobraron extra?
-#     - No recibí mi factura
-#     - El monto de la factura está mal
-#     - Quiero revisar mi facturación
-#     - Necesito ayuda con mi factura
-#     - No me llegó el recibo
-#     - El cobro no corresponde
-#     - Tengo dudas sobre mi factura
-#     - Quiero aclarar mi factura
-#     - ¿Me pueden explicar el cobro?
-#     - Mi factura tiene cargos que no reconozco
-#     - Hay cargos no autorizados en mi factura
-#     - Quiero saber por qué subió mi factura
+- intent: problema_tecnico
+  examples: |
+    - mi inter se frego, me puedes ayudar?
+    - No tengo internet
+    - Se me fue la señal
+    - No funciona el servicio
+    - Tengo problemas con el router
+    - Se cayó la conexión
+    - La conexión me está fallando
+    - No tengo señal
+    - El wifi no me agarra
+    - Se desconectó mi internet
+    - El servicio está caído
+    - Mi internet no sirve
+    - El router no prende
+    - La luz del router está en rojo
+    - El internet está súper lento
+    - Tengo una emergencia con mi internet
+    - Falla en el servicio
+    - ¿Qué onda con la conexión?
+    - Se traba el internet
+    - El internet no avanza
+    - Mi wifi se desconecta a cada rato
+    - Tengo un problema técnico
+    - Ayuda, mi internet no funciona
+    - El internet está inestable
+    - Mi router no conecta
+    - Necesito soporte técnico, por favor
+    - No me funciona nada
+
+- intent: problema_facturacion
+  examples: |
+    - Tengo un problema con mi factura
+    - Mi factura está incorrecta
+    - No entiendo el cobro que me hicieron
+    - Me cobraron de más este mes
+    - Hay un error en mi recibo
+    - Quiero reclamar un cobro
+    - Mi factura no coincide con el servicio
+    - ¿Por qué me cobraron extra?
+    - No recibí mi factura
+    - El monto de la factura está mal
+    - Quiero revisar mi facturación
+    - Necesito ayuda con mi factura
+    - No me llegó el recibo
+    - El cobro no corresponde
+    - Tengo dudas sobre mi factura
+    - Quiero aclarar mi factura
+    - ¿Me pueden explicar el cobro?
+    - Mi factura tiene cargos que no reconozco
+    - Hay cargos no autorizados en mi factura
+    - Quiero saber por qué subió mi factura
+
 # - intent: confirmar_solucion_tecnica
 #   examples: |
 #     - Ya se solucionó el problema

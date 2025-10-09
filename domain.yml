@@ -1,5 +1,45 @@
 version: '3.1'
 slots:
+  nombre:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+  telefono:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+  email:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+  dui:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+  datos_validos:
+    type: bool
+    influence_conversation: true
+    mappings:
+    - type: custom
+  datos_confirmados:
+    type: bool
+    influence_conversation: true
+    mappings:
+    - type: custom
+  continuar_proceso:
+    type: bool
+    influence_conversation: true
+    mappings:
+    - type: custom
+  campos_invalidos:
+    type: list
+    influence_conversation: true
+    mappings:
+    - type: custom
   # cliente_existente:
   #   type: bool
   #   influence_conversation: true
@@ -20,16 +60,20 @@ slots:
   #   influence_conversation: true
   #   mappings:
   #   - type: custom
-  # datos_confirmados:
-  #   type: bool
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: custom
+
 intents:
 - saludo
 - interes_planes
+- problema_tecnico
+- problema_facturacion
+- proporcionar_datos
+- proporcionar_nombre_completo
+- proporcionar_email
+- proporcionar_telefono
+- proporcionar_dui
+- afirmar
+- negar
 # - aceptar_plan
-# - afirmar
 # - agradecimiento
 # - calificar
 # - cancelar_visita_tecnica
@@ -40,24 +84,20 @@ intents:
 # - elegir_plan
 # - escalar_humano
 # - interes_promociones
-# - negar
 # - nlu_fallback
 # - no_confirmar_solucion_tecnica
 # - nuevo_cliente
-# - problema_facturacion
-# - problema_tecnico
-# - proporcionar_datos
 # - quejas
 # - rechazar_plan
 # - rechazar_visita_tecnica
 entities:
 - necesidad
-# - dui
-# - email
+- dui
+- email
 # - calificacion
 # - plan_elegido
-# - telefono
-# - nombre
+- telefono
+- nombre
 # - respuesta
 # - plan
 # - direccion
@@ -65,12 +105,17 @@ actions:
 - utter_saludo
 - utter_ofrecer_ayuda
 - action_mostrar_planes_disponibles
+- action_validar_datos_cliente
+- utter_solicitar_datos
+- utter_modificar_datos_cliente
+- action_modificar_datos_cliente
+- utter_datos_confirmados
+- utter_reintentar
 # - utter_ofrecer_ayuda_extra
 # - utter_plan_valido
 # - utter_negar
 # - action_end
 # - utter_presentar_planes
-# - utter_solicitar_datos
 # - utter_pide_elegir_plan
 # - action_validar_plan
 # - utter_confirmar_datos_cliente
@@ -83,18 +128,23 @@ actions:
 # - utter_planes
 # - utter_ofrecer_plan
 # - utter_despedida
-# - uttler_plan_valido
+# - utter_plan_valido
 responses:
   # utter_ofrecer_ayuda_extra:
   # - text: ¿Algo más en lo que pueda ayudarte?
   # utter_pregunte_cierre:
   # - text: ¿Te gustaría contratar el plan {plan_elegido}?
-  # utter_solicitar_datos:
-  # - text: Podrías proporcionarme tu número de dui, nombre completo, número de télefono y correo electrónico por favor
+  utter_solicitar_datos:
+  - text: Podrías proporcionarme tu número de dui, nombre completo, número de télefono y correo electrónico por favor
   # utter_confirmar_datos_cliente:
   # - text: 'Para confirmar tus datos son nombre: {nombre}, DUI: {dui}, teléfono: {telefono} y correo: {email}. Eso sería correcto?'
-  # utter_corregir_datos_cliente:
-  # - text: 'Por favor, indícame los datos correctos: nombre, DUI, teléfono y correo.'
+  utter_modificar_datos_cliente:
+  - text: 'Por favor, indícame los datos correctos'
+
+  utter_datos_confirmados:
+  - text: 'Tus datos han sido confirmados.'
+  - text: 'Gracias por confirmar tu información.'
+
   utter_ofrecer_ayuda:
   - text: ¿En qué puedo ayudarte hoy?
   - text: ¿Cómo puedo asistirte?
@@ -105,6 +155,14 @@ responses:
   - text: ¿Qué te gustaría hacer hoy?
   - text: ¿En qué puedo serte útil?
   - text: ¿Qué necesitas que haga por vos?
+
+  utter_reintentar:
+  - text: Ok, intenté de nuevo, porfa.
+  - text: Dale, probá otra vez.
+  - text: Listo, hacelo de nuevo.
+  - text: Intentá otra vez.
+  - text: Probá de nuevo.
+  - text: Dale, intentá otra vez.
   # utter_identificar_cliente:
   # - text: Para ayudarte más rápido, ¿me das tu nombre completo y el número de tu contrato o DUI, porfa?
   # - text: Necesito confirmar tu identidad. Por favor, dame tu nombre y el número de teléfono con el que contrataste.
@@ -491,3 +549,6 @@ responses:
   # - text: ¡Muy bien! Agradezco tu calificación.
   # - text: ¡Chivo! Gracias por tu calificación.
   # - text: ¡Qué bueno! Agradezco tu calificación.
+session_config:
+  session_expiration_time: 60  # minutes of inactivity before session resets
+  carry_over_slots_to_new_session: true  # keep slot values between sessions
