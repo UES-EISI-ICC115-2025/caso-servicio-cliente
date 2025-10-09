@@ -6,7 +6,7 @@ intents:
 - problema_tecnico
 - problema_facturacion
 # - dar_datos
-- give_nombre_completo
+# - give_nombre_completo
 - inform
 - afirmar
 - negar
@@ -49,16 +49,12 @@ slots:
     - type: from_intent
       intent: negar
       value: false
-  temp_nombre_completo:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: nombre_completo
   nombre_completo:
     type: text
-    influence_conversation: true
     mappings:
-    - type: custom
+    - type: from_entity
+      entity: nombre_completo
+    influence_conversation: true
   telefono:
     type: text
     mappings:
@@ -124,7 +120,7 @@ slots:
 forms:
   login_form:
     required_slots:
-      # - nombre_completo
+      - nombre_completo
       - email
       - telefono
       - dui
@@ -140,7 +136,8 @@ actions:
 - utter_reintentar
 - action_capture_nombre_completo
 - action_confirm_nombre_completo
-- utter_confirmar_nombre_completo
+- utter_confirmar_nombre_completo  
+- validate_login_form
 # - utter_modificar_datos_cliente
 # - action_modificar_datos_cliente
 # - utter_datos_confirmados
@@ -171,6 +168,17 @@ responses:
     - text: "¿Cuál es tu número de teléfono?"
   utter_ask_dui:
     - text: "¿Podrías decirme tu número de DUI?"
+  # ... respuestas para la validación fallida
+  utter_wrong_email:
+    - text: "El formato del correo electrónico no es válido. Por favor, inténtalo de nuevo."
+  utter_wrong_dui:
+    - text: "El DUI no es válido. Por favor, asegúrate de que el formato y el dígito verificador sean correctos."
+  utter_wrong_telefono:
+    - text: "El número de teléfono no es válido. Debe ser de 8 dígitos."
+  utter_wrong_nombre_completo:
+    - text: "El nombre {nombre_completo} no fue encontrado."
+  utter_info_completa:
+    - text: "¡Gracias! Tu información (Correo: {email}, DUI: {dui}, Teléfono: {telefono}, Nombre: {nombre_completo}) ha sido validada."
   utter_confirmar_datos:
     - text: "¿Son correctos los siguientes datos? \nNombre completo: {nombre_completo}\nDUI: {dui}\nTeléfono: {telefono}\nCorreo Eletrónico: {email}\n"
   utter_invalid_telefono:

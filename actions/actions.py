@@ -436,120 +436,148 @@ class ActionSetNecesidad(Action):
         return [SlotSet("necesidad", necesidad_value)]
 
 
-
 class ActionCaptureNombreCompleto(Action):
     def name(self) -> Text:
         return "action_capture_nombre_completo"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
 
-        full_name_entity = next(tracker.get_latest_entity_values("nombre_completo"), None)
+        full_name_entity = next(
+            tracker.get_latest_entity_values("nombre_completo"), None
+        )
 
         if full_name_entity:
             # Captura el nombre temporalmente para pedir confirmación
             return [SlotSet("temp_nombre_completo", full_name_entity)]
         else:
-            dispatcher.utter_message(text="No pude entender tu nombre. Por favor, ¿podrías repetirlo?")
+            dispatcher.utter_message(
+                text="No pude entender tu nombre. Por favor, ¿podrías repetirlo?"
+            )
             return []
+
 
 class ActionConfirmNombreCompleto(Action):
     def name(self) -> Text:
         return "action_confirm_nombre_completo"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
         # Obtiene el nombre temporalmente almacenado
         nombre_confirmado = tracker.get_slot("temp_nombre_completo")
-        
+
         if nombre_confirmado:
-            dispatcher.utter_message(text=f"Gracias, {nombre_confirmado}. Tu nombre completo ha sido registrado.")
+            dispatcher.utter_message(
+                text=f"Gracias, {nombre_confirmado}. Tu nombre completo ha sido registrado."
+            )
             # Si el usuario confirma, mueve el nombre al slot final
             return [SlotSet("nombre_completo", nombre_confirmado)]
         else:
             return []
-        
-class ActionValidateEmail(Action):
+
+
+class ValidateInfoForm(FormValidationAction):
     def name(self) -> Text:
-        return "action_validate_email"
+        return "validate_login_form"
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        # Expresión regular para validar formato de correo electrónico
+    def validate_email(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Valida el valor del slot 'email'."""
         email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-        
-        # Obtener el valor del slot 'email'
-        email = tracker.get_slot("email")
 
-        if email and re.match(email_regex, email):
-            dispatcher.utter_message(text=f"El correo electrónico '{email}' es válido.")
-            return [SlotSet("email_valido", True)]
+        if re.match(email_regex, slot_value):
+            # dispatcher.utter_message(
+            #     text=f"El correo electrónico '{slot_value}' es válido."
+            # )
+            return {"email": slot_value}
         else:
-            dispatcher.utter_message(text="El correo electrónico ingresado no es válido. Por favor, inténtalo de nuevo.")
-            return [SlotSet("email_valido", False), SlotSet("email", None)]
+            # dispatcher.utter_message(response="utter_wrong_email")
+            return {"email": None}
 
-class ActionValidateDui(Action):
-    def name(self) -> Text:
-        return "action_validate_dui"
+    def validate_dui(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Valida el valor del slot 'dui'."""
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # Validación del formato y dígito verificador para el DUI de El Salvador
+        if re.match(r"^\d{8}-\d$", slot_value):
+            digits, digit_veri = slot_value.split("-")
+            suma = 0
+            for i in range(len(digits)):
+                suma += (9 - i) * int(digits[i])
 
-        # Obtener el valor del slot 'dui'
-        dui = tracker.get_slot("dui")
-
-        if dui:
-            # Eliminar guiones y espacios para la validación
-            dui_clean = dui.replace("-", "").strip()
-
-            # Expresión regular para verificar el formato (8 dígitos seguidos de un guión y un dígito)
-            if re.match(r"^\d{8}-\d$", dui):
-                
-                # Algoritmo de validación del dígito verificador para el DUI de El Salvador
-                digits, digit_veri = dui.split('-')
-                suma = 0
-                for i in range(len(digits)):
-                    suma += (9 - i) * int(digits[i])
-                
-                # El dígito verificador debe coincidir
-                if int(digit_veri) == (10 - (suma % 10)) % 10:
-                    dispatcher.utter_message(text=f"El DUI '{dui}' es válido.")
-                    return [SlotSet("dui_valido", True)]
-                else:
-                    dispatcher.utter_message(text="El DUI no es válido. El dígito verificador es incorrecto.")
-                    return [SlotSet("dui_valido", False), SlotSet("dui", None)]
-
+            if int(digit_veri) == (10 - (suma % 10)) % 10:
+                # dispatcher.utter_message(text=f"El DUI '{slot_value}' es válido.")
+                return {"dui": slot_value}
             else:
-                dispatcher.utter_message(text="El formato del DUI no es correcto. Debe ser '########-#' (8 dígitos, guión, 1 dígito).")
-                return [SlotSet("dui_valido", False), SlotSet("dui", None)]
-        
-        dispatcher.utter_message(text="No se proporcionó un DUI. Por favor, inténtalo de nuevo.")
-        return [SlotSet("dui_valido", False), SlotSet("dui", None)]
+                # dispatcher.utter_message(response="utter_wrong_dui")
+                return {"dui": None}
+        else:
+            # dispatcher.utter_message(response="utter_wrong_dui")
+            return {"dui": None}
 
-
-class ActionValidateTelefono(Action):
-    def name(self) -> Text:
-        return "action_validate_telefono"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        # Expresión regular para validar números de 8 dígitos de El Salvador
-        # Acepta números con o sin el prefijo +503, espacios, o guiones.
+    def validate_telefono(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Valida el valor del slot 'telefono'."""
         telefono_regex = r"^(?:\+503)?[\s-]?\d{4}[\s-]?\d{4}$"
 
-        telefono = tracker.get_slot("telefono")
-        
-        if telefono and re.match(telefono_regex, telefono):
-            dispatcher.utter_message(text=f"El número de teléfono '{telefono}' es válido.")
-            return [SlotSet("telefono_valido", True)]
+        if re.match(telefono_regex, slot_value):
+            # dispatcher.utter_message(
+            #     text=f"El número de teléfono '{slot_value}' es válido."
+            # )
+            return {"telefono": slot_value}
         else:
-            dispatcher.utter_message(text="El número de teléfono ingresado no es válido. Debe ser de 8 dígitos.")
-            return [SlotSet("telefono_valido", False), SlotSet("telefono", None)]
+            # dispatcher.utter_message(response="utter_wrong_telefono")
+            return {"telefono": None}
+
+    def validate_nombre_completo(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        """Valida el valor del slot 'nombre_completo'."""
+        nombre_completo_regex = r"^\s*(?:\S+\s+){2,9}\S+\s*$"
+
+        # Captura el mensaje completo del usuario y lo usa como valor del slot
+        full_text = tracker.latest_message.get("text", "")
+        if isinstance(full_text, str) and full_text.strip():
+            slot_value = " ".join(full_text.strip().split())
+
+        if re.match(nombre_completo_regex, slot_value):
+            # dispatcher.utter_message(text=f"El nombre '{slot_value}' es válido.")
+
+            return {"nombre_completo": slot_value}
+        else:
+            # dispatcher.utter_message(response="utter_wrong_nombre_completo")
+            return {"nombre_completo": None}
+
+    # async def extract_nombre_completo(
+    #     self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict
+    # ) -> Dict[Text, Any]:
+    #     text_of_last_user_message = tracker.latest_message.get("text")
+    #     return {"nombre_completo": text_of_last_user_message}
