@@ -4,13 +4,42 @@ nlu:
   examples: |
     - [a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+
 
-- regex: telefono
-  examples: |
-    - [0-9]{8}
+# - regex: telefono
+#   examples: |
+#     - ^(?:\+503)?[\s-]?\d{4}[\s-]?\d{4}
 
-- regex: dui
+# - regex: dui
+#   examples: |
+#     - [0-9]{8}-[0-9]{1}
+
+
+- intent: elegir_plan
   examples: |
-    - [0-9]{8}-[0-9]{1}
+    - Quiero el [plan](necesidad) [básico hogar](plan_elegido)
+    - Me interesa el [plan](necesidad) [básico hogar](plan_elegido)
+    - Quisiera contratar el [plan](necesidad) [básico hogar](plan_elegido)
+    - El [plan](necesidad) [básico hogar](plan_elegido) está bien para mí
+    - Sí, quiero el [plan](necesidad) [básico hogar](plan_elegido)
+    - Acepto el [plan](necesidad) [básico hogar](plan_elegido)
+    - Ese [plan](necesidad) [básico hogar](plan_elegido) me gusta
+    - Me quedo con el [plan](necesidad) [básico hogar](plan_elegido)
+    - Quiero el [plan](necesidad) [ultra premium](plan_elegido)
+    - Me interesa el [plan](necesidad) [ultra premium](plan_elegido)
+    - Quisiera contratar el [plan](necesidad) [ultra premium](plan_elegido)
+    - El [plan](necesidad) [ultra premium](plan_elegido) está bien para mí
+    - Sí, quiero el [plan](necesidad) [ultra premium](plan_elegido)
+    - Acepto el [plan](necesidad) [ultra premium](plan_elegido)
+    - Ese [plan](necesidad) [ultra premium](plan_elegido) me gusta
+    - Me quedo con el [plan](necesidad) [ultra premium](plan_elegido)
+    - Quiero el [plan](necesidad) [familiar estándar](plan_elegido)
+    - Me interesa el [plan](necesidad) [familiar estándar](plan_elegido)
+    - Quisiera contratar el [plan](necesidad) [familiar estándar](plan_elegido)
+    - El [plan](necesidad) [familiar estándar](plan_elegido) está bien para mí
+    - Sí, quiero el [plan](necesidad) [familiar estándar](plan_elegido)
+    - Acepto el [plan](necesidad) [familiar estándar](plan_elegido)
+    - Ese [plan](necesidad) [familiar estándar](plan_elegido) me gusta
+    - Me quedo con el [plan](necesidad) [familiar estándar](plan_elegido)
+
 - intent: saludo
   examples: |
     - Hola
@@ -64,7 +93,7 @@ nlu:
     - Soy [Luisa Fernanda Gonzales Alarcón](nombre_completo)
     - Mi nombre es [María José Estrada Merino](nombre_completo)
     - Me llamo [José Luis Rodríguez Bolaños](nombre_completo)
-- intent: inform
+- intent: give_dui
   examples: |
     - [01234567-8](dui)
     - [012345678](dui)
@@ -88,6 +117,9 @@ nlu:
     - Tengo el DUI [789012345](dui), ¿cómo está?
     - Mi documento de identidad es [890123456](dui), un placer
     - El número de mi documento es [901234567](dui), ¿qué tal?
+
+- intent: give_telefono
+  examples: |
     - [1234-5678](telefono)
     - Mi teléfono es [1234-5678](telefono)
     - El número de mi teléfono es [8765-4321](telefono)
@@ -109,6 +141,8 @@ nlu:
     - Tengo el teléfono [0987-6543](telefono), ¿cómo está?
     - Mi número de contacto es [1098-7654](telefono), un placer
     - El número para llamarme es [2109-8765](telefono), ¿qué tal?
+- intent: give_email
+  examples: |
     - [estefany.gomez@example.com](email)
     - Mi correo es [estefany.gomez@example.com](email)
     - El email que uso es [carlos.martinez@example.com](email)

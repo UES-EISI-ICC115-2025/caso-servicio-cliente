@@ -7,6 +7,8 @@ intents:
 - problema_facturacion
 # - dar_datos
 - give_nombre_completo
+- give_email
+- give_telefono
 - inform
 - afirmar
 - negar
@@ -18,7 +20,7 @@ intents:
 # - confirmar_solucion_tecnica
 # - confirmar_visita_tecnica
 # - despedida
-# - elegir_plan
+- elegir_plan
 # - escalar_humano
 # - interes_promociones
 # - nlu_fallback
@@ -30,14 +32,15 @@ intents:
 
 entities:
 - necesidad
-- dui
+# - dui
 - email
+- user_id
 # - calificacion
 # - plan_elegido
 - telefono
 - nombre_completo
 # - respuesta
-# - plan
+- plan_elegido
 # - direccion
 slots:
   confirmar:
@@ -49,33 +52,32 @@ slots:
     - type: from_intent
       intent: negar
       value: false
+
   nombre_completo:
     type: text
     mappings:
-    - type: from_entity
-      entity: nombre_completo
+    - type: from_intent
+      intent: give_nombre_completo
+      value: "Juan Antonio Moran Garza"
     influence_conversation: true
+
   telefono:
     type: text
     mappings:
     - type: from_entity
       entity: telefono
-    # validation:
-    #   rejections:
-    #     - if: not (slots.telefono matches "^(?:\+503\s?)?(?:[267]\d{3}-?\d{4})$")
-    #       utter: utter_invalid_telefono
-    #   refill_utter: "utter_reintentar" # defaults to utter_ask_phone_number
+
   email:
     type: text
     mappings:
     - type: from_entity
       entity: email
     
-  dui:
+  user_id:
     type: text
     mappings:
     - type: from_entity
-      entity: dui
+      entity: user_id
 
   # datos_validos:
   #   type: bool
@@ -102,13 +104,23 @@ slots:
   #   influence_conversation: true
   #   mappings:
   #   - type: custom
-  # plan_elegido:
-  #   type: text
-  #   influence_conversation: false
-  #   mappings:
-  #   - type: custom
+  plan_elegido:
+    type: categorical
+    influence_conversation: true
+    values:
+      - "basico_hogar"
+      - "familiar_estandar"
+      - "ultra_premium"
+    mappings:
+    - type: from_entity
+      entity: plan_elegido
   necesidad:
-    type: text
+    type: categorical
+    values:
+      - "asistencia_tecnica"
+      - "facturacion"
+      - "contratacion"
+      - "cerrar_venta"
     influence_conversation: true
     mappings:
     - type: custom
@@ -123,7 +135,7 @@ forms:
       - nombre_completo
       - email
       - telefono
-      - dui
+      # - dui
 
 actions:
 - utter_saludo
@@ -138,6 +150,9 @@ actions:
 - action_confirm_nombre_completo
 - utter_confirmar_nombre_completo  
 - validate_login_form
+- utter_solicitar_mas_info
+- action_set_cliente
+- action_cerrar_venta
 # - utter_modificar_datos_cliente
 # - action_modificar_datos_cliente
 # - utter_datos_confirmados
@@ -186,7 +201,7 @@ responses:
   utter_ask_nombre_completo:
     - text: "Por favor, dime tu nombre completo."
   utter_confirmar_nombre_completo:
-    - text: "¿Tu nombre completo es {temp_nombre_completo}?"
+    - text: "¿Tu nombre completo es {nombre_completo}?"
   utter_pedir_nombre_completo_de_nuevo:
     - text: "Disculpa, no pude entender tu nombre completo. ¿Podrías escribirlo de nuevo?"
   # utter_confirm_nombre_completo:
@@ -201,6 +216,9 @@ responses:
   # - text: 'Para confirmar tus datos son nombre: {nombre_completo}, DUI: {dui}, teléfono: {telefono} y correo: {email}. Eso sería correcto?'
   # utter_modificar_datos_cliente:
   # - text: 'Por favor, indícame los datos correctos'
+
+  utter_solicitar_mas_info:
+  - text: 'Para poder ayudarte mejor, ¿podrías darme más detalles sobre lo que te está pasando?'
 
   # utter_datos_confirmados:
   # - text: 'Tus datos han sido confirmados.'

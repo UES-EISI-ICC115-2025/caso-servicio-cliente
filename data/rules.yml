@@ -1,59 +1,48 @@
 version: "3.1"
 rules:
   - rule: Saludar al usuario
+    conversation_start: true
     steps:
       - intent: saludo
       - action: utter_saludo
       - action: utter_ofrecer_ayuda
 
-  - rule: activate login form por problema tecnico
-    steps:
-      - intent: problema_tecnico   # intent that triggers form activation
-      - action: login_form      # run the form
-      - active_loop: login_form # this form is active
-
-  - rule: activate login form por problema de facturacion
-    steps:
-      - intent: problema_facturacion   # intent that triggers form activation
-      - action: login_form      # run the form
-      - active_loop: login_form # this form is active
-
-  - rule: submit form
-    condition:
-    - active_loop: login_form   # this form must be active
-    steps:
-      - action: login_form      # run the form
-      - active_loop: null            # the form is no longer active because it has been filled
-      # - action: utter_ask_nombre_completo
-      # - intent: give_nombre_completo
-      - action: utter_confirmar_datos   # action to take after the form is complete
-
-
-
-  # - rule: Brindar Nombre completo
+  # - rule: Set cliente
   #   steps:
-  #     - intent: proporcionar_nombre_completo
-  #       entities:
-  #         - nombre: Juan Carlos Pérez Moran
-  #     - action: action_validar_datos_cliente
-  # - rule: Brindar Email
+  #     - intent: give_nombre_completo
+  #     - action: action_set_cliente
+  #     - slot_was_set:
+  #         - nombre_completo: "Juan Antonio Moran Garza"
+  #         - user_id: "123456"
+  #     - action: utter_confirmar_nombre_completo
+  #     - intent: afirmar
+
+  # - rule: activate login form por problema tecnico
   #   steps:
-  #     - intent: proporcionar_email
-  #       entities:
-  #         - email: estefany.gomez@example.com
-  #     - action: action_validar_datos_cliente
-  # - rule: Brindar Teléfono
+  #     - intent: problema_tecnico   # intent that triggers form activation
+  #     - action: action_set_necesidad
+  #     - action: action_set_cliente
+  #     # - slot_was_set:
+  #     #     - necesidad: "asistencia_tecnica"
+  #     # - action: utter_ask_nombre_completo
+
+  # - rule: activate login form por problema de facturacion
   #   steps:
-  #     - intent: proporcionar_telefono
-  #       entities:
-  #         - telefono: 9876-5432
-  #     - action: action_validar_datos_cliente
-  # - rule: Brindar DUI
+  #     - intent: problema_facturacion   # intent that triggers form activation
+  #     - action: action_set_necesidad
+  #     - action: action_set_cliente
+  # - action: login_form      # run the form
+  # - active_loop: login_form # this form is active
+
+  # - rule: submit form
+  #   condition:
+  #   - active_loop: login_form   # this form must be active
   #   steps:
-  #     - intent: proporcionar_dui
-  #       entities:
-  #         - dui: '987654321'
-  #     - action: action_validar_datos_cliente
+  #     - action: login_form      # run the form
+  #     - active_loop: null            # the form is no longer active because it has been filled
+  #     # - action: utter_ask_nombre_completo
+  #     # - intent: give_nombre_completo
+  #     - action: utter_confirmar_datos   # action to take after the form is complete
 
   # - rule: Despedirse del usuario
   #   steps:
@@ -67,8 +56,49 @@ rules:
   #     - slot_was_set:
   #         - plan_valido: false
   #     - action: utter_plan_no_disponible
+  - rule: Manejar fallback de NLU durante la oferta de planes
+    condition:
+      - slot_was_set:
+          - necesidad: "contratacion"
+    steps:
+      - intent: negar
+      - action: action_mostrar_planes_disponibles
 
-  - rule: Fallback
+  - rule: Manejar fallback de NLU durante cierre de venta
+    condition:
+      - slot_was_set:
+          - necesidad: "cerrar_venta"
+    steps:
+      - intent: negar
+      - action: action_cerrar_venta
+  - rule: Manejar fallback de NLU durante la oferta de planes
+    condition:
+      - slot_was_set:
+          - necesidad: "contratacion"
+    steps:
+      - intent: afirmar
+      - action: action_mostrar_planes_disponibles
+
+  - rule: Manejar fallback de NLU durante cierre de venta
+    condition:
+      - slot_was_set:
+          - necesidad: "cerrar_venta"
+    steps:
+      - intent: afirmar
+      - action: action_cerrar_venta
+
+  - rule: Manejar fallback de NLU durante la oferta de planes
+    condition:
+      - slot_was_set:
+          - necesidad: "contratacion"
     steps:
       - intent: nlu_fallback
-      - action: utter_default
+      - action: action_mostrar_planes_disponibles
+
+  - rule: Manejar fallback de NLU durante cierre de venta
+    condition:
+      - slot_was_set:
+          - necesidad: "cerrar_venta"
+    steps:
+      - intent: nlu_fallback
+      - action: action_cerrar_venta
