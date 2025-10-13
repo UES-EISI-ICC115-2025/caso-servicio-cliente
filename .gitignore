@@ -1,8 +1,9 @@
 # Entorno de python
 icc115-venv/
-rag-venv/
+rag_env/
 rasa_env/
 langchain_env/
+gradio-env/
 
 # Archivos compilados de Python
 __pycache__/
