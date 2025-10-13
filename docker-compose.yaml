@@ -13,8 +13,8 @@ services:
   rag-api:
     build: .
     container_name: rag-api
-    depends_on:
-      - ollama
+    # depends_on:
+    #   - ollama
     ports:
       - "8001:8001"
     environment:
