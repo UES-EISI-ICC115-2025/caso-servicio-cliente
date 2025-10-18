@@ -1,0 +1,23 @@
+version: "3.1"
+stories:
+- story: Test Case - Happy Path Internet Contract (tests/test_stories.yml)
+  steps:
+  - action: utter_greet
+  - intent: greet
+  - action: utter_ask_service
+  - intent: request_internet_service
+  - action: utter_show_plans
+  - intent: choose_plan  # predicted: choose_plan: I'll take [Plan 3](plan)
+  - slot_was_set:
+    - plan: Plan 3
+  - action: utter_ask_email
+  - intent: provide_email  # predicted: provide_email: my email is [test.user@mail.com](email)
+  - slot_was_set:
+    - email: test.user@mail.com
+  - action: utter_contract_sent  # predicted: action_listen
+  - action: utter_additional_request  # predicted: action_listen
+  - intent: deny
+  - action: utter_ask_rating  # predicted: action_default_fallback
+  - intent: provide_rating  # predicted: goodbye: a five
+  - action: utter_acknowledge_rating
+  - action: utter_goodbye  # predicted: action_default_fallback

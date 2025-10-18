@@ -1,323 +1,40 @@
-# data/stories.yml
 version: "3.1"
+
 stories:
-
-- story: Brindar información sobre planes
-  steps:
-  # - checkpoint: identificar_necesidad
-  - action: utter_ofrecer_ayuda
-  - intent: interes_planes
-  - action: action_set_necesidad
-  - slot_was_set:
-      - necesidad: "contratacion"
-  - action: action_mostrar_planes_disponibles
-
-- story: Elegir plan
-  steps:
-  - intent: elegir_plan
-    entities:
-      - plan_elegido: "basico_hogar"
-  - action: action_set_necesidad
-  - slot_was_set:
-      - necesidad: "cerrar_venta"
-  - action: action_cerrar_venta
-
-  # - checkpoint: elegir_plan
-
-# - story: Asistencia técnica
-#   steps:
-#   - action: utter_ofrecer_ayuda
-#   - intent: problema_tecnico
-#   - action: action_set_necesidad
-#   - slot_was_set:
-#       - necesidad: "asistencia_tecnica"
-#   - action: action_ask_nombre_completo
-#   - intent: give_nombre_completo
-#     entities:
-#       - user_id: "12345"  # Example user_id
-#       - nombre_completo: "Juan Antonio Moran Garza"
-#   - action: utter_confirmar_asistencia_tecnica
-
-# - story: Reportar problema facturacion
-#   steps:
-#   # - checkpoint: identificar_necesidad
-#   - action: utter_ofrecer_ayuda
-#   - intent: problema_facturacion
-#   - action: action_set_necesidad
-#   - action: utter_ask_nombre
-#   # - action: datos_cliente_form
-
-# - story: Reportar problema técnico
-#   steps:
-#   # - checkpoint: identificar_necesidad
-#   - action: utter_ofrecer_ayuda
-#   - intent: problema_tecnico
-#   - action: action_set_necesidad
-#   - action: utter_ask_nombre
-#   # - action: datos_cliente_form
-
-# - story: Capture full name
-#   steps:
-#     - intent: dar_nombre_completo
-#     - action: action_capture_full_name
-#     - slot_was_set:
-#         - nombre_completo: "Juan Antonio Pérez Calveti" # This is an example value for the slot check
-#     - action: utter_confirm_name
-
-# - story: solicitar datos del cliente
-#   steps:
-#     # - intent: solicitar_datos
-#     - action: datos_cliente_form
-#     - active_loop: datos_cliente_form
-#     - action: utter_confirmar_datos
-
-# - story: datos incorrectos, reintentar
-#   steps:
-#     - intent: negar
-#     - action: utter_reintentar
-#     - action: action_reset_datos_cliente_form
-#     - action: datos_cliente_form
-
-# - story: datos correctos, continuar
-#   steps:
-#     - intent: afirmar
-#     - action: utter_datos_confirmados
-#     - active_loop: null
-
-# - story: Login cliente
-#   steps:
-#   - checkpoint: login_cliente
-#   - action: utter_solicitar_datos
-#   - checkpoint: dar_datos_cliente
-
-# - story: cliente proporciona datos
-#   steps:
-#   - checkpoint: dar_datos_cliente
-#   - intent: proporcionar_datos
-#     entities:
-#       - nombre: Juan Pérez
-#       - telefono: 1234-5678
-#       - email: juan.perez@gmail.com
-#       - dui: '012345678'
-#   - action: action_validar_datos_cliente
-#   - checkpoint: validar_datos_cliente
-
-# - story: Validar datos del cliente - no válidos
-#   steps:
-#   - checkpoint: validar_datos_cliente
-#   - action: action_validar_datos_cliente
-#   - slot_was_set:
-#       - datos_validos: false
-#   - intent: proporcionar_datos
-#     entities:
-#       - nombre: Juan Pérez
-#       - telefono: 1234-5678
-#       - email: juan.perez@gmail.com
-#       - dui: '012345678'
-#   # - checkpoint: validar_datos_cliente
-
-# - story: Validar datos del cliente - válidos
-#   steps:
-#   - checkpoint: validar_datos_cliente
-#   - action: action_validar_datos_cliente
-#   - slot_was_set:
-#       - datos_validos: true
-#   - checkpoint: confirmar_datos_cliente
-
-# - story: Cliente confirma datos
-#   steps:
-#   - checkpoint: confirmar_datos_cliente
-#   - slot_was_set:
-#       - datos_validos: true
-#   - intent: afirmar
-#   - slot_was_set:
-#       - datos_confirmados: true
-#   - action: utter_datos_confirmados
-
-# - story: Cliente no confirma datos
-#   steps:
-#   - checkpoint: confirmar_datos_cliente
-#   - slot_was_set:
-#       - datos_validos: true
-#   - intent: negar
-#   - slot_was_set:
-#       - datos_confirmados: false
-#   - action: utter_reintentar
-#   - action: utter_modificar_datos_cliente
-
-# - story: validar plan elegido - válido
-#   steps:
-#     - checkpoint: elegir_plan
-#     - action: utter_mostrar_planes_disponibles
-#     - action: utter_pide_elegir_plan
-#     - intent: elegir_plan        # el usuario dice un plan
-#     - action: action_validar_plan # acción que valida el plan
-#     - slot_was_set:
-#         - plan_valido: true  # si el plan es válido
-#         - plan_elegido: basico  # guarda el plan elegido
-#     - action: utter_plan_valido    # si el plan es válido
-#     - checkpoint: solicitar_datos_cliente
-
-# - story: validar plan elegido - no válido
-#   steps:
-#     - checkpoint: elegir_plan
-#     - action: utter_mostrar_planes_disponibles
-#     - action: utter_pide_elegir_plan
-#     - intent: elegir_plan        # el usuario dice un plan
-#     - action: action_validar_plan # acción que valida el plan
-#     - slot_was_set:
-#         - plan_valido: false
-#     - action: utter_plan_no_disponible  # si el plan no es válido
-#     - checkpoint: elegir_plan
-
-# - story: Solicitar datos del cliente - válido
-#   steps:
-#     - checkpoint: solicitar_datos_cliente
-#     - action: utter_solicitar_datos
-#     - intent: proporcionar_datos
-#       entities:
-#         - nombre: Juan Pérez
-#         - telefono: 1234-5678
-#         - email: juan.perez@correo.com
-#         - dui: '012345678'
-#     - action: utter_confirmar_datos_cliente
-#     - intent: negar
-#     - slot_was_set:
-#         - datos_confirmados: false
-#     - action: utter_corregir_datos_cliente
-#     - checkpoint: solicitar_datos_cliente
-
-# - story: Solicitar datos del cliente - confirmado y contratación
-#   steps:
-#     - checkpoint: solicitar_datos_cliente
-#     - action: utter_solicitar_datos
-#     - intent: proporcionar_datos
-#       entities:
-#         - nombre: Juan Pérez
-#         - telefono: 1234-5678
-#         - email: juan.perez@correo.com
-#         - dui: '012345678'
-#     - action: utter_confirmar_datos_cliente
-#     - slot_was_set:
-#         - datos_confirmados: true
-#         - necesidad: contratacion
-#     - checkpoint: enviar_contrato
-
-# - story: Solicitar datos del cliente - confirmado y soporte técnico
-#   steps:
-#     - checkpoint: solicitar_datos_cliente
-#     - action: utter_solicitar_datos
-#     - intent: proporcionar_datos
-#       entities:
-#         - nombre: Juan Pérez
-#         - telefono: 1234-5678
-#         - email: juan.perez@correo.com
-#         - dui: '012345678'
-#     - action: utter_confirmar_datos_cliente    
-#     - slot_was_set:
-#         - datos_confirmados: true
-#         - necesidad: soporte_tecnico
-#     - checkpoint: soporte_tecnico
-
-# - story: Solicitar datos del cliente - confirmado y soporte facturación
-#   steps:
-#     - checkpoint: solicitar_datos_cliente
-#     - action: utter_solicitar_datos
-#     - intent: proporcionar_datos
-#       entities:
-#         - nombre: Juan Pérez
-#         - telefono: 1234-5678
-#         - email: juan.perez@correo.com
-#         - dui: '012345678'
-#     - action: utter_confirmar_datos_cliente
-#     - slot_was_set:
-#         - datos_confirmados: true
-#         - necesidad: soporte_facturacion
-#     - checkpoint: soporte_facturacion
-
-
-# - story: Cerrar Venta - Contratación
-#   steps:
-#   - checkpoint: enviar_contrato
-#   - slot_was_set:
-#     - plan_valido: true  # si el plan es válido
-#     - plan_elegido: basico  # guarda el plan elegido
-#     - datos_confirmados: true
-#     - necesidad: contratacion
-#   - action: action_enviar_contrato
-#   - checkpoint: ofrecer_ayuda_extra
-
-# - story: Ofrecer ayuda extra
-#   steps:
-#     - checkpoint: ofrecer_ayuda_extra
-#     - action: utter_ofrecer_ayuda_extra
-#     - slot_was_set:
-#         - necesidad: soporte_tecnico
-#     - checkpoint: soporte_tecnico
-#     - slot_was_set:
-#         - necesidad: soporte_facturacion
-#     - checkpoint: soporte_facturacion
-#     - slot_was_set:
-#         - necesidad: null
-#     - checkpoint: calificacion_servicio
-#     - checkpoint: identificar_necesidad
-
-# - story: Calificación del servicio
-#   steps:
-#   - checkpoint: calificacion_servicio
-#   - action: utter_pedir_calificacion
-#   - intent: calificar
-#     entities:
-#     - calificacion: '5'
-#   - action: utter_agradecer_calificacion
-#   - checkpoint: despedida
-
-# - story: Finalizar conversación
-#   steps:
-#   - checkpoint: despedida
-#   - action: utter_despedida
-#   - action: action_end
-
-# - story: interactive_story_1
-#   steps:
-#   - intent: saludo
-#   - action: utter_saludo
-#   - action: utter_ofrecer_ayuda
-#   - intent: interes_planes
-#     entities:
-#     - necesidad: plan
-#   - action: utter_presentar_planes
-#   - action: utter_mostrar_planes_disponibles
-#   - action: utter_pide_elegir_plan
-#   - intent: elegir_plan
-#     entities:
-#     - necesidad: plan
-#     - plan_elegido: básico
-#   - action: action_validar_plan
-#   - slot_was_set:
-#     - plan_valido: true
-#   - slot_was_set:
-#     - plan_elegido: básico
-#   - action: utter_plan_valido
-#   - action: utter_solicitar_datos
-#   - intent: proporcionar_datos
-#     entities:
-#     - telefono: 7777-8888
-#     - nombre: Juan
-#     - email: correo@gmail.com
-#   - intent: proporcionar_datos
-#     entities:
-#     - telefono: 7777-8888
-#     - nombre: Juan Carlos
-#     - email: correo@gmail.com
-#     - dui: '4354958490'
-#   - action: utter_confirmar_datos_cliente
-#   - action: action_enviar_contrato
-#   - action: utter_ofrecer_ayuda_extra
-#   - intent: negar
-#   - action: utter_pedir_calificacion
-#   - intent: calificar
-#     entities:
-#     - calificacion: '4'
-#   - action: utter_agradecer_calificacion
-#   - action: action_end
+  - story: Internet Service Contracting Happy Path
+    steps:
+      # 1. Bot Greets
+      - action: utter_greet
+      # 2. User Greets (Optional but good for training)
+      - intent: greet
+      # 3. Bot Responds and asks what it can do
+      - action: utter_ask_service
+      # 4. User states goal
+      - intent: request_internet_service
+      # 5. Bot shows plans
+      - action: utter_show_plans
+      # 6. User chooses a plan (extracts 'plan' entity)
+      - intent: choose_plan
+      - slot_was_set:
+          - plan: "..."
+      # 7. Bot asks for email
+      - action: utter_ask_email
+      # # 8. User provides email (extracts 'email' entity)
+      - intent: provide_email
+      # -----------------------------------------------------------------------
+      # RASA TRICK: Directly set the slot here in the story to enforce the state.
+      # This makes the story's intention clearer to the trainer.
+      # -----------------------------------------------------------------------
+      - slot_was_set:
+        - email: "some_email@example.com" # Use an explicit example value
+      # 10. User says no more requests
+      - intent: deny # Or 'goodbye', or 'thanks'
+      # 11. Bot asks for rating
+      - action: utter_ask_rating
+      # 12. User provides rating (extracts 'rating' entity)
+      - intent: provide_rating
+      - slot_was_set:
+          - rating: "..."
+      # 13. Conversation ends
+      - action: utter_acknowledge_rating
+      - action: utter_goodbye

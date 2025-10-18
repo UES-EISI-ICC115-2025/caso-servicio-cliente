@@ -1,631 +1,82 @@
-version: '3.1'
+version: "3.1"
 
+# 1. User Intents: What the user can say
 intents:
-- saludo
-- interes_planes
-- problema_tecnico
-- problema_facturacion
-# - dar_datos
-- give_nombre_completo
-- give_email
-- give_telefono
-- inform
-- afirmar
-- negar
-# - aceptar_plan
-# - agradecimiento
-# - calificar
-# - cancelar_visita_tecnica
-# - confirmar_datos
-# - confirmar_solucion_tecnica
-# - confirmar_visita_tecnica
-# - despedida
-- elegir_plan
-# - escalar_humano
-# - interes_promociones
-# - nlu_fallback
-# - no_confirmar_solucion_tecnica
-# - nuevo_cliente
-# - quejas
-# - rechazar_plan
-# - rechazar_visita_tecnica
+  - greet
+  - goodbye
+  - affirm # e.g., "yes", "that one"
+  - deny # e.g., "no", "not now"
+  - thanks
+  - out_of_scope # For additional requests outside the main task
+  - request_internet_service
+  - choose_plan
+  - provide_email
+  - provide_rating
 
+# 2. Entities: Data the bot needs to extract
 entities:
-- necesidad
-# - dui
-- email
-- user_id
-# - calificacion
-# - plan_elegido
-- telefono
-- nombre_completo
-# - respuesta
-- plan_elegido
-# - direccion
+  - plan
+  - email
+  - rating
+
+# 3. Slots: Memory for the conversation
 slots:
-  confirmar:
-    type: bool
-    mappings:
-    - type: from_intent
-      intent: afirmar
-      value: true
-    - type: from_intent
-      intent: negar
-      value: false
-
-  nombre_completo:
+  plan:
     type: text
-    mappings:
-    - type: from_intent
-      intent: give_nombre_completo
-      value: "Juan Antonio Moran Garza"
     influence_conversation: true
-
-  telefono:
-    type: text
     mappings:
-    - type: from_entity
-      entity: telefono
-
+      - type: from_entity
+        entity: plan
   email:
     type: text
-    mappings:
-    - type: from_entity
-      entity: email
-    
-  user_id:
-    type: text
-    mappings:
-    - type: from_entity
-      entity: user_id
-
-  # datos_validos:
-  #   type: bool
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: custom
-  # datos_confirmados:
-  #   type: bool
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: custom
-  # continuar_proceso:
-  #   type: bool
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: custom
-  # campos_invalidos:
-  #   type: list
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: custom
-  # cliente_existente:
-  #   type: bool
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: custom
-  plan_elegido:
-    type: categorical
-    influence_conversation: true
-    values:
-      - "basico_hogar"
-      - "familiar_estandar"
-      - "ultra_premium"
-    mappings:
-    - type: from_entity
-      entity: plan_elegido
-  necesidad:
-    type: categorical
-    values:
-      - "asistencia_tecnica"
-      - "facturacion"
-      - "contratacion"
-      - "cerrar_venta"
     influence_conversation: true
     mappings:
-    - type: custom
-  # plan_valido:
-  #   type: bool
-  #   influence_conversation: true
-  #   mappings:
-  #   - type: custom
-forms:
-  login_form:
-    required_slots:
-      - nombre_completo
-      - email
-      - telefono
-      # - dui
+      - type: from_entity
+        entity: email
+  rating:
+    type: float
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: rating
 
-actions:
-- utter_saludo
-- utter_ofrecer_ayuda
-- action_mostrar_planes_disponibles
-- action_set_necesidad
-# - action_validar_datos_cliente
-# - utter_solicitar_datos
-- utter_invalid_telefono
-- utter_reintentar
-- action_capture_nombre_completo
-- action_confirm_nombre_completo
-- utter_confirmar_nombre_completo  
-- validate_login_form
-- utter_solicitar_mas_info
-- action_set_cliente
-- action_cerrar_venta
-# - utter_modificar_datos_cliente
-# - action_modificar_datos_cliente
-# - utter_datos_confirmados
-# - utter_reintentar
-# - action_reset_datos_cliente_form
-# - utter_ofrecer_ayuda_extra
-# - utter_plan_valido
-# - utter_negar
-# - action_end
-# - utter_presentar_planes
-# - utter_pide_elegir_plan
-# - action_validar_plan
-# - utter_confirmar_datos_cliente
-# - utter_agradecer_calificacion
-# - action_enviar_contrato
-# - utter_pedir_calificacion
-# - utter_pregunte_cierre
-# - utter_agradecimiento
-# - utter_afirmar
-# - utter_planes
-# - utter_ofrecer_plan
-# - utter_despedida
-# - utter_plan_valido
+# 4. Bot Responses (Utterances)
 responses:
+  # Initial/Greeting
+  utter_greet:
+    - text: "Hello! Welcome to our service. How can I assist you today?"
+  utter_ask_service:
+    - text: "Great! I can help you with things like **contracting a new service**, **checking plan details**, or **getting technical support**."
+
+  # Service Path Responses
+  utter_show_plans:
+    - text: "I see you're interested in contracting internet service. Here are our current plans:"
+      # You would usually use a custom action or a rich response (buttons/cards) here, but for simple text:
+    - text: |
+        **Plan 1 (Basic):** 100 Mbps for $40/month
+        **Plan 2 (Standard):** 300 Mbps for $60/month
+        **Plan 3 (Premium):** 1 Gbps for $90/month
+        Which plan would you like to choose? (e.g., Plan 2)
   utter_ask_email:
-    - text: "Por favor, indícame tu correo electrónico."
-  utter_ask_telefono:
-    - text: "¿Cuál es tu número de teléfono?"
-  utter_ask_dui:
-    - text: "¿Podrías decirme tu número de DUI?"
-  # ... respuestas para la validación fallida
-  utter_wrong_email:
-    - text: "El formato del correo electrónico no es válido. Por favor, inténtalo de nuevo."
-  utter_wrong_dui:
-    - text: "El DUI no es válido. Por favor, asegúrate de que el formato y el dígito verificador sean correctos."
-  utter_wrong_telefono:
-    - text: "El número de teléfono no es válido. Debe ser de 8 dígitos."
-  utter_wrong_nombre_completo:
-    - text: "El nombre {nombre_completo} no fue encontrado."
-  utter_info_completa:
-    - text: "¡Gracias! Tu información (Correo: {email}, DUI: {dui}, Teléfono: {telefono}, Nombre: {nombre_completo}) ha sido validada."
-  utter_confirmar_datos:
-    - text: "¿Son correctos los siguientes datos? \nNombre completo: {nombre_completo}\nDUI: {dui}\nTeléfono: {telefono}\nCorreo Eletrónico: {email}\n"
-  utter_invalid_telefono:
-    - text: "El número de telefono {telefono} no es válido"
-  utter_ask_nombre_completo:
-    - text: "Por favor, dime tu nombre completo."
-  utter_confirmar_nombre_completo:
-    - text: "¿Tu nombre completo es {nombre_completo}?"
-  utter_pedir_nombre_completo_de_nuevo:
-    - text: "Disculpa, no pude entender tu nombre completo. ¿Podrías escribirlo de nuevo?"
-  # utter_confirm_nombre_completo:
-  #   - text: "Gracias, {nombre_completo}. Hemos guardado tu nombre."
-  # utter_ofrecer_ayuda_extra:
-  # - text: ¿Algo más en lo que pueda ayudarte?
-  # utter_pregunte_cierre:
-  # - text: ¿Te gustaría contratar el plan {plan_elegido}?
-  # utter_solicitar_datos:
-  # - text: Podrías proporcionarme tu número de dui, nombre completo, número de télefono y correo electrónico por favor
-  # utter_confirmar_datos_cliente:
-  # - text: 'Para confirmar tus datos son nombre: {nombre_completo}, DUI: {dui}, teléfono: {telefono} y correo: {email}. Eso sería correcto?'
-  # utter_modificar_datos_cliente:
-  # - text: 'Por favor, indícame los datos correctos'
+    - text: "Excellent choice! To send you the contract details, could you please provide your **email address**?"
+  utter_contract_sent:
+    - text: "Thank you for providing your email, **{email}**. The contract is on its way to your inbox! We appreciate you choosing our services."
 
-  utter_solicitar_mas_info:
-  - text: 'Para poder ayudarte mejor, ¿podrías darme más detalles sobre lo que te está pasando?'
+  # Post-Service Flow
+  utter_additional_request:
+    - text: "Do you have any other requests, or is there anything else I can assist you with?"
+  utter_ask_rating:
+    - text: "Thank you for using our service! Finally, could you please give us a rating from **1 (poor) to 5 (excellent)** on your experience today?"
 
-  # utter_datos_confirmados:
-  # - text: 'Tus datos han sido confirmados.'
-  # - text: 'Gracias por confirmar tu información.'
+  # General/Ending
+  utter_goodbye:
+    - text: "Goodbye! Have a great day."
+  utter_thanks_answered:
+    - text: "You're welcome! I'm glad I could help."
+  utter_acknowledge_rating:
+    - text: "We appreciate your feedback! Have a wonderful day."
 
-  utter_ofrecer_ayuda:
-  - text: ¿En qué puedo ayudarte hoy?
-  - text: ¿Cómo puedo asistirte?
-  - text: ¿Qué necesitas?
-  - text: ¿En qué te puedo ayudar?
-  - text: ¿Qué puedo hacer por vos?
-  - text: ¿Cómo te puedo servir?
-  - text: ¿Qué te gustaría hacer hoy?
-  - text: ¿En qué puedo serte útil?
-  - text: ¿Qué necesitas que haga por vos?
-
-  utter_reintentar:
-  - text: Dale, probá otra vez.
-  - text: Intentá otra vez.
-  - text: Probá de nuevo.
-  - text: Dale, intentá otra vez.
-  # utter_identificar_cliente:
-  # - text: Para ayudarte más rápido, ¿me das tu nombre completo y el número de tu contrato o DUI, porfa?
-  # - text: Necesito confirmar tu identidad. Por favor, dame tu nombre y el número de teléfono con el que contrataste.
-  # - text: Para saber quién sos, ¿me podés decir tu nombre completo y el número de tu servicio?
-  # - text: Con gusto te atiendo. ¿Cuál es tu nombre y número de identificación?
-  # - text: Antes de continuar, ¿me podés dar tus datos, porfa? Nombre y un número para identificarte.
-  # - text: Para poder ver tus datos en el sistema, necesito que me digas tu nombre completo.
-  # - text: ¡Hola! Para que podamos revisar tu cuenta, decime tu nombre y número de teléfono.
-  # - text: Necesito tu nombre y tu número de contrato para ayudarte con eso.
-  # - text: Dame tu nombre y tu DUI para que te busque en el sistema.
-  # - text: Para acceder a tu información, ¿me decís tu nombre completo, por favor?
-  # - text: Para identificar tu cuenta, decime tu nombre y tu número de servicio.
-  # - text: Antes de seguir, ¿me podés confirmar tu nombre y el número de teléfono que tenés registrado?
-  # - text: Con mucho gusto te ayudamos. Solo necesito tu nombre y el número de tu plan.
-  # - text: ¿Me das tu nombre y el número de tu contrato, porfa? Así te doy la mejor atención.
-  # - text: Dame tu nombre y tu número de teléfono, para que te identifique.
-  # - text: ¿Me decís tu nombre completo y el número de servicio, por favor?
-  # - text: Para poder ayudarte, decime tu nombre y el número de teléfono con el que tenés el servicio.
-  # - text: ¡Qué chivo que nos escribas! ¿Cuál es tu nombre completo y número de contrato?
-  # - text: Necesito tu nombre y el número de cuenta para poder ayudarte con tu problema.
-  # - text: Decime tu nombre y número de contacto, así te puedo ayudar con tu solicitud.
-  # - text: ¿Me decís tu nombre y el número de identificación para ver tu cuenta?
-  # - text: Para que te busquemos en el sistema, dame tu nombre completo y número de contrato.
-  # - text: Decime tu nombre y número de teléfono para que podamos verificar tu información.
-  # - text: Para ver el estado de tu servicio, necesito que me digas tu nombre y tu número de teléfono.
-  # - text: Con tu nombre y número de DUI puedo ver qué está pasando con tu servicio.
-  # - text: Vaya, para ayudarte, dame tu nombre y el número del servicio que te falla.
-  # - text: Para que podamos atenderte, ¿me das tu nombre y el número de tu plan?
-  # - text: Para poder darte un buen servicio, decime tu nombre completo y el número de cuenta.
-  # - text: ¡Hola! Para poder atenderte mejor, decime tu nombre y número de teléfono.
-  # - text: ¿Me podrías dar tu nombre y el número del servicio para revisarlo?
-  # utter_presentar_planes:
-  # - text: ¡Qué bueno que te interese! Tenemos varios planes de internet.
-  # - text: ¡Excelente! Tenemos planes para todos los gustos y presupuestos.
-  # - text: ¡Dale! Tenemos planes desde 50 hasta 500 megas.
-  # - text: ¡Perfecto! Tenemos planes de internet
-  # - text: ¡Genial! Tenemos varios planes de internet para vos.
-  # - text: ¡Qué chivo que te interese! Tenemos planes desde 50 hasta 500 megas.
-  # - text: ¡Claro que sí! Tenemos planes para todos los gustos y presupuestos.
-  # utter_preguntar_a_fondo:
-  # - text: Para entender mejor, ¿podrías darme más detalles del problema?
-  # - text: ¿Me podrías explicar un poco más qué es lo que está pasando?
-  # - text: Para ayudarte mejor, ¿podrías contarme más sobre lo que te está pasando?
-  # - text: ¿Podrías darme más información sobre el problema que estás teniendo?
-  # - text: Para entender bien, ¿me podrías contar más detalles del problema?
-  # - text: ¿Me podrías explicar un poco más qué es lo que no está funcionando bien?
-  # utter_plan_no_disponible:
-  # - text: El plan que solicitó no está disponible.
-  # utter_plan_valido:
-  # - text: El plan {plan_elegido} es válido y ha sido seleccionado.
-  # utter_pide_elegir_plan:
-  # - text: ¿Hay algún plan en particular que te interese?
-  # - text: ¿Querés que te cuente más de algún plan en especial?
-  # - text: ¿Te gustaría saber más de algún plan específico?
-  # - text: ¿Hay algún plan que te gustaría conocer mejor?
-  # - text: ¿Querés que te dé más detalles de algún plan en particular?
-  # utter_soporte_tecnico:
-  # - text: Vaya, entiendo que tenés un problema. ¿Podrías darme más detalles de lo que pasa?
-  # - text: Ajá, entiendo. Reinicia tu router, porfa, y me decís si se arregla.
-  # - text: Dale, te ayudo con eso. ¿Ya probaste desconectando y volviendo a conectar el router?
-  # - text: Tranquilo/a, vamos a revisar eso. ¿Podrías decirme si la luz del router está en rojo?
-  # - text: ¡Qué mala onda! Para empezar, decime si ya reiniciaste tus equipos.
-  # - text: Vamos a ver qué está pasando. ¿Me podrías decir qué error te aparece en la pantalla?
-  # - text: Vaya, para diagnosticar el problema, ¿podés hacer un test de velocidad?
-  # - text: Déjame ver qué pasa. ¿Tu router está conectado directamente a la corriente?
-  # - text: No te preocupes, lo resolvemos. ¿Podrías verificar si todos los cables están bien conectados?
-  # - text: Para el problema que me decís, necesitamos que me describas qué hace el router.
-  # - text: Para saber qué onda, ¿podrías indicarme si es problema de la red wifi o del cable?
-  # - text: Vaya, porfa, decime qué luces tiene el router encendidas o si están parpadeando.
-  # - text: Entiendo. Vamos a hacer unas pruebas. ¿Podés apagar el router y volver a encenderlo en 30 segundos?
-  # - text: Se está cortando la conexión, decís. ¿A cuántos dispositivos tenés conectado el internet?
-  # - text: No te agarra el wifi, me decís. ¿El router está cerca de donde lo usás?
-  # - text: Para el problema que tenés, ¿me podrías confirmar si el problema es en un solo dispositivo?
-  # - text: Vamos a resolver tu problema de conexión. ¿Me podés dar el nombre del servicio que te falla?
-  # - text: Para ayudarte, necesito que me des tu número de cuenta y el error que te da.
-  # - text: Para esto del internet, ¿podés decirme si has hecho algún cambio en tu configuración?
-  # - text: Con gusto te ayudo. ¿Me podés decir si el problema es de conexión a la red o de velocidad?
-  # - text: Vaya, lo revisamos. ¿Ya revisaste si el problema no es con el dispositivo que usas?
-  # - text: Entiendo. Déjame hacer un diagnóstico remoto. Dame tu número de cuenta, porfa.
-  # - text: Para el fallo de conexión, decime si ya probaste reiniciando la computadora o el teléfono.
-  # - text: ¡Uy, qué lío! Para ayudarte, ¿me podés decir desde cuándo te está fallando?
-  # - text: Vamos a ver eso. ¿Podés hacer un ping a alguna página y ver si hay pérdida de paquetes?
-  # - text: Ya te ayudamos con eso. ¿La conexión se te cae en ciertos momentos o todo el tiempo?
-  # - text: Para tu problema con el internet, ¿me podés decir si usas cable o wifi?
-  # - text: Vamos a revisar tu conexión. Decime si las luces del router están estables o parpadean.
-  # - text: ¡Qué ondas! Para lo del servicio, porfa, ¿me podés dar tu número de cliente?
-  # - text: Para el problema que tenés, ¿podés ir a la página de test de velocidad y decirme qué resultado te da?
-  # utter_nuevo_cliente:
-  # - text: ¡Qué chivo que nos consideres! Tenemos un montón de planes, ¿buscás algo para tu casa?
-  # - text: ¡Bienvenido/a! Para que te hagas cliente, ¿me das tu número de teléfono y te contactamos?
-  # - text: ¡Excelente decisión! Decime tu dirección para ver qué planes de fibra óptica tenemos para vos.
-  # - text: ¡Qué bueno! Tenemos varios paquetes, ¿querés que te mande la info por correo o por WhatsApp?
-  # - text: Para darte la información correcta, ¿qué tipo de plan estás buscando? ¿Más velocidad o más datos?
-  # - text: Para contratar, decime tus datos y uno de nuestros asesores te va a contactar súper rápido.
-  # - text: ¡Dale! Para empezar, decime tu nombre y dirección para ver los planes disponibles.
-  # - text: ¡Qué alegría! Decime, ¿querés información de internet, cable o ambos?
-  # - text: Para que te unas a la familia, ¿me decís tu nombre completo y un número de contacto?
-  # - text: ¡Qué bueno que te interesés! Para que te llamemos, dame tu nombre y teléfono.
-  # - text: Con mucho gusto te informamos. ¿Me das tu correo para enviarte la info de nuestros planes?
-  # - text: Para poner internet en tu casa, solo decime tu dirección para ver la cobertura.
-  # - text: Si querés ser cliente, decime tu nombre y te explico los paquetes que tenemos.
-  # - text: Para ver qué plan te conviene, ¿me podés decir cuántos megas creés que necesitás?
-  # - text: Tenemos los mejores precios. Para una cotización, decime tu nombre y teléfono.
-  # - text: Si querés poner internet, ¿podés darme tu dirección y te confirmo la cobertura?
-  # - text: ¡Qué bueno! Para empezar el proceso de contratación, decime tu nombre y número.
-  # - text: Claro que sí, con gusto te damos la info. ¿Me decís tu nombre para pasarte con un asesor?
-  # - text: Para saber los planes, decime si querés solo internet o paquete con cable.
-  # - text: Si te interesa el servicio, decime tu dirección para ver si llegamos hasta tu casa.
-  # - text: Con nosotros tenés la mejor velocidad. ¿Querés que te cotice un plan?
-  # - text: Para contratar, decime tu nombre y teléfono. Es súper fácil.
-  # - text: Me interesa lo que me decís. ¿Me das tu nombre y te explico cómo funciona?
-  # - text: ¡Qué chivo! Para contratar, solo necesitás tu DUI y una firma.
-  # - text: Para unirte, solo decime qué plan te interesa y te ayudamos con el papeleo.
-  # - text: ¡Dale, te damos la info! ¿Querés que te enviemos la lista de planes?
-  # - text: Si querés contratar, ¿me podés dar un correo para mandarte los requisitos?
-  # - text: Para que te hagás cliente, decime tu nombre y te explico las promos.
-  # - text: Tenemos planes bien económicos. ¿Cuántos megas estás buscando?
-  # - text: Para contratar, necesitás tu DUI y una tarjeta de crédito, ¿tenés una?
-  utter_saludo:
-  - text: ¡Qué ondas, maje! ¿En qué te puedo echar la mano?
-  - text: ¡Quiubo! ¿Qué querés hacer hoy?
-  - text: ¡Buenas! Qué gusto saludarte. ¿En qué te puedo servir?
-  - text: ¡Hey! ¿Qué tal? ¿En qué te puedo ayudar hoy?
-  - text: ¡Qué bueno que nos escribas! Decime, ¿qué onda?
-  - text: ¡Puchica, qué bueno! ¿Qué necesitas?
-  - text: ¡Aló! ¿Qué se te ofrece?
-  - text: ¡Hola! ¿Qué me cuentas?
-  - text: ¡Qué ondas, vos! ¿Qué tal todo?
-  - text: ¡Buenas, mi amigo/a! ¿Cómo andás?
-  - text: ¡Hola, hola! ¿Qué tal el día?
-  - text: ¡Ey, qué onda! ¿En qué te puedo ser útil?
-  - text: ¡Qué onda! ¿Qué necesitas que hagamos hoy?
-  - text: ¡Hola! ¿En qué puedo ayudarte?
-  - text: ¡Buenas tardes! ¿En qué puedo servirle?
-  - text: ¡Buenas noches! ¿Qué necesitas?
-  - text: ¡Vaya, qué onda, pues! ¿En qué te ayudo?
-  - text: ¡Qué bueno verte por aquí! ¿Qué te trae por acá?
-  - text: ¡Hola! ¿Todo bien? ¿Te puedo ayudar en algo?
-  - text: ¡Quiuvo! ¿Cómo estamos?
-  - text: ¡Hey! ¿Qué onda con todo?
-  - text: ¡Hola! ¿Cómo estás? ¿En qué puedo ayudarte?
-  - text: ¡Buenas! Estoy aquí para ayudarte, ¿en qué te puedo servir?
-  - text: ¡Qué chivo! ¿En qué te puedo echar una mano?
-  - text: ¡Ey, qué gusto! ¿Qué tal?
-  - text: ¡Vaya, qué onda, pues! ¿Qué se te ofrece?
-  - text: ¡Hola! Decime, ¿en qué te puedo ayudar?
-  - text: ¡Qué ondas! ¿Qué necesitas?
-  - text: ¡Buenas, buenas! ¿En qué te puedo ayudar?
-  - text: ¡Hola! ¿Cómo le va? Estoy para servirle.
-  # utter_despedida:
-  # - text: ¡Vaya pues! ¡Adiós! Que te vaya bien.
-  # - text: ¡Chao! ¡Ahí nos vemos!
-  # - text: ¡Hasta luego! Si necesitas algo más, ya sabes dónde estoy.
-  # - text: ¡Cuídate! Fue un gusto ayudarte.
-  # - text: ¡Que te vaya bonito! Cualquier cosa, volvés a escribir.
-  # - text: ¡Ahí nos vemos! ¡Púyale, pues!
-  # - text: ¡Adiós, maje! Que estés bien.
-  # - text: ¡Chao, chivo! ¡Gracias por comunicarte!
-  # - text: ¡Hasta la próxima! Siempre estamos para servirte.
-  # - text: ¡Con permiso! Que pases un buen día.
-  # - text: ¡Vaya, pues, adiós! Gracias por la preferencia.
-  # - text: ¡Nos vemos, chele! Cualquier cosa, aquí estamos.
-  # - text: ¡Hasta el rato! Te esperamos de vuelta.
-  # - text: ¡Adiós! No dudes en contactarnos otra vez.
-  # - text: ¡Que tengas un buen día! Adiós.
-  # - text: ¡Chao, chao! ¡Nos vemos pronto!
-  # - text: ¡Adiós! Fue un placer atenderte.
-  # - text: ¡Hasta la próxima! ¡Que te vaya bien!
-  # - text: ¡Saludos, pues! Gracias por tu llamada.
-  # - text: ¡Me voy, pues! Cualquier cosa, aquí me encuentras.
-  # - text: ¡Que estés bien! Adiós.
-  # - text: ¡Que te vaya bien! Si necesitas algo más, ya sabes.
-  # - text: ¡Adiós! Vuelve pronto.
-  # - text: ¡Ahí te dejo! Cualquier cosa, me buscás.
-  # - text: ¡Cuídate mucho! Adiós.
-  # - text: ¡Nos vemos! Gracias por comunicarte.
-  # - text: ¡Hasta pronto! Que tengas una excelente semana.
-  # - text: ¡Chao! Fue un gusto.
-  # - text: ¡Adiós, pues! Nos vemos en otra ocasión.
-  # - text: '¡Gracias a vos! ¡Adiós! '
-  # utter_escalar_humano:
-  # - text: ¡Vaya pues! Te voy a pasar con uno de nuestros agentes. Por favor, esperá un momento en la línea.
-  # - text: Entiendo. En este momento te transferimos con un asesor para que te atienda. Quedate en espera, porfa.
-  # - text: ¡Claro! Con mucho gusto te conecto con un agente humano. No te vayas a ir.
-  # - text: Va a ser un placer ayudarte. Te voy a pasar con alguien que te puede dar una mejor atención. Dame un momento.
-  # - text: Entiendo que necesitás hablar con alguien. Dame un momento para buscar a uno de nuestros agentes.
-  # - text: Te voy a pasar con un asesor en cuanto esté disponible. Por favor, no te desconectes.
-  # - text: De acuerdo. Te pongo en contacto con un humano para que te ayude. Gracias por tu paciencia.
-  # - text: Claro, te paso con un asesor. Por favor, no te desconectes.
-  # - text: No te preocupes, te transfiero con un agente en este momento.
-  # - text: Está bien, te voy a pasar con alguien de nuestro equipo. En un momento te van a atender.
-  # - text: Entendido, te transfiero con un agente para que te ayude. Gracias por esperar.
-  # - text: ¡Claro que sí! Conecto con un asesor. Te agradecemos la espera.
-  # - text: Dale, te paso con un agente. Mantenete en línea, porfa.
-  # - text: En un momento te atenderá uno de nuestros asesores. Gracias por la espera.
-  # - text: Te vamos a conectar con un agente. Aguardá un momento, por favor.
-  # - text: Con gusto. Te comunico con un agente. Esperá en la línea, porfa.
-  # - text: Para una mejor atención, te transfiero con un asesor. Ya casi te atienden.
-  # - text: De acuerdo. Te transferimos con un agente humano. Ya casi te atienden.
-  # - text: Está bien. Te pongo en contacto con un asesor. Por favor, dame un momento.
-  # - text: Te voy a transferir con un agente para que te ayude con tu consulta. Ya casi te atienden.
-  # - text: Te pasamos con un asesor para que te atienda. Esperá un momento, por favor.
-  # - text: Entiendo que necesitás a alguien más. Te transfiero con un agente humano. Gracias por la espera.
-  # - text: Para resolverlo, te transfiero con un asesor. Ya casi te atienden.
-  # - text: Va. En este momento te transfiero con alguien de nuestro equipo.
-  # - text: Te pasamos con un asesor. Ya te atienden, no te preocupes.
-  # - text: Entiendo tu necesidad. Te transfiero con un agente. Gracias por la paciencia.
-  # - text: Te pongo en contacto con un asesor. Mantenete en línea, por favor.
-  # - text: Te transfiero con un agente, esperá un momento.
-  # - text: Te ayudo con eso. Te conecto con un humano. Aguardá un segundo.
-  # - text: Dale, te transfiero con un agente humano. Ya te van a atender.
-  # utter_agradecimiento:
-  # - text: ¡De nada, a la orden! Si necesitás algo más, solo avisame.
-  # - text: Con gusto. Para eso estamos.
-  # - text: No hay de qué. Cualquier otra cosa, aquí me encuentras.
-  # - text: ¡Chivo! Me alegra haberte ayudado. Adiós.
-  # - text: Con mucho gusto. Fue un placer ayudarte.
-  # - text: No te preocupes, para eso estamos. Que tengas un buen día.
-  # - text: A la orden. Cualquier otra cosa, no dudes en preguntar.
-  # - text: Es un placer. Siempre estoy para servirte.
-  # - text: Con gusto, siempre que necesités algo más, avisame.
-  # - text: ¡Qué bien! Si te puedo ayudar en algo más, solo decime.
-  # - text: De nada. Cualquier otra consulta, con gusto te atiendo.
-  # - text: No hay problema. Me alegra haber sido de ayuda.
-  # - text: ¡Chivo! Que te vaya bien.
-  # - text: A la orden. Fue un gusto.
-  # - text: Para eso estamos. Que tengas un buen día.
-  # - text: No es nada, a la orden.
-  # - text: Con mucho gusto. Fue un placer.
-  # - text: Que estés bien. Si necesitas algo, avisame.
-  # - text: De nada, para eso trabajamos.
-  # - text: ¡Qué bueno! Me alegra haberte ayudado.
-  # - text: No hay de qué. Si necesitás algo más, ya sabes.
-  # - text: Siempre a la orden. Si necesitás más información, no dudes en preguntar.
-  # - text: Con gusto. Fue un placer ser de ayuda.
-  # - text: No te preocupes. ¡Que tengas un buen día!
-  # - text: ¡Qué chivo! Me alegra que todo haya salido bien.
-  # - text: Estamos a tu servicio. Fue un placer atenderte.
-  # - text: ¡De nada! Si necesitás algo, no dudes en comunicarte.
-  # - text: Con mucho gusto. Si necesitás más información, solo decime.
-  # - text: Fue un gusto poder ayudarte. ¡Adiós!
-  # - text: Para eso estamos. Nos vemos a la próxima.
-  # utter_negar:
-  # - text: Entendido, entonces no continuamos con eso.
-  # - text: De acuerdo, no seguimos con ese proceso.
-  # - text: Vaya, entendido, lo cancelo.
-  # - text: Está bien, no haremos ese cambio.
-  # - text: Ok, no hay problema. ¿Hay algo más en lo que pueda ayudarte?
-  # - text: Entendido, no continuemos con esa acción.
-  # - text: De acuerdo, lo dejaremos para después.
-  # - text: Está bien, no haremos eso.
-  # - text: Ok. No hay problema. Te puedo ayudar en otra cosa?
-  # - text: Entendido, no quieres eso.
-  # - text: De acuerdo, no hacemos el cambio.
-  # - text: Vaya, ok. ¿En qué más te puedo ayudar?
-  # - text: Está bien, lo dejamos así.
-  # - text: Ok. No hay problema.
-  # - text: Entendido, no continuamos.
-  # - text: De acuerdo, lo cancelamos.
-  # - text: Ok, lo dejamos así. ¿Algo más en que te ayude?
-  # - text: Está bien, no haremos ese proceso.
-  # - text: Entendido. ¿Hay algo más en que te pueda ayudar?
-  # - text: No hay problema, no lo haremos.
-  # - text: Vaya, está bien. ¿En qué más te puedo servir?
-  # - text: De acuerdo, lo dejamos así. ¡Con gusto te ayudo en algo más!
-  # - text: Entendido. No hay problema.
-  # - text: Ok, no continuamos con eso.
-  # - text: Está bien. ¿Qué más necesitas?
-  # - text: Vaya, ok. Lo dejamos así por ahora.
-  # - text: Entendido. ¿Qué otra cosa necesitas?
-  # - text: De acuerdo. No haremos ese paso.
-  # - text: Ok, no. ¿Te ayudo con otra cosa?
-  # - text: Está bien. ¿En qué más te sirvo?
-  # utter_afirmar:
-  # - text: ¡Chivo! Entonces, seguimos con el proceso.
-  # - text: ¡Perfecto! Continuamos.
-  # - text: De acuerdo, seguimos con el siguiente paso.
-  # - text: Vaya, ¡qué bien! Hacemos eso.
-  # - text: Dale, procedemos con lo acordado.
-  # - text: Ok, confirmado. Seguimos.
-  # - text: ¡Magnífico! Hacemos ese cambio.
-  # - text: ¡Excelente! Continuamos con el proceso.
-  # - text: De acuerdo, lo hacemos.
-  # - text: Vaya, dale. Seguimos.
-  # - text: ¡Qué chivo! Continuamos con el plan.
-  # - text: Ok, vamos adelante.
-  # - text: ¡Perfecto! Lo gestiono de inmediato.
-  # - text: ¡Dale, pues! Hagámoslo.
-  # - text: Claro, seguimos.
-  # - text: Vaya, está bien.
-  # - text: Ok, confirmado. ¿Algo más?
-  # - text: ¡Así es! Procedemos.
-  # - text: Excelente, ¡manos a la obra!
-  # - text: De acuerdo, hacemos eso.
-  # - text: Vaya, perfecto.
-  # - text: Ok, lo hacemos. ¿Algo más en qué te ayude?
-  # - text: ¡Chivo! Confirmo.
-  # - text: ¡Sí, vamos! Procedemos.
-  # - text: De acuerdo, hagámoslo.
-  # - text: Vaya, qué bien. Seguimos.
-  # - text: Ok, confirmado. ¿Qué sigue?
-  # - text: ¡Perfecto! Entonces continuamos.
-  # - text: Dale, hacemos el cambio.
-  # - text: Claro que sí. Seguimos.
-  # utter_quejas:
-  # - text: Lamento mucho escuchar eso. Para poder ayudarte a resolver tu problema, ¿me podés dar más detalles de lo que sucedió?
-  # - text: Entiendo tu molestia y te pido disculpas. Por favor, dame tu nombre y número de cuenta para ver qué podemos hacer.
-  # - text: De verdad, nos disculpamos por la mala experiencia que tuviste. Te aseguro que lo revisaremos de inmediato.
-  # - text: Te pido disculpas por el inconveniente. Vamos a revisar tu caso para darte una solución lo más pronto posible.
-  # - text: Qué pena que te haya pasado eso. Dame un momento, por favor, para revisar tu situación.
-  # - text: Lamento mucho que no estés satisfecho con nuestro servicio. Dame tu número de cuenta y revisamos qué pasó.
-  # - text: Puchica, qué pena. Vamos a tomar en cuenta tu queja para mejorar. Mientras tanto, ¿en qué te puedo ayudar?
-  # - text: Disculpá las molestias. Queremos solucionar esto cuanto antes. ¿Me das tu número de servicio?
-  # - text: Entiendo, de verdad que sí. Te pido una disculpa. ¿Podrías darme más información sobre tu problema?
-  # - text: Lamento la situación. Tomaremos las medidas necesarias. Por favor, dame tus datos para revisarlo.
-  # - text: Qué mal que te sientas así. Te pido una disculpa en nombre de la empresa. Dame tus datos para ayudarte.
-  # - text: Nos disculpamos. Para resolver tu reclamo, ¿me podés dar el número de tu caso o tus datos personales?
-  # - text: Entiendo tu queja. Para poder darte una solución, dame más información sobre tu problema.
-  # - text: Lo siento mucho. Te pido una disculpa. ¿Me puedes dar el número de tu servicio?
-  # - text: ¡Vaya pues! Tomaremos tu queja con seriedad. Te voy a pasar con un agente para que te ayude.
-  # - text: Lamentamos el mal servicio que recibiste. Para atender tu queja, dame tu número de teléfono y te contactamos.
-  # - text: Entiendo que estás molesto. De verdad, lo siento. Dame tu número de contrato y lo reviso.
-  # - text: Disculpas por lo sucedido. Queremos que tu experiencia sea la mejor. Dame los detalles para ayudarte.
-  # - text: Lamento el inconveniente. Te aseguro que tu queja será revisada. ¿Cuál es tu número de servicio?
-  # - text: Qué mal que te sientas así. Queremos solucionar tu problema. Dame más detalles, porfa.
-  # - text: Tomamos muy en serio tus comentarios. Por favor, dame tu nombre y número de cuenta para investigar.
-  # - text: De verdad, lo siento. Te pido una disculpa. Dame tus datos para que pueda ayudarte.
-  # - text: Lamento la mala experiencia. ¿Me podés dar el número de tu servicio para verificar qué pasó?
-  # - text: Entiendo que no estás contento. Queremos revertir eso. Dame tus datos para revisarlo.
-  # - text: Nos disculpamos por los inconvenientes. Dame tu número de contrato para darte seguimiento.
-  # - text: Lamento escuchar eso. Te aseguro que tomaremos las acciones necesarias. ¿Cuál es tu número de cuenta?
-  # - text: Qué pena que haya ocurrido esto. Te pido disculpas. Dame tus datos, por favor.
-  # - text: Entendido. Tu queja ha sido registrada. Dame tus datos para contactarte con un agente.
-  # - text: Disculpas. Para darte una solución, necesito tu número de servicio y el detalle de tu queja.
-  # - text: Lamento el problema. Por favor, dame tu número de cuenta para poder investigar.
-  utter_default:
-  - text: ¡Uy! No te entendí muy bien. ¿Me podés repetir, porfa?
-  - text: Disculpá, no te capté. ¿Podrías ser más claro?
-  - text: No entendí lo que dijiste. ¿Podrías decirlo de otra manera, porfa?
-  - text: ¡Uhm! Creo que no entendí bien. ¿Me puedes decir qué necesitas?
-  - text: Se me hace que no te entendí. ¿Podrías repetirlo?
-  - text: No te entiendo, mi amigo/a. ¿Puedes ser más específico?
-  - text: Vaya, no te entendí. ¿Qué onda? ¿Qué me quieres decir?
-  - text: Disculpá, no te entendí. Intentemos de nuevo, ¿va?
-  - text: No te pude entender. ¿Me podés explicar un poquito más?
-  - text: ¡Uy, se me perdió la señal! ¿Podrías repetir lo que dijiste?
-  - text: No entendí. ¿Me podrías decir qué quieres, porfa?
-  - text: No entiendo, ¿me puedes dar más detalles?
-  - text: Disculpá, no capté la idea. ¿Puedes reformularlo?
-  - text: No te entiendo. ¿Qué más me puedes decir?
-  - text: ¡Ups! No te entendí. ¿Qué querés hacer?
-  - text: No sé qué me querés decir. Intentemos de nuevo.
-  - text: Lo siento, no te entendí bien. ¿Me podrías repetir, por favor?
-  - text: No te entendí. ¿Podrías ser más específico?
-  - text: Se me hace que no entendí. ¿Podrías repetirlo, porfa?
-  - text: No te entendí, chele/chela. ¿Me podés repetir?
-  - text: Disculpa, no entendí bien. ¿Qué necesitas?
-  - text: ¡Puchica! No te entendí. ¿Puedes decirme qué pasó?
-  - text: No te entendí. ¿Podrías volver a escribir?
-  - text: No te entiendo. Intentá otra vez, porfa.
-  - text: ¡Uy, me confundiste! ¿Qué querés hacer?
-  - text: No entendí. ¿Puedes explicarme mejor?
-  - text: No sé qué me quisiste decir. ¿Qué necesitas?
-  - text: Disculpá, no entiendo. ¿Me podés repetir?
-  - text: No te entendí bien. ¿Podrías ser más claro?
-  - text: Me perdí en lo que dijiste. ¿Qué querés hacer?
-  # utter_pedir_calificacion:
-  # - text: Para mejorar nuestro servicio, ¿me podrías calificar del 1 al 5 cómo te fue hoy?
-  # - text: ¿Podrías darme una calificación del 1 al 5 sobre tu experiencia hoy?
-  # - text: ¿Cómo calificarías tu experiencia conmigo hoy, del 1 al 5?
-  # - text: Para saber cómo lo hice, ¿me podrías calificar del 1 al 5?
-  # - text: ¿Me podrías dar una calificación del 1 al 5 sobre la atención que te di?
-  # - text: ¿Cómo me calificarías del 1 al 5 por la ayuda que te brindé?
-  # - text: Para mejorar, ¿me podrías calificar del 1 al 5?
-  # - text: ¿Podrías darme una calificación del 1 al 5 sobre el servicio que te ofrecí?
-  # - text: ¿Me podrías calificar del 1 al 5 por la atención que te di hoy?
-  # utter_agradecer_calificacion:
-  # - text: ¡Gracias por tu calificación! Siempre estoy para servirte.
-  # - text: ¡Qué chivo! Gracias por tu calificación.
-  # - text: ¡Perfecto! Agradezco tu calificación.
-  # - text: ¡Dale, pues! Gracias por tu calificación.
-  # - text: ¡Excelente! Agradezco tu calificación.
-  # - text: ¡Chevere! Gracias por tu calificación.
-  # - text: ¡Muy bien! Agradezco tu calificación.
-  # - text: ¡Chivo! Gracias por tu calificación.
-  # - text: ¡Qué bueno! Agradezco tu calificación.
+# 5. Session Configuration
 session_config:
-  session_expiration_time: 60  # minutes of inactivity before session resets
-  carry_over_slots_to_new_session: true  # keep slot values between sessions
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

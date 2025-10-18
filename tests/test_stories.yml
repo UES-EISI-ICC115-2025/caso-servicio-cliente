@@ -1,91 +1,52 @@
-#### This file contains tests to evaluate that your bot behaves as expected.
-#### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
+# tests/test_stories.yml
+version: "3.1"
 
 stories:
-- story: happy path 1
+- story: Test Case - Happy Path Internet Contract
   steps:
-  - user: |
-      hello there!
-    intent: greet
+  # 1. Bot Greets
   - action: utter_greet
-  - user: |
-      amazing
-    intent: mood_great
-  - action: utter_happy
+  
+  # 2. User Greets & Bot explains capabilities
+  - user: hello
+    intent: greet
+  - action: utter_ask_service
+  
+  # 3. User states goal & Bot shows plans
+  - user: I want to contract internet service
+    intent: request_internet_service
+  - action: utter_show_plans
+  
+  # 4. User chooses a plan & Bot asks for email
+  - user: I'll take Plan 3
+    intent: choose_plan
+    entities:
+      - plan: "Plan 3"
+  - slot_was_set:
+      - plan: "Plan 3"
+  - action: utter_ask_email
+  
+  # 5. User provides email (Rule will handle the next actions)
+  - user: my email is test.user@mail.com
+    intent: provide_email
+    entities:
+      - email: "test.user@mail.com"
+  - slot_was_set:
+      - email: "test.user@mail.com"
+  
+  # 6. Bot confirms contract and asks for additional request (Actions from the Rule)
+  - action: utter_contract_sent
+  - action: utter_additional_request
 
-- story: happy path 2
-  steps:
-  - user: |
-      hello there!
-    intent: greet
-  - action: utter_greet
-  - user: |
-      amazing
-    intent: mood_great
-  - action: utter_happy
-  - user: |
-      bye-bye!
-    intent: goodbye
-  - action: utter_goodbye
-
-- story: sad path 1
-  steps:
-  - user: |
-      hello
-    intent: greet
-  - action: utter_greet
-  - user: |
-      not good
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - user: |
-      yes
-    intent: affirm
-  - action: utter_happy
-
-- story: sad path 2
-  steps:
-  - user: |
-      hello
-    intent: greet
-  - action: utter_greet
-  - user: |
-      not good
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - user: |
-      not really
+  # 7. User says no more requests & Bot asks for rating
+  - user: no
     intent: deny
+  - action: utter_ask_rating
+  
+  # 8. User provides rating & Bot acknowledges and says goodbye
+  - user: a five
+    intent: provide_rating
+    entities:
+      - rating: "5"
+  - action: utter_acknowledge_rating
   - action: utter_goodbye
-
-- story: sad path 3
-  steps:
-  - user: |
-      hi
-    intent: greet
-  - action: utter_greet
-  - user: |
-      very terrible
-    intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - user: |
-      no
-    intent: deny
-  - action: utter_goodbye
-
-- story: say goodbye
-  steps:
-  - user: |
-      bye-bye!
-    intent: goodbye
-  - action: utter_goodbye
-
-- story: bot challenge
-  steps:
-  - user: |
-      are you a bot?
-    intent: bot_challenge
-  - action: utter_iamabot
