@@ -35,18 +35,40 @@ stories:
       - email: "test.user@mail.com"
   
   # 6. Bot confirms contract and asks for additional request (Actions from the Rule)
-  - action: utter_contract_sent
-  - action: utter_additional_request
+  # - action: utter_contract_sent
+  # - action: utter_additional_request
 
   # 7. User says no more requests & Bot asks for rating
   - user: no
     intent: deny
-  - action: utter_ask_rating
   
   # 8. User provides rating & Bot acknowledges and says goodbye
+  - action: utter_ask_rating
   - user: a five
     intent: provide_rating
     entities:
       - rating: "5"
   - action: utter_acknowledge_rating
   - action: utter_goodbye
+
+- story: Test Case - Contract Denial Path
+  steps:
+  - action: utter_greet
+  - user: hi
+    intent: greet
+  - action: utter_ask_service
+  - user: I need internet
+    intent: request_internet_service
+  - action: utter_show_plans
+  - user: I changed my mind, stop the contract
+    intent: deny
+  - action: utter_contract_cancelled
+  - action: utter_ask_rating         # Bot asks for rating
+# User provides rating
+  - user: a five # Add this user input
+    intent: provide_rating
+    entities:
+      - rating: "5"
+      
+  - action: utter_acknowledge_rating # Bot acknowledges
+  - action: utter_goodbye            # Conversation ends

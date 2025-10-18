@@ -49,6 +49,7 @@ nlu:
       - [myaddress@domain.net](email) is my address
 
   # Intent: provide_rating (with entity extraction)
+  # Spelled-out letter examples (NEW)
   - intent: provide_rating
     examples: |
       - I would give it a [5](rating)
@@ -56,6 +57,17 @@ nlu:
       - a solid [5](rating)
       - "3"
       - my rating is [1](rating)
+      - I give it a [five](rating)
+      - my rating is [four](rating)
+      - a great big [five](rating)
+      - just a [one](rating)
+      - it's a [two](rating)
+      - [three](rating) out of five
+      - [five](rating)
+      - [four](rating)
+      - [three](rating)
+      - [two](rating)
+      - [one](rating)
 
   # Other necessary intents
   - intent: affirm
@@ -74,6 +86,10 @@ nlu:
       - don't
       - not really
       - skip it
+      - I don't want it anymore
+      - cancel the order
+      - I changed my mind
+      - stop the contract
 
   - intent: goodbye
     examples: |

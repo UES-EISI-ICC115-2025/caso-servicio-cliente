@@ -1,6 +1,9 @@
 version: "3.1"
 
 stories:
+# -------------------------------------------------------------
+# 1. PRIMARY HAPPY PATH
+# -------------------------------------------------------------
   - story: Internet Service Contracting Happy Path
     steps:
       # 1. Bot Greets
@@ -38,3 +41,27 @@ stories:
       # 13. Conversation ends
       - action: utter_acknowledge_rating
       - action: utter_goodbye
+# -------------------------------------------------------------
+# 2. NEW DENIAL PATH
+# -------------------------------------------------------------
+  - story: User denies contract after seeing plans
+    steps:
+    # Starts the same as the happy path (Bot greets -> User greets -> Bot asks)
+    - action: utter_greet
+    - intent: greet
+    - action: utter_ask_service
+    
+    # User states the goal (Contract internet)
+    - intent: request_internet_service
+    
+    # Bot shows plans
+    - action: utter_show_plans
+    
+    # *** THE DENIAL POINT ***
+    - intent: deny # User says "I don't want it anymore" or "cancel the order"
+    
+# --- START RESTORED RATING SEQUENCE (The multi-turn dialogue) ---
+    - action: utter_ask_rating
+    - intent: provide_rating
+    - action: utter_acknowledge_rating
+    - action: utter_goodbye

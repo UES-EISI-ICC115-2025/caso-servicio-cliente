@@ -10,5 +10,11 @@ rules:
   - action: utter_contract_sent
   - action: utter_additional_request
 
-# This checkpoint ensures that once the email is successfully provided, 
-# the story jumps past the ask-for-email part and continues the flow.
+- rule: Acknowledge email submission and proceed
+  steps:
+  - action: utter_ask_email 
+  - intent: provide_email
+  - slot_was_set:
+    - email:
+  - action: utter_contract_sent
+  - action: utter_additional_request # This rule is valid because it's deterministic.

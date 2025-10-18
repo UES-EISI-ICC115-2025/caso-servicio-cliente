@@ -14,10 +14,21 @@ stories:
   - intent: provide_email  # predicted: provide_email: my email is [test.user@mail.com](email)
   - slot_was_set:
     - email: test.user@mail.com
-  - action: utter_contract_sent  # predicted: action_listen
-  - action: utter_additional_request  # predicted: action_listen
   - intent: deny
-  - action: utter_ask_rating  # predicted: action_default_fallback
-  - intent: provide_rating  # predicted: goodbye: a five
+  - action: utter_ask_rating
+  - intent: provide_rating  # predicted: provide_rating: a [five](rating)
   - action: utter_acknowledge_rating
-  - action: utter_goodbye  # predicted: action_default_fallback
+  - action: utter_goodbye
+- story: Test Case - Contract Denial Path (tests/test_stories.yml)
+  steps:
+  - action: utter_greet
+  - intent: greet
+  - action: utter_ask_service
+  - intent: request_internet_service
+  - action: utter_show_plans
+  - intent: deny
+  - action: utter_contract_cancelled  # predicted: utter_ask_rating
+  - action: utter_ask_rating  # predicted: utter_goodbye
+  - intent: provide_rating  # predicted: provide_rating: a [five](rating)
+  - action: utter_acknowledge_rating
+  - action: utter_goodbye

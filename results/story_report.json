@@ -1,88 +1,4 @@
 {
-  "action_listen": {
-    "precision": 0.7777777777777778,
-    "recall": 1.0,
-    "f1-score": 0.8750000000000001,
-    "support": 7
-  },
-  "utter_ask_service": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "greet": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "deny": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "None": {
-    "precision": 0.0,
-    "recall": 0.0,
-    "f1-score": 0.0,
-    "support": 2
-  },
-  "provide_email": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "utter_ask_rating": {
-    "precision": 0.0,
-    "recall": 0.0,
-    "f1-score": 0.0,
-    "support": 1
-  },
-  "utter_goodbye": {
-    "precision": 0.0,
-    "recall": 0.0,
-    "f1-score": 0.0,
-    "support": 1
-  },
-  "utter_acknowledge_rating": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "utter_additional_request": {
-    "precision": 0.0,
-    "recall": 0.0,
-    "f1-score": 0.0,
-    "support": 1
-  },
-  "choose_plan": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "request_internet_service": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "utter_contract_sent": {
-    "precision": 0.0,
-    "recall": 0.0,
-    "f1-score": 0.0,
-    "support": 1
-  },
-  "provide_rating": {
-    "precision": 0.0,
-    "recall": 0.0,
-    "f1-score": 0.0,
-    "support": 1
-  },
   "utter_ask_email": {
     "precision": 1.0,
     "recall": 1.0,
@@ -93,31 +9,109 @@
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
+    "support": 2
+  },
+  "utter_goodbye": {
+    "precision": 0.6666666666666666,
+    "recall": 1.0,
+    "f1-score": 0.8,
+    "support": 2
+  },
+  "utter_contract_cancelled": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 1
+  },
+  "provide_rating": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "utter_ask_rating": {
+    "precision": 0.5,
+    "recall": 0.5,
+    "f1-score": 0.5,
+    "support": 2
+  },
+  "utter_acknowledge_rating": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "None": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 4
+  },
+  "provide_email": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
+  "request_internet_service": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "greet": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "action_listen": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 12
+  },
+  "deny": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "utter_ask_service": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "choose_plan": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
     "support": 1
   },
   "micro avg": {
-    "precision": 0.8888888888888888,
-    "recall": 0.6956521739130435,
-    "f1-score": 0.7804878048780488,
-    "support": 23
+    "precision": 0.9411764705882353,
+    "recall": 0.8421052631578947,
+    "f1-score": 0.8888888888888888,
+    "support": 38
   },
   "macro avg": {
-    "precision": 0.6111111111111112,
-    "recall": 0.625,
-    "f1-score": 0.6171875,
-    "support": 23
+    "precision": 0.8111111111111111,
+    "recall": 0.8333333333333334,
+    "f1-score": 0.8200000000000001,
+    "support": 38
   },
   "weighted avg": {
-    "precision": 0.6280193236714976,
-    "recall": 0.6956521739130435,
-    "f1-score": 0.657608695652174,
-    "support": 23
+    "precision": 0.8245614035087719,
+    "recall": 0.8421052631578947,
+    "f1-score": 0.8315789473684211,
+    "support": 38
   },
-  "accuracy": 0.6956521739130435,
+  "accuracy": 0.8421052631578947,
   "conversation_accuracy": {
     "accuracy": 0.0,
     "correct": 0,
     "with_warnings": 0,
-    "total": 1
+    "total": 2
   }
 }

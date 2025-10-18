@@ -75,6 +75,8 @@ responses:
     - text: "You're welcome! I'm glad I could help."
   utter_acknowledge_rating:
     - text: "We appreciate your feedback! Have a wonderful day."
+  utter_contract_cancelled:
+      - text: "I understand. If you decide to contract a service in the future, please feel free to reach out. Thank you for considering us. Goodbye!"
 
 # 5. Session Configuration
 session_config:
