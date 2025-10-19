@@ -31,16 +31,11 @@ stories:
       - slot_was_set:
         - email: "some_email@example.com" # Use an explicit example value
       # 10. User says no more requests
+      - action: utter_contract_sent
+      - action: utter_additional_request
       - intent: deny # Or 'goodbye', or 'thanks'
       # 11. Bot asks for rating
-      - action: utter_ask_rating
-      # 12. User provides rating (extracts 'rating' entity)
-      - intent: provide_rating
-      - slot_was_set:
-          - rating: "..."
-      # 13. Conversation ends
-      - action: utter_acknowledge_rating
-      - action: utter_goodbye
+      - checkpoint: Ask for and receive rating
 # -------------------------------------------------------------
 # 2. NEW DENIAL PATH
 # -------------------------------------------------------------
@@ -59,8 +54,14 @@ stories:
     
     # *** THE DENIAL POINT ***
     - intent: deny # User says "I don't want it anymore" or "cancel the order"
-    
+    - action: utter_contract_cancelled
 # --- START RESTORED RATING SEQUENCE (The multi-turn dialogue) ---
+    - checkpoint: Ask for and receive rating
+
+  - story: Ask for and receive rating
+    steps:
+    - checkpoint: Ask for and receive rating
+    # The story starts when the bot explicitly asks for the rating
     - action: utter_ask_rating
     - intent: provide_rating
     - action: utter_acknowledge_rating

@@ -35,11 +35,11 @@ stories:
       - email: "test.user@mail.com"
   
   # 6. Bot confirms contract and asks for additional request (Actions from the Rule)
-  # - action: utter_contract_sent
-  # - action: utter_additional_request
+  - action: utter_contract_sent
+  - action: utter_additional_request
 
   # 7. User says no more requests & Bot asks for rating
-  - user: no
+  - user: no, that's all
     intent: deny
   
   # 8. User provides rating & Bot acknowledges and says goodbye
@@ -60,7 +60,7 @@ stories:
   - user: I need internet
     intent: request_internet_service
   - action: utter_show_plans
-  - user: I changed my mind, stop the contract
+  - user: no, I don't want to sign up
     intent: deny
   - action: utter_contract_cancelled
   - action: utter_ask_rating         # Bot asks for rating

@@ -1,26 +1,14 @@
 {
-  "utter_ask_email": {
+  "choose_plan": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
     "support": 1
   },
-  "utter_show_plans": {
+  "provide_email": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 2
-  },
-  "utter_goodbye": {
-    "precision": 0.6666666666666666,
-    "recall": 1.0,
-    "f1-score": 0.8,
-    "support": 2
-  },
-  "utter_contract_cancelled": {
-    "precision": 0.0,
-    "recall": 0.0,
-    "f1-score": 0.0,
     "support": 1
   },
   "provide_rating": {
@@ -29,25 +17,7 @@
     "f1-score": 1.0,
     "support": 2
   },
-  "utter_ask_rating": {
-    "precision": 0.5,
-    "recall": 0.5,
-    "f1-score": 0.5,
-    "support": 2
-  },
-  "utter_acknowledge_rating": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 2
-  },
-  "None": {
-    "precision": 0.0,
-    "recall": 0.0,
-    "f1-score": 0.0,
-    "support": 4
-  },
-  "provide_email": {
+  "utter_additional_request": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
@@ -59,17 +29,47 @@
     "f1-score": 1.0,
     "support": 2
   },
+  "utter_show_plans": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "utter_contract_cancelled": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
   "greet": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
     "support": 2
   },
-  "action_listen": {
+  "utter_contract_sent": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 12
+    "support": 1
+  },
+  "utter_goodbye": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "utter_ask_email": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
+  "utter_acknowledge_rating": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
   },
   "deny": {
     "precision": 1.0,
@@ -83,31 +83,43 @@
     "f1-score": 1.0,
     "support": 2
   },
-  "choose_plan": {
+  "utter_ask_rating": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 1
+    "support": 2
+  },
+  "None": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 4
+  },
+  "action_listen": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 12
   },
   "micro avg": {
-    "precision": 0.9411764705882353,
-    "recall": 0.8421052631578947,
-    "f1-score": 0.8888888888888888,
-    "support": 38
+    "precision": 1.0,
+    "recall": 0.9,
+    "f1-score": 0.9473684210526316,
+    "support": 40
   },
   "macro avg": {
-    "precision": 0.8111111111111111,
-    "recall": 0.8333333333333334,
-    "f1-score": 0.8200000000000001,
-    "support": 38
+    "precision": 0.9411764705882353,
+    "recall": 0.9411764705882353,
+    "f1-score": 0.9411764705882353,
+    "support": 40
   },
   "weighted avg": {
-    "precision": 0.8245614035087719,
-    "recall": 0.8421052631578947,
-    "f1-score": 0.8315789473684211,
-    "support": 38
+    "precision": 0.9,
+    "recall": 0.9,
+    "f1-score": 0.9,
+    "support": 40
   },
-  "accuracy": 0.8421052631578947,
+  "accuracy": 0.9,
   "conversation_accuracy": {
     "accuracy": 0.0,
     "correct": 0,
