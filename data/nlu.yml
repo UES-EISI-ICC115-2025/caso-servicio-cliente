@@ -1,13 +1,6 @@
 version: "3.1"
 
 nlu:
-
-  - regex: email
-    # A standard regex pattern for email addresses
-    examples: |
-      - \b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b
-
-  # Intent: greet
   - intent: greet
     examples: |
       - hello
@@ -16,7 +9,6 @@ nlu:
       - hey there
       - how are you
 
-  # Intent: request_internet_service
   - intent: request_internet_service
     examples: |
       - I want to contract internet service
@@ -24,8 +16,23 @@ nlu:
       - I'm looking for an internet subscription
       - contract internet
       - new internet service please
+      - i wanna contract a new plan
+      - wanna get a new service
+      - want to contract internet
+      - new contract for internet
+      - looking to sign up for a plan
+      - sign up for internet
+      - contract a plan
+      - i wanna get a new plan
+      - new contract for internet
+      - looking to sign up for a plan
+      - new plan
+      - sign up
+      - buy internet
+      - contract a service
+      - looking for a plan
+      - internet contract
 
-  # Intent: choose_plan (with entity extraction)
   - intent: choose_plan
     examples: |
       - I'll take [Plan 2](plan)
@@ -34,9 +41,7 @@ nlu:
       - go with [Plan 3](plan)
       - [Plan 1](plan) please
 
-  # Intent: provide_email (with entity extraction)
   - intent: provide_email
-# Crucial: Add examples that might include misspellings or extra text
     examples: |
       - my email is [user@example.com](email)
       - you can send it to [test.user@mail.com](email)
@@ -48,8 +53,6 @@ nlu:
       - my email is [wrongly_spelled@gogle.com](email) # Match the context of your user's typo
       - [myaddress@domain.net](email) is my address
 
-  # Intent: provide_rating (with entity extraction)
-  # Spelled-out letter examples (NEW)
   - intent: provide_rating
     examples: |
       - I would give it a [5](rating)
@@ -69,7 +72,6 @@ nlu:
       - [two](rating)
       - [one](rating)
 
-  # Other necessary intents
   - intent: affirm
     examples: |
       - yes
@@ -111,3 +113,7 @@ nlu:
       - I need support
       - Check my bill
       - I have another question
+
+  - regex: email
+    examples: |
+      - \b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b

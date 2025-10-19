@@ -1,68 +1,37 @@
 version: "3.1"
 
 stories:
-# -------------------------------------------------------------
-# 1. PRIMARY HAPPY PATH
-# -------------------------------------------------------------
   - story: Internet Service Contracting Happy Path
     steps:
-      # 1. Bot Greets
       - action: utter_greet
-      # 2. User Greets (Optional but good for training)
       - intent: greet
-      # 3. Bot Responds and asks what it can do
       - action: utter_ask_service
-      # 4. User states goal
       - intent: request_internet_service
-      # 5. Bot shows plans
       - action: utter_show_plans
-      # 6. User chooses a plan (extracts 'plan' entity)
       - intent: choose_plan
       - slot_was_set:
           - plan: "..."
-      # 7. Bot asks for email
       - action: utter_ask_email
-      # # 8. User provides email (extracts 'email' entity)
       - intent: provide_email
-      # -----------------------------------------------------------------------
-      # RASA TRICK: Directly set the slot here in the story to enforce the state.
-      # This makes the story's intention clearer to the trainer.
-      # -----------------------------------------------------------------------
       - slot_was_set:
-        - email: "some_email@example.com" # Use an explicit example value
-      # 10. User says no more requests
+        - email: "some_email@example.com" 
       - action: utter_contract_sent
       - action: utter_additional_request
-      - intent: deny # Or 'goodbye', or 'thanks'
-      # 11. Bot asks for rating
-      - checkpoint: Ask for and receive rating
-# -------------------------------------------------------------
-# 2. NEW DENIAL PATH
-# -------------------------------------------------------------
+      - intent: deny
+      - action: utter_ask_rating
+
   - story: User denies contract after seeing plans
     steps:
-    # Starts the same as the happy path (Bot greets -> User greets -> Bot asks)
     - action: utter_greet
     - intent: greet
     - action: utter_ask_service
-    
-    # User states the goal (Contract internet)
     - intent: request_internet_service
-    
-    # Bot shows plans
     - action: utter_show_plans
-    
-    # *** THE DENIAL POINT ***
-    - intent: deny # User says "I don't want it anymore" or "cancel the order"
+    - intent: deny
     - action: utter_contract_cancelled
-# --- START RESTORED RATING SEQUENCE (The multi-turn dialogue) ---
-    - checkpoint: Ask for and receive rating
+    - action: utter_ask_rating
 
   - story: Ask for and receive rating
     steps:
     - checkpoint: Ask for and receive rating
-    # The story starts when the bot explicitly asks for the rating
     - action: utter_ask_rating
-    - intent: provide_rating
-    - action: utter_acknowledge_rating
-    - action: utter_goodbye

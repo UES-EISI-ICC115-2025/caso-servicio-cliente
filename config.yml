@@ -21,11 +21,13 @@ pipeline:
 
   # Main NLU machine learning components
 - name: DIETClassifier   # Intent classification and entity extraction
-  epochs: 100
+  epochs: 200
   constrain_negatives: true
+  constrain_similarities: true
 - name: EntitySynonymMapper
 - name: ResponseSelector   # Handles chitchat and frequently asked questions
   epochs: 100
+  constrain_similarities: true
 
 # The policies determine how the Core component chooses the next action.
 policies:

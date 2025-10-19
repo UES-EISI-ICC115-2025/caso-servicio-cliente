@@ -5,16 +5,19 @@ rules:
   steps:
   - action: utter_ask_email # Trigger condition: Bot just asked for email
   - intent: provide_email           # User provides email (setting the slot)
-  - slot_was_set:
-    - email: # Check the slot was set to any value
+  # - slot_was_set:
+  #   - email: 
   - action: utter_contract_sent
   - action: utter_additional_request
 
-- rule: Acknowledge email submission and proceed
+- rule: Show plans immediately after service request
   steps:
-  - action: utter_ask_email 
-  - intent: provide_email
-  - slot_was_set:
-    - email:
-  - action: utter_contract_sent
-  - action: utter_additional_request # This rule is valid because it's deterministic.
+  - intent: request_internet_service
+  - action: utter_show_plans
+
+- rule: Final action - say goodbye after acknowledgement
+  steps:
+  - intent: provide_rating
+  - action: utter_acknowledge_rating # Bot just acknowledged the rating
+  - action: utter_goodbye           # Bot must immediately say goodbye
+  - action: action_session_start
