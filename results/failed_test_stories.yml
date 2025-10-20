@@ -7,20 +7,20 @@ stories:
   - action: utter_ask_service
   - intent: request_internet_service
   - action: utter_show_plans
-  - intent: choose_plan  # predicted: choose_plan: I'll take [Plan 3](plan)
+  - intent: choose_plan  # predicted: choose_plan: Yo quiero el plan [basico](plan)
   - slot_was_set:
-    - plan: Plan 3
+    - plan: Plan 1
   - action: utter_ask_email
-  - intent: provide_email  # predicted: provide_email: my email is [test.user@mail.com](email)
+  - intent: provide_email  # predicted: provide_email: mi correo es [test.user@mail.com](email)
   - slot_was_set:
     - email: test.user@mail.com
   - action: utter_contract_sent
   - action: utter_additional_request
   - intent: deny
   - action: utter_ask_rating
-  - intent: provide_rating  # predicted: provide_rating: a [five](rating)
+  - intent: provide_rating  # predicted: choose_plan: le doy un [5](rating)
   - action: utter_acknowledge_rating
-  - action: utter_goodbye
+  - action: action_listen  # predicted: utter_goodbye
 - story: Test Case - Contract Denial Path (tests/test_stories.yml)
   steps:
   - action: utter_greet
@@ -31,6 +31,6 @@ stories:
   - intent: deny
   - action: utter_contract_cancelled
   - action: utter_ask_rating
-  - intent: provide_rating  # predicted: provide_rating: a [five](rating)
+  - intent: provide_rating  # predicted: choose_plan: [4](rating)
   - action: utter_acknowledge_rating
-  - action: utter_goodbye
+  - action: action_listen  # predicted: utter_goodbye

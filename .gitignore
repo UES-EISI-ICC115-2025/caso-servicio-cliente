@@ -5,6 +5,8 @@ rasa_env/
 langchain_env/
 gradio-env/
 .venv
+app_env/
+test_venv/
 
 # Archivos compilados de Python
 __pycache__/

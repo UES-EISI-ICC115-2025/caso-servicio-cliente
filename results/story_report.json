@@ -1,58 +1,4 @@
 {
-  "request_internet_service": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 2
-  },
-  "utter_contract_sent": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "utter_show_plans": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 2
-  },
-  "greet": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 2
-  },
-  "utter_ask_email": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "choose_plan": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "utter_goodbye": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 2
-  },
-  "utter_contract_cancelled": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 1
-  },
-  "action_listen": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 12
-  },
   "utter_additional_request": {
     "precision": 1.0,
     "recall": 1.0,
@@ -65,13 +11,25 @@
     "f1-score": 1.0,
     "support": 1
   },
-  "provide_rating": {
+  "action_listen": {
     "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 2
+    "recall": 0.8333333333333334,
+    "f1-score": 0.9090909090909091,
+    "support": 12
   },
-  "utter_ask_service": {
+  "choose_plan": {
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "f1-score": 0.5,
+    "support": 1
+  },
+  "None": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 4
+  },
+  "greet": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
@@ -89,37 +47,73 @@
     "f1-score": 1.0,
     "support": 2
   },
+  "request_internet_service": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "utter_show_plans": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
   "deny": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
     "support": 2
   },
-  "None": {
+  "provide_rating": {
     "precision": 0.0,
     "recall": 0.0,
     "f1-score": 0.0,
-    "support": 4
+    "support": 2
+  },
+  "utter_ask_email": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
+  "utter_contract_sent": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
+  },
+  "utter_ask_service": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 2
+  },
+  "utter_contract_cancelled": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 1
   },
   "micro avg": {
-    "precision": 1.0,
-    "recall": 0.9,
-    "f1-score": 0.9473684210526316,
-    "support": 40
+    "precision": 0.9375,
+    "recall": 0.7894736842105263,
+    "f1-score": 0.8571428571428572,
+    "support": 38
   },
   "macro avg": {
-    "precision": 0.9411764705882353,
-    "recall": 0.9411764705882353,
-    "f1-score": 0.9411764705882353,
-    "support": 40
+    "precision": 0.8333333333333334,
+    "recall": 0.8645833333333334,
+    "f1-score": 0.8380681818181819,
+    "support": 38
   },
   "weighted avg": {
-    "precision": 0.9,
-    "recall": 0.9,
-    "f1-score": 0.9,
-    "support": 40
+    "precision": 0.8245614035087719,
+    "recall": 0.7894736842105263,
+    "f1-score": 0.8002392344497608,
+    "support": 38
   },
-  "accuracy": 0.9,
+  "accuracy": 0.7894736842105263,
   "conversation_accuracy": {
     "accuracy": 0.0,
     "correct": 0,

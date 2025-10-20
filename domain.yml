@@ -44,39 +44,54 @@ slots:
 responses:
   # Initial/Greeting
   utter_greet:
-    - text: "Hello! Welcome to our service. How can I assist you today?"
+    - text: "¡Buenas! Bienvenido a nuestro servicio. ¿En qué te puedo ayudar?"
+    - text: "¡Qué onda! ¿Listo para que te ayude con algo?"
   utter_ask_service:
-    - text: "Great! I can help you with things like **contracting a new service**, **checking plan details**, or **getting technical support**."
+    - text: "¡Chivo! Te puedo ayudar con cosas como **contratar un servicio nuevo**, **chequear los detalles de un plan**, o **darte soporte técnico**."
+    - text: "¡De a galán! Te ayudo a **agarrar un plan nuevo**, **ver los detalles de los planes**, o con **soporte técnico**."
 
   # Service Path Responses
   utter_show_plans:
-    - text: "I see you're interested in contracting internet service. Here are our current plans:"
-      # You would usually use a custom action or a rich response (buttons/cards) here, but for simple text:
     - text: |
-        **Plan 1 (Basic):** 100 Mbps for $40/month
-        **Plan 2 (Standard):** 300 Mbps for $60/month
-        **Plan 3 (Premium):** 1 Gbps for $90/month
-        Which plan would you like to choose? (e.g., Plan 2)
+        Veo que querés contratar internet. Cabal, aquí están nuestros planes:
+        **Plan 1 (Básico):** 100 Mbps por $40/mes
+        **Plan 2 (Estándar):** 300 Mbps por $60/mes
+        **Plan 3 (Premium):** 1 Gbps por $90/mes
+        ¿Cuál plan te gusta más? (ej., Plan 2)
+    - text: |
+        Con gusto, aquí te muestro los planes que tenemos para que navegués:
+        **Plan 1 (Básico):** 100 Mbps por $40 al mes
+        **Plan 2 (Estándar):** 300 Mbps por $60 al mes
+        **Plan 3 (Premium):** 1 Gbps por $90 al mes
+        Decime, ¿cuál de estos te llega más?
   utter_ask_email:
-    - text: "Excellent choice! To send you the contract details, could you please provide your **email address**?"
+    - text: "¡Excelente elección! Para mandarte los detalles del contrato, ¿me podrías dar tu **correo electrónico**, porfa?"
+    - text: "¡Chivísimo! ¿Me regalás tu **correo** para enviarte el contrato?"
   utter_contract_sent:
-    - text: "Thank you for providing your email, **{email}**. The contract is on its way to your inbox! We appreciate you choosing our services."
+    - text: "Gracias por tu correo, **{email}**. ¡Ya va en camino el contrato a tu bandeja de entrada! Te agradecemos por preferirnos."
+    - text: "¡Cabal! Ya te mandé el contrato a **{email}**. ¡Gracias por elegirnos, estamos a la orden!"
 
   # Post-Service Flow
   utter_additional_request:
-    - text: "Do you have any other requests, or is there anything else I can assist you with?"
+    - text: "¿Necesitás algo más o ya estamos?"
+    - text: "¿Te puedo ayudar en alguna otra cosa?"
   utter_ask_rating:
-    - text: "Thank you for using our service! Finally, could you please give us a rating from **1 (poor) to 5 (excellent)** on your experience today?"
+    - text: "¡Gracias por usar nuestro servicio! Por último, ¿nos podrías regalar una calificación del **1 (malo) al 5 (excelente)** sobre tu experiencia de hoy?"
+    - text: "¡Ya casi terminamos! Solo te pido que califiqués la atención con una nota del **1 al 5**. ¡Gracias!"
 
   # General/Ending
   utter_goodbye:
-    - text: "Goodbye! Have a great day."
+    - text: "¡Vaya pues, cuidate! ¡Feliz día!"
+    - text: "¡Adiós! Que tengas un buen día."
   utter_thanks_answered:
-    - text: "You're welcome! I'm glad I could help."
+    - text: "¡A la orden! Me alegra haberte ayudado."
+    - text: "¡Ya sabés! Para eso estamos."
   utter_acknowledge_rating:
-    - text: "We appreciate your feedback! Have a wonderful day."
+    - text: "¡Te agradecemos tu opinión! ¡Que tengas un día chivo!"
+    - text: "¡Gracias por tu calificación! ¡Pasa un feliz día!"
   utter_contract_cancelled:
-      - text: "I understand. If you decide to contract a service in the future, please feel free to reach out. Thank you for considering us. Goodbye!"
+      - text: "Entiendo, no hay problema. Si más adelante te animás, aquí vamos a estar. ¡Gracias por considerarnos! ¡Cuidate!"
+      - text: "Está bien, te entiendo. Cualquier cosa, ya sabés dónde encontrarnos. ¡Gracias y adiós!"
 
 # 5. Session Configuration
 session_config:

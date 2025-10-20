@@ -3,55 +3,59 @@ version: "3.1"
 nlu:
   - intent: greet
     examples: |
-      - hello
-      - hi
-      - good morning
-      - hey there
-      - how are you
+      - hola
+      - qué onda
+      - buenos días
+      - qué tal
+      - cómo estás
 
   - intent: request_internet_service
     examples: |
-      - I want to contract internet service
-      - I need a new plan
-      - I'm looking for an internet subscription
-      - contract internet
-      - new internet service please
-      - i wanna contract a new plan
-      - wanna get a new service
-      - want to contract internet
-      - new contract for internet
-      - looking to sign up for a plan
-      - sign up for internet
-      - contract a plan
-      - i wanna get a new plan
-      - new contract for internet
-      - looking to sign up for a plan
-      - new plan
-      - sign up
-      - buy internet
-      - contract a service
-      - looking for a plan
-      - internet contract
+      - quiero contratar un plan nuevo
+      - quiero un servicio nuevo
+      - quiero contratar internet
+      - un contrato nuevo de internet
+      - ando viendo para inscribirme a un plan
+      - inscribirme a internet
+      - contratar un plan
+      - quiero agarrar un plan nuevo
+      - un contrato nuevo de internet
+      - ando viendo para inscribirme a un plan
+      - plan nuevo
+      - inscribirme
+      - comprar internet
+      - contratar un servicio
+      - ando buscando un plan
+      - contrato de internet
 
   - intent: choose_plan
     examples: |
-      - I'll take [Plan 2](plan)
-      - The [Standard](plan) one
-      - I choose the [Premium](plan) plan
-      - go with [Plan 3](plan)
-      - [Plan 1](plan) please
+      - [Plan 1](plan) porfa
+      - Deme el [Plan 2](plan)
+      - El [Estándar](plan), ese mero
+      - Voy a agarrar el plan [Premium](plan)
+      - Me quedo con el [Plan 3](plan)
+      - El [Plan 1](plan) porfa
+      - [Plan 1](plan) por favor
+      - [Plan 2](plan)
+      - [Plan 3](plan)
+      - [Estándar](plan)
+      - [Premium](plan)
+      - [básico](plan)
+      - [basico](plan)
+      - plan [basico](plan)
 
   - intent: provide_email
     examples: |
-      - my email is [user@example.com](email)
-      - you can send it to [test.user@mail.com](email)
-      - [myemail@server.net](email)
-      - it's [inbox@company.org](email)
+      - mi correo es [usuario@ejemplo.com](email)
+      - lo puede mandar a [prueba.usuario@correo.com](email)
+      - [micorreo@servidor.net](email)
+      - es [bandeja@empresa.org](email)
       - [moralesandrea.edr4@gmail.com](email)
-      - sure, its [myemail@here.com](email)
-      - [john.doe@email.co](email) thanks
-      - my email is [wrongly_spelled@gogle.com](email) # Match the context of your user's typo
-      - [myaddress@domain.net](email) is my address
+      - claro, es [micorreo@aqui.com](email)
+      - [juan.perez@correo.co](email) gracias
+      - mi correo es [mal_escrito@gogle.com](email) # Match the context of your user's typo
+      - [midireccion@dominio.net](email) es mi dirección
 
   - intent: provide_rating
     examples: |
@@ -74,45 +78,50 @@ nlu:
 
   - intent: affirm
     examples: |
-      - yes
-      - yeah
-      - absolutely
-      - correct
-      - please do
-      - sure
+      - sí
+      - ajá
+      - por supuesto
+      - correcto
+      - por favor
+      - claro
 
   - intent: deny
     examples: |
       - no
-      - nope
-      - don't
-      - not really
-      - skip it
-      - I don't want it anymore
-      - cancel the order
-      - I changed my mind
-      - stop the contract
+      - nel
+      - no quiero
+      - la verdad no
+      - saltar
+      - ya no lo quiero
+      - cancelar el pedido
+      - cambié de opinión
+      - parar el contrato
+      - solamente
+      - eso es todo
 
   - intent: goodbye
     examples: |
-      - bye
-      - goodbye
-      - see you later
-      - talk to you soon
-      - thanks, bye
+      - adiós
+      - hasta luego
+      - nos vemos
+      - hablamos pronto
+      - gracias, adiós
 
   - intent: thanks
     examples: |
-      - thank you
-      - thanks
-      - much appreciated
-      - thank you so much
+      - gracias
+      - muchas gracias
+      - se lo agradezco mucho
+      - muchísimas gracias
 
   - intent: out_of_scope
     examples: |
       - I need support
-      - Check my bill
-      - I have another question
+      - Necesito ayuda
+      - Quiero ver la factura
+      - Necesito revisar la factura
+      - Tengo problemas con la facturacion
+      - Tengo otra consulta
 
   - regex: email
     examples: |

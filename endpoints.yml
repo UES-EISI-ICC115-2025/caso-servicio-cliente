@@ -11,27 +11,13 @@
 # https://rasa.com/docs/rasa/custom-actions
 
 action_endpoint:
- url: "http://localhost:5055/webhook"
- timeout: 120
+  url: "http://localhost:5055/webhook"
+  timeout: 120
 
 # Tracker store which is used to store the conversations.
 # By default the conversations are stored in memory.
 # https://rasa.com/docs/rasa/tracker-stores
 
-#tracker_store:
-#    type: redis
-#    url: <host of the redis instance, e.g. localhost>
-#    port: <port of your redis instance, usually 6379>
-#    db: <number of your database within redis, e.g. 0>
-#    password: <password used for authentication>
-#    use_ssl: <whether or not the communication is encrypted, default false>
-
-#tracker_store:
-#    type: mongod
-#    url: <url to your mongo instance, e.g. mongodb://localhost:27017>
-#    db: <name of the db within your mongo instance, e.g. rasa>
-#    username: <username used for authentication>
-#    password: <password used for authentication>
 
 # Event broker which all conversation events should be streamed to.
 # https://rasa.com/docs/rasa/event-brokers
@@ -41,3 +27,13 @@ action_endpoint:
 #  username: username
 #  password: password
 #  queue: queue
+
+# tracker_store:
+#   type: SQL
+#   dialect: postgresql
+#   url: postgresql://rasa:icc115@localhost:5432/rasa_conversations
+  # url: localhost
+  # port: 5432
+  # user: rasa
+  # password: icc115
+  # db: "public.rasa_conversations"

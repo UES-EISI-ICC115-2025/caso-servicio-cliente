@@ -3,7 +3,7 @@ import requests
 import os
 
 # --- Configuration (Replace with your actual API details) ---
-API_URL = "https://your-chatbot-api.com/chat"
+API_URL = "http://localhost:5005/webhooks/rest/webhook"
 API_KEY = os.getenv("CHAT_API_KEY") 
 # IMPORTANT: Set the environment variable 'CHAT_API_KEY' in your terminal
 # e.g., export CHAT_API_KEY="sk-xxxxxxxxxxxxxxxx" 
@@ -47,7 +47,7 @@ def get_bot_response_streaming(message, history):
 
 
 # --- Create and Customize the Interface ---
-demo = gr.ChatInterface(
+app = gr.ChatInterface(
     fn=get_bot_response_streaming,
     title="Servicio al cliente",
     description="Chat de atención al cliente automatizado. Escribe tu consulta y recibe respuestas en tiempo real.",
@@ -56,7 +56,8 @@ demo = gr.ChatInterface(
 )
 
 if __name__ == "__main__":
-    demo.launch(
+    app.launch(
         server_name="0.0.0.0", 
-        server_port=7860     # Optional: specify a port (7860 is the default)
+        server_port=8081, # MUST match the port NGINX targets (8080)
+        show_api=False,  # Opcional, limpia la interfaz
     )

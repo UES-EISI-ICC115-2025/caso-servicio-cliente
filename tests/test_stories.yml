@@ -8,26 +8,26 @@ stories:
   - action: utter_greet
   
   # 2. User Greets & Bot explains capabilities
-  - user: hello
+  - user: qué onda
     intent: greet
   - action: utter_ask_service
   
   # 3. User states goal & Bot shows plans
-  - user: I want to contract internet service
+  - user: quiero agarrar un plan de internet
     intent: request_internet_service
   - action: utter_show_plans
   
   # 4. User chooses a plan & Bot asks for email
-  - user: I'll take Plan 3
+  - user: Yo quiero el plan basico
     intent: choose_plan
     entities:
-      - plan: "Plan 3"
+      - plan: "Plan 1"
   - slot_was_set:
-      - plan: "Plan 3"
+      - plan: "Plan 1"
   - action: utter_ask_email
   
   # 5. User provides email (Rule will handle the next actions)
-  - user: my email is test.user@mail.com
+  - user: mi correo es test.user@mail.com
     intent: provide_email
     entities:
       - email: "test.user@mail.com"
@@ -39,36 +39,34 @@ stories:
   - action: utter_additional_request
 
   # 7. User says no more requests & Bot asks for rating
-  - user: no, that's all
+  - user: solamente
     intent: deny
   
   # 8. User provides rating & Bot acknowledges and says goodbye
   - action: utter_ask_rating
-  - user: a five
+  - user: le doy un 5
     intent: provide_rating
     entities:
       - rating: "5"
   - action: utter_acknowledge_rating
-  - action: utter_goodbye
 
 - story: Test Case - Contract Denial Path
   steps:
   - action: utter_greet
-  - user: hi
+  - user: buenas
     intent: greet
   - action: utter_ask_service
-  - user: I need internet
+  - user: quiero internet
     intent: request_internet_service
   - action: utter_show_plans
-  - user: no, I don't want to sign up
+  - user: no, no me gusto ninguno
     intent: deny
   - action: utter_contract_cancelled
   - action: utter_ask_rating         # Bot asks for rating
 # User provides rating
-  - user: a five # Add this user input
+  - user: "4"
     intent: provide_rating
     entities:
-      - rating: "5"
+      - rating: "4"
       
   - action: utter_acknowledge_rating # Bot acknowledges
-  - action: utter_goodbye            # Conversation ends

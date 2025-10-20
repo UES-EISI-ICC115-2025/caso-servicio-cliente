@@ -20,4 +20,3 @@ rules:
   - intent: provide_rating
   - action: utter_acknowledge_rating # Bot just acknowledged the rating
   - action: utter_goodbye           # Bot must immediately say goodbye
-  - action: action_session_start
