@@ -1,12 +1,9 @@
 import gradio as gr
 import requests
-import os
 
-# --- Configuration (Replace with your actual API details) ---
-API_URL = "http://localhost:5005/webhooks/rest/webhook"
-API_KEY = os.getenv("CHAT_API_KEY") 
-# IMPORTANT: Set the environment variable 'CHAT_API_KEY' in your terminal
-# e.g., export CHAT_API_KEY="sk-xxxxxxxxxxxxxxxx" 
+# --- Configuration ---
+API_URL = "http://localhost:5005/webhooks/rest/webhook"  # Rasa API endpoint
+
 
 # --- The API Bridge Function with Streaming ---
 def get_bot_response_streaming(message, history):
@@ -17,47 +14,34 @@ def get_bot_response_streaming(message, history):
         formatted_messages.append({"role": "assistant", "content": assistant})
     formatted_messages.append({"role": "user", "content": message})
 
-    # 2. Prepare the request (replace with your API's specific JSON structure)
-    headers = {"Authorization": f"Bearer {API_KEY}"}
-    payload = {
-        "messages": formatted_messages,
-        "model": "your_api_model_name",
-        "stream": True # Important for real-time display
-    }
+    payload = {"sender": "user", "message": message}  # A unique identifier for the user
 
     try:
         # 3. Call API and stream response
-        response_stream = requests.post(API_URL, headers=headers, json=payload, stream=True, timeout=60)
+        # Rasa's default /webhooks/rest/webhook does not stream responses in chunks.
+        # It returns a list of responses at once.
+        response_stream = requests.post(API_URL, json=payload, timeout=60)
         response_stream.raise_for_status()
 
-        partial_message = ""
-        for chunk in response_stream.iter_content(chunk_size=1024):
-            # --- REPLACE THIS SECTION WITH YOUR API'S STREAMING PARSING ---
-            # You need to correctly extract the new text from each 'chunk'
-            # e.g., if it's Server-Sent Events (SSE), you'd parse the 'data:' lines.
-            
-            # Simplified placeholder:
-            new_text = chunk.decode("utf-8")
-            partial_message += new_text
-            yield partial_message
-            # -------------------------------------------------------------
+        rasa_responses = response_stream.json()
+        bot_messages = [r.get("text") for r in rasa_responses if r.get("text")]
+        yield "\n".join(bot_messages)  # Join multiple Rasa responses if any
 
     except requests.exceptions.RequestException as e:
         yield f"Error: Failed to connect to API or request timed out: {e}"
 
 
-# --- Create and Customize the Interface ---
 app = gr.ChatInterface(
     fn=get_bot_response_streaming,
     title="Servicio al cliente",
     description="Chat de atención al cliente automatizado. Escribe tu consulta y recibe respuestas en tiempo real.",
     theme="gradio/soft",
-    submit_btn="Enviar"
+    submit_btn="Enviar",
 )
 
 if __name__ == "__main__":
     app.launch(
-        server_name="0.0.0.0", 
-        server_port=8081, # MUST match the port NGINX targets (8080)
-        show_api=False,  # Opcional, limpia la interfaz
+        server_name="0.0.0.0",
+        server_port=8081,  # MUST match the port NGINX targets (8081)
+        show_api=True,  # Opcional, limpia la interfaz
     )

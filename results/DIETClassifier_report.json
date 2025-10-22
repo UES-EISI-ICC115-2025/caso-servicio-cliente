@@ -1,4 +1,11 @@
 {
+  "email": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 9,
+    "confused_with": {}
+  },
   "rating": {
     "precision": 1.0,
     "recall": 1.0,
@@ -11,13 +18,6 @@
     "recall": 1.0,
     "f1-score": 1.0,
     "support": 21,
-    "confused_with": {}
-  },
-  "email": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 9,
     "confused_with": {}
   },
   "micro avg": {

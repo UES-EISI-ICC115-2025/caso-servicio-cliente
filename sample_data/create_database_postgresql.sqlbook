@@ -1,0 +1,115 @@
+-- SQLBook: Code
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- SQLBook: Code
+-- Active: 1760903346765@@127.0.0.1@5432@rasa_conversations@public
+-- 1. CREACIÓN DE LA BASE DE DATOS
+-- PostgreSQL maneja la codificación y la colación a nivel de la base de datos de manera diferente a MySQL.
+-- 'UTF8' es el estándar, y el 'template0' asegura una base limpia.
+CREATE DATABASE icc115
+    WITH
+    ENCODING = 'UTF8';
+-- SQLBook: Code
+-- Active: 1760903346765@@127.0.0.1@5432@icc115@public
+
+-- 2. CREACIÓN DE LA TABLA 'users'
+CREATE TABLE users (
+    -- Reemplazo de BINARY(16) por UUID y UUID_TO_BIN(UUID()) por gen_random_uuid()
+    user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    nombre VARCHAR(255),
+    email VARCHAR(255),
+    telefono VARCHAR(20),
+    direccion VARCHAR(255),
+    fecha_registro TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- 3. CREACIÓN DE LA TABLA 'productos'
+CREATE TABLE productos (
+    producto_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(500) NOT NULL,
+    velocidad_bajada_mbps INTEGER NOT NULL,
+    velocidad_subida_mbps INTEGER NOT NULL,
+    precio_mensual NUMERIC(10, 2) NOT NULL, -- Uso de NUMERIC en lugar de DECIMAL
+    beneficios VARCHAR(1000) NOT NULL,
+    creado_en TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- 4. CREACIÓN DE LA TABLA 'billing_data'
+CREATE TABLE billing_data (
+    billing_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID, -- Tipo de dato consistente
+    producto_id UUID,
+    fecha_factura DATE,
+    monto REAL,
+    estado VARCHAR(25),
+    FOREIGN KEY(user_id) REFERENCES users(user_id)
+);
+
+
+-- 5. CREACIÓN DE LA TABLA 'conversations'
+CREATE TABLE conversations (
+    session_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID,
+    fecha_inicio TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    fecha_fin TIMESTAMP WITHOUT TIME ZONE,
+    satisfaccion INTEGER,
+    FOREIGN KEY(user_id) REFERENCES users(user_id)
+);
+
+
+-- 6. CREACIÓN DE LA TABLA 'messages'
+CREATE TABLE messages (
+    message_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    session_id UUID,
+    sender VARCHAR(8),
+    text VARCHAR(255),
+    timestamp TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(session_id) REFERENCES conversations(session_id)
+);
+
+
+-- 7. CREACIÓN DE LA TABLA 'support_tickets'
+CREATE TABLE support_tickets (
+    ticket_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID,
+    problema VARCHAR(100),
+    descripcion TEXT,
+    estado VARCHAR(15),
+    fecha_creacion TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    fecha_cierre TIMESTAMP WITHOUT TIME ZONE,
+    prioridad VARCHAR(15),
+    FOREIGN KEY(user_id) REFERENCES users(user_id)
+);
+
+
+-- 8. CREACIÓN DE LA TABLA 'technical_visits'
+CREATE TABLE technical_visits (
+    visit_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    ticket_id UUID,
+    user_id UUID,
+    fecha_visita TIMESTAMP WITHOUT TIME ZONE,
+    tecnico VARCHAR(150),
+    estado VARCHAR(20),
+    FOREIGN KEY(ticket_id) REFERENCES support_tickets(ticket_id),
+    FOREIGN KEY(user_id) REFERENCES users(user_id)
+);
+
+
+-- 9. CREACIÓN DE LA TABLA 'feedback'
+CREATE TABLE feedback (
+    feedback_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    session_id UUID,
+    user_id UUID,
+    rating INTEGER,
+    comentarios VARCHAR(255),
+    fecha_feedback TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(session_id) REFERENCES conversations(session_id),
+    FOREIGN KEY(user_id) REFERENCES users(user_id)
+);
+-- SQLBook: Code
+-- Active: 1760903346765@@127.0.0.1@5432@icc115@public
+-- Active: 1760903346765@@127.0.0.1@5432@icc115@public
+-- ALTER TABLE support_tickets ALTER COLUMN descripcion TYPE TEXT;
+ALTER TABLE technical_visits ALTER COLUMN tecnico TYPE TEXT;

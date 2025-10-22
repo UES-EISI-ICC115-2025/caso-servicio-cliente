@@ -28,12 +28,7 @@ action_endpoint:
 #  password: password
 #  queue: queue
 
-# tracker_store:
-#   type: SQL
-#   dialect: postgresql
-#   url: postgresql://rasa:icc115@localhost:5432/rasa_conversations
-  # url: localhost
-  # port: 5432
-  # user: rasa
-  # password: icc115
-  # db: "public.rasa_conversations"
+tracker_store:
+  type: SQL
+  dialect: postgresql
+  url: postgresql+psycopg2://demo:demo@localhost:5432/rasa_conversations

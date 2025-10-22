@@ -7,6 +7,7 @@ gradio-env/
 .venv
 app_env/
 test_venv/
+.data_env/
 
 # Archivos compilados de Python
 __pycache__/
