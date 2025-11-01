@@ -13,14 +13,14 @@ stories:
   - action: utter_ask_email
   - intent: provide_email  # predicted: provide_email: mi correo es [test.user@mail.com](email)
   - slot_was_set:
-    - email: test.user@mail.com
+    - email: null
   - action: utter_contract_sent
   - action: utter_additional_request
   - intent: deny
-  - action: utter_ask_rating
-  - intent: provide_rating  # predicted: choose_plan: le doy un [5](rating)
+  - action: utter_ask_rating  # predicted: action_default_fallback
+  - intent: provide_rating  # predicted: provide_rating: le doy un [5](rating)
   - action: utter_acknowledge_rating
-  - action: action_listen  # predicted: utter_goodbye
+  - action: utter_goodbye
 - story: Test Case - Contract Denial Path (tests/test_stories.yml)
   steps:
   - action: utter_greet
@@ -31,6 +31,26 @@ stories:
   - intent: deny
   - action: utter_contract_cancelled
   - action: utter_ask_rating
-  - intent: provide_rating  # predicted: choose_plan: [4](rating)
+  - intent: provide_rating  # predicted: provide_rating: [4](rating)
   - action: utter_acknowledge_rating
-  - action: action_listen  # predicted: utter_goodbye
+  - action: utter_goodbye
+- story: Test Case - Billing Check and Successful Verification (tests/test_stories.yml)
+  steps:
+  - action: utter_greet
+  - intent: greet
+  - action: utter_ask_service
+  - intent: request_billing
+  - action: user_verification_form
+  - active_loop: user_verification_form
+  - slot_was_set:
+    - user_id: 12556479-5
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_check_billing_status
+  - action: utter_additional_request
+  - intent: deny
+  - action: utter_ask_rating
+  - intent: provide_rating  # predicted: request_internet_service: un cinco
+  - action: utter_acknowledge_rating
+  - action: utter_goodbye

@@ -13,6 +13,13 @@
     "support": 15,
     "confused_with": {}
   },
+  "user_id": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 3,
+    "confused_with": {}
+  },
   "plan": {
     "precision": 1.0,
     "recall": 1.0,
@@ -24,19 +31,19 @@
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 45
+    "support": 48
   },
   "macro avg": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 45
+    "support": 48
   },
   "weighted avg": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 45
+    "support": 48
   },
   "accuracy": 1.0
 }

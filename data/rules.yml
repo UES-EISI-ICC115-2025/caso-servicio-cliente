@@ -1,12 +1,10 @@
-# data/rules.yml
+version: "3.1"
 
 rules:
 - rule: Respond to email after asking
   steps:
-  - action: utter_ask_email # Trigger condition: Bot just asked for email
-  - intent: provide_email           # User provides email (setting the slot)
-  # - slot_was_set:
-  #   - email: 
+  - action: utter_ask_email
+  - intent: provide_email
   - action: utter_contract_sent
   - action: utter_additional_request
 
@@ -18,5 +16,23 @@ rules:
 - rule: Final action - say goodbye after acknowledgement
   steps:
   - intent: provide_rating
-  - action: utter_acknowledge_rating # Bot just acknowledged the rating
-  - action: utter_goodbye           # Bot must immediately say goodbye
+  - action: utter_acknowledge_rating
+  - action: utter_goodbye
+  - action: action_session_start
+
+- rule: Activate user verification form on billing request
+  steps:
+  - intent: request_billing
+  - action: user_verification_form
+  - active_loop: user_verification_form
+
+- rule: Submit user verification form
+  condition:
+  - active_loop: user_verification_form
+  steps:
+  - action: user_verification_form
+  - active_loop: null
+  - action: action_check_billing_status
+  - action: utter_additional_request
+  - intent: deny
+  - action: utter_ask_rating

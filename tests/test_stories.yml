@@ -30,9 +30,9 @@ stories:
   - user: mi correo es test.user@mail.com
     intent: provide_email
     entities:
-      - email: "test.user@mail.com"
+      - email:
   - slot_was_set:
-      - email: "test.user@mail.com"
+      - email:
   
   # 6. Bot confirms contract and asks for additional request (Actions from the Rule)
   - action: utter_contract_sent
@@ -47,8 +47,10 @@ stories:
   - user: le doy un 5
     intent: provide_rating
     entities:
-      - rating: "5"
+      - rating:
   - action: utter_acknowledge_rating
+  - action: utter_goodbye
+  - action: action_session_start
 
 - story: Test Case - Contract Denial Path
   steps:
@@ -67,6 +69,60 @@ stories:
   - user: "4"
     intent: provide_rating
     entities:
-      - rating: "4"
+      - rating:
       
   - action: utter_acknowledge_rating # Bot acknowledges
+  - action: utter_goodbye
+  - action: action_session_start
+
+- story: Test Case - Billing Check and Successful Verification
+  steps:
+  - action: utter_greet
+  - user: hola
+    intent: greet
+  - action: utter_ask_service
+  
+  # 2. Activación del formulario
+  - user: quiero chequear mi estado de cuenta
+    intent: request_billing
+  - action: user_verification_form
+  - active_loop: user_verification_form
+  
+  # 2.5. PREDICCIÓN DE PROMPT: El validador se ejecuta primero para ver el estado del slot
+  # - action: utter_ask_user_id
+  
+  # 3. Usuario proporciona el ID
+  # - user: mi dui es 12556479-5
+  #   intent: inform_id
+  #   entities:
+  #     - user_id: "12556479-5"
+      
+  # 3.5. EJECUCIÓN DE VALIDACIÓN
+  # - action: validate_user_verification_form
+      
+  # 4. Eventos internos (Core)
+  - slot_was_set:
+    - user_id: "12556479-5"
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  
+  # 4.5. Acciones de Form Submission (Rule)
+  - action: action_check_billing_status
+  - action: utter_additional_request
+  
+  # 6. Usuario niega peticiones adicionales (Aquí el Rule de Rating toma control)
+  - user: nope
+    intent: deny
+    
+  # 7. Secuencia de Calificación (Fix 3: Forzado por Rule)
+  - action: utter_ask_rating 
+  - user: un cinco
+    intent: provide_rating
+    entities:
+      - rating:
+      
+  # 8. Fin de la conversación
+  - action: utter_acknowledge_rating
+  - action: utter_goodbye
+  - action: action_session_start

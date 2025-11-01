@@ -12,12 +12,16 @@ intents:
   - choose_plan
   - provide_email
   - provide_rating
+  - request_billing
+  - inform_id
 
 # 2. Entities: Data the bot needs to extract
 entities:
   - plan
   - email
   - rating
+  - user_id
+  - billing_status
 
 # 3. Slots: Memory for the conversation
 slots:
@@ -27,6 +31,12 @@ slots:
     mappings:
       - type: from_entity
         entity: plan
+  user_id: 
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: user_id
   email:
     type: text
     influence_conversation: true
@@ -39,6 +49,20 @@ slots:
     mappings:
       - type: from_entity
         entity: rating
+  billing_status: # Estado de la factura (ej: 'VENCIDA', 'PAGADA', 'PENDIENTE')
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom # Se llenará con la acción personalizada
+
+forms:
+  user_verification_form: # Nuevo formulario para recolectar el DUI
+    required_slots:
+      - user_id
+
+actions:
+  - validate_user_verification_form
+  - action_check_billing_status
 
 # 4. Bot Responses (Utterances)
 responses:
@@ -90,9 +114,18 @@ responses:
     - text: "¡Te agradecemos tu opinión! ¡Que tengas un día chivo!"
     - text: "¡Gracias por tu calificación! ¡Pasa un feliz día!"
   utter_contract_cancelled:
-      - text: "Entiendo, no hay problema. Si más adelante te animás, aquí vamos a estar. ¡Gracias por considerarnos! ¡Cuidate!"
-      - text: "Está bien, te entiendo. Cualquier cosa, ya sabés dónde encontrarnos. ¡Gracias y adiós!"
+    - text: "Entiendo, no hay problema. Si más adelante te animás, aquí vamos a estar. ¡Gracias por considerarnos! ¡Cuidate!"
+    - text: "Está bien, te entiendo. Cualquier cosa, ya sabés dónde encontrarnos. ¡Gracias y adiós!"
 
+  # Billing Path Responses
+  utter_ask_user_id: 
+    - text: "Para consultar tu facturación, ¿me das tu **DUI**?" # Usado por el form
+  utter_billing_overdue:
+    - text: "Revisando... ¡Tenés una factura vencida! Por favor, revisá tu correo para los detalles de pago."
+  utter_billing_paid:
+    - text: "¡Revisando... Cheque! Tu facturación está al día. ¡Mil gracias por tu pago oportuno!"
+  utter_billing_pending:
+    - text: "Revisando... Tenés una factura pendiente de pago con fecha límite el 30 de este mes."
 # 5. Session Configuration
 session_config:
   session_expiration_time: 60

@@ -123,6 +123,33 @@ nlu:
       - Tengo problemas con la facturacion
       - Tengo otra consulta
 
+  - intent: request_billing
+    examples: |
+      - quiero consultar mi factura
+      - mi factura está pagada?
+      - chequear estado de cuenta
+      - necesito ver si debo algo
+      - consulta de saldo
+
+  - intent: inform_id
+    examples: |
+      - mi dui es [12345678-1](user_id)
+      - soy [12345678-1](user_id)
+      - es [12345678-1](user_id)
+      - "55555555-5"
+
+  # 1. Regex para Correo Electrónico
+  # Patrón estándar para capturar emails de forma robusta.
   - regex: email
     examples: |
-      - \b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b
+      '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}'
+
+  # 2. Regex para ID de Usuario (user_id)
+  # Patrón que acepta 9 dígitos (000000000) O 8 dígitos seguidos de un guion y un dígito (00000000-0).
+  # Explicación del patrón:
+  # ^(\d{9})$    -> Captura 9 dígitos exactos (000000000)
+  # |            -> OR
+  # (\d{8}-\d)$ -> Captura 8 dígitos, guion, y 1 dígito (00000000-0)
+  - regex: user_id
+    examples: |
+      '^(\d{9})|(\d{8}-\d)$'

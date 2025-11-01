@@ -31,7 +31,9 @@ stories:
     - action: utter_contract_cancelled
     - action: utter_ask_rating
 
-  - story: Ask for and receive rating
+  - story: Billing check and completion
     steps:
-    - checkpoint: Ask for and receive rating
+    - action: action_check_billing_status
+    - action: utter_additional_request
+    - intent: deny
     - action: utter_ask_rating
