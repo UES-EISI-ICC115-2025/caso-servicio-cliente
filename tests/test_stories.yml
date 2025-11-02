@@ -126,3 +126,40 @@ stories:
   - action: utter_acknowledge_rating
   - action: utter_goodbye
   - action: action_session_start
+
+- story: Test Case - Technical Support RAG Success Flow
+  steps:
+  # 1. Inicio de la conversación
+  - action: utter_greet
+  - user: hola
+    intent: greet
+  - action: utter_ask_service
+  
+  # 2. Usuario pide soporte (Inicia el flujo)
+  - user: necesito ayuda, no me conecta el inter
+    intent: request_support
+
+  # 4. EJECUCIÓN RAG: El bot llama al microservicio
+  - action: action_technical_support_rag
+
+  - user: ya funciona, gracias
+    intent: issue_fixed
+  
+  # 5. TRANSICIÓN CONDICIONAL: La acción Python dispara la pregunta de seguimiento si el RAG fue exitoso
+  - action: utter_additional_request # Bot pregunta:
+  
+  # 6. Usuario niega peticiones adicionales (Inicia la calificación)
+  - user: no, solamente, ahi estamos, solo eso necesitaba
+    intent: deny
+  
+  # 7. Secuencia de Calificación (Forzado por Rule)
+  - action: utter_ask_rating
+  - user: "4"
+    intent: provide_rating
+    entities:
+      - rating: "4"
+      
+  # 8. Fin de la conversación (Reglas de Goodbye)
+  - action: utter_acknowledge_rating
+  - action: utter_goodbye
+  - action: action_session_start

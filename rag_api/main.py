@@ -16,8 +16,8 @@ import chromadb
 # -------------------------------
 # Configuration
 # -------------------------------
-OLLAMA_URL = "http://172.16.2.90:11434"
-CHROMA_HOST = "172.16.2.66"
+OLLAMA_URL = "http://localhost:11434"
+CHROMA_HOST = "localhost"
 CHROMA_PORT = 8000
 COLLECTION_NAME = "manuales_y_procedimientos"
 

@@ -54,3 +54,17 @@ stories:
   - intent: provide_rating  # predicted: request_internet_service: un cinco
   - action: utter_acknowledge_rating
   - action: utter_goodbye
+- story: Test Case - Technical Support RAG Success Flow (tests/test_stories.yml)
+  steps:
+  - action: utter_greet
+  - intent: greet
+  - action: utter_ask_service
+  - intent: request_support
+  - action: action_technical_support_rag
+  - intent: issue_fixed
+  - action: utter_additional_request
+  - intent: deny
+  - action: utter_ask_rating
+  - intent: provide_rating  # predicted: provide_rating: [4](rating)
+  - action: utter_acknowledge_rating
+  - action: utter_goodbye

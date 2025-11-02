@@ -37,3 +37,14 @@ stories:
     - action: utter_additional_request
     - intent: deny
     - action: utter_ask_rating
+
+  - story: Technical Support RAG Flow
+    steps:
+    - intent: request_support
+    # - user: Tengo problemas con mi internet, ¿qué hago?
+    - action: action_technical_support_rag
+    - intent: issue_fixed
+    # Si no se establece un slot para continuar
+    - action: utter_additional_request 
+    - intent: deny
+    - action: utter_ask_rating

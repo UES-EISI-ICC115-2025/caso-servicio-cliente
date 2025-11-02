@@ -36,3 +36,17 @@ rules:
   - action: utter_additional_request
   - intent: deny
   - action: utter_ask_rating
+
+- rule: Activate RAG for technical questions
+  steps:
+  - intent: request_support             
+  - action: action_technical_support_rag
+
+# Para manejar preguntas técnicas adicionales dentro del mismo turno, si el usuario hace otra pregunta
+- rule: RAG for follow-up technical questions
+  steps:
+  # El bot ya respondió algo técnico
+  - action: action_technical_support_rag 
+  # O cualquier intent que captures como "pregunta"
+  - intent: out_of_scope 
+  - action: action_technical_support_rag

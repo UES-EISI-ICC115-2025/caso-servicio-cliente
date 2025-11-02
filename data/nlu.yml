@@ -118,10 +118,19 @@ nlu:
     examples: |
       - I need support
       - Necesito ayuda
-      - Quiero ver la factura
-      - Necesito revisar la factura
-      - Tengo problemas con la facturacion
       - Tengo otra consulta
+
+  - intent: request_support
+    examples: |
+      - tengo problemas con mi internet
+      - no me conecta el inter
+      - el servicio está caído
+      - necesito asistencia técnica
+      - mi conexión es muy lenta
+      - el internet no funciona
+      - hay una falla en el servicio
+      - quiero reportar un problema técnico
+      - ayuda con mi conexión
 
   - intent: request_billing
     examples: |
@@ -137,6 +146,18 @@ nlu:
       - soy [12345678-1](user_id)
       - es [12345678-1](user_id)
       - "55555555-5"
+
+  - intent: issue_fixed
+    examples: |
+      - sí, ya se arregló
+      - ya funciona bien
+      - todo está bien ahora
+      - sí, gracias por la ayuda
+      - ya está solucionado
+      - ya sirve
+      - se arregló
+      - ahora sí funciona
+      - ahora si, ya me conecta bien
 
   # 1. Regex para Correo Electrónico
   # Patrón estándar para capturar emails de forma robusta.

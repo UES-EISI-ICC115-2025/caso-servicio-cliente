@@ -8,6 +8,7 @@ gradio-env/
 app_env/
 test_venv/
 .data_env/
+rasa_rag_env/
 
 # Archivos compilados de Python
 __pycache__/

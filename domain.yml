@@ -14,6 +14,8 @@ intents:
   - provide_rating
   - request_billing
   - inform_id
+  - request_support
+  - issue_fixed
 
 # 2. Entities: Data the bot needs to extract
 entities:
@@ -63,6 +65,7 @@ forms:
 actions:
   - validate_user_verification_form
   - action_check_billing_status
+  - action_technical_support_rag
 
 # 4. Bot Responses (Utterances)
 responses:
