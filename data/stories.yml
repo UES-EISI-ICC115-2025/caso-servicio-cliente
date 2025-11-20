@@ -7,7 +7,7 @@ stories:
       - intent: greet
       - action: utter_ask_service
       - intent: request_internet_service
-      - action: utter_show_plans
+      - action: action_fetch_product_plans
       - intent: choose_plan
       - slot_was_set:
           - plan: "..."
@@ -26,7 +26,7 @@ stories:
     - intent: greet
     - action: utter_ask_service
     - intent: request_internet_service
-    - action: utter_show_plans
+    - action: action_fetch_product_plans
     - intent: deny
     - action: utter_contract_cancelled
     - action: utter_ask_rating

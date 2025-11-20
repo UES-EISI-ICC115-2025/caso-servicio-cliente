@@ -1,0 +1,11 @@
+-- SQLBook: Code
+SELECT
+    producto_id,
+    nombre,
+    descripcion,
+    velocidad_bajada_mbps,
+    velocidad_subida_mbps,
+    precio_mensual,
+    beneficios
+FROM productos
+ORDER BY precio_mensual ASC

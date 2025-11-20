@@ -11,7 +11,7 @@ rules:
 - rule: Show plans immediately after service request
   steps:
   - intent: request_internet_service
-  - action: utter_show_plans
+  - action: action_fetch_product_plans
 
 - rule: Final action - say goodbye after acknowledgement
   steps:

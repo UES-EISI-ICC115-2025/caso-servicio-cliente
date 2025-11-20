@@ -15,7 +15,7 @@ stories:
   # 3. User states goal & Bot shows plans
   - user: quiero agarrar un plan de internet
     intent: request_internet_service
-  - action: utter_show_plans
+  - action: action_fetch_product_plans
   
   # 4. User chooses a plan & Bot asks for email
   - user: Yo quiero el plan basico
@@ -60,7 +60,7 @@ stories:
   - action: utter_ask_service
   - user: quiero internet
     intent: request_internet_service
-  - action: utter_show_plans
+  - action: action_fetch_product_plans
   - user: no, no me gusto ninguno
     intent: deny
   - action: utter_contract_cancelled

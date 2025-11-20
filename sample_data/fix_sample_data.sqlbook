@@ -1,0 +1,32 @@
+-- SQLBook: Code
+select users.user_id, billing_id, email, monto
+from billing_data
+    left join users on billing_data.user_id = users.user_id;
+-- SQLBook: Code
+WITH
+    products_data AS (
+        SELECT
+            producto_id,
+            precio_mensual * 1.13 as monto,
+            ROW_NUMBER() OVER (
+                ORDER BY producto_id
+            ) AS rn
+        FROM productos
+    ),
+    users_data AS (
+        SELECT user_id, FLOOR(RANDOM() * 3 + 1) AS rn
+        FROM users
+    ),
+    mixed_data AS (
+        SELECT u.user_id, p.producto_id, p.monto, u.rn
+        FROM users_data u
+            JOIN products_data p ON u.rn = p.rn
+        order by p.producto_id, u.user_id
+    )
+UPDATE billing_data AS target
+SET
+    monto = mixed_data.monto,
+    producto_id = mixed_data.producto_id
+FROM mixed_data
+WHERE
+    target.user_id = mixed_data.user_id;

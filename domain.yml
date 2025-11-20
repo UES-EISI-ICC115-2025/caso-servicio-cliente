@@ -33,7 +33,7 @@ slots:
     mappings:
       - type: from_entity
         entity: plan
-  user_id: 
+  user_id:
     type: text
     influence_conversation: true
     mappings:
@@ -66,6 +66,7 @@ actions:
   - validate_user_verification_form
   - action_check_billing_status
   - action_technical_support_rag
+  - action_fetch_product_plans
 
 # 4. Bot Responses (Utterances)
 responses:
@@ -121,7 +122,7 @@ responses:
     - text: "Está bien, te entiendo. Cualquier cosa, ya sabés dónde encontrarnos. ¡Gracias y adiós!"
 
   # Billing Path Responses
-  utter_ask_user_id: 
+  utter_ask_user_id:
     - text: "Para consultar tu facturación, ¿me das tu **DUI**?" # Usado por el form
   utter_billing_overdue:
     - text: "Revisando... ¡Tenés una factura vencida! Por favor, revisá tu correo para los detalles de pago."

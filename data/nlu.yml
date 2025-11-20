@@ -27,6 +27,10 @@ nlu:
       - contratar un servicio
       - ando buscando un plan
       - contrato de internet
+      - que planes tienes disponibles
+      - que planes hay
+      - que ofertas tienen
+      - que me puedes ofrecer
 
   - intent: choose_plan
     examples: |

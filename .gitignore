@@ -9,6 +9,8 @@ app_env/
 test_venv/
 .data_env/
 rasa_rag_env/
+.env
+results/
 
 # Archivos compilados de Python
 __pycache__/

@@ -20,29 +20,31 @@ RAG_API_PORT = 8000
 app = Flask(__name__)
 RAG_CHAIN = None
 
+"""
+Construye la cadena RAG usando LLM y Embeddings del mismo servidor Ollama.
+"""
+print("Inicializando LLM Local (Ollama) y Base Vectorial...")
+
+# 1. Conectores LLM y Embeddings (Ambos usan Ollama y phi3)
+try:
+    requests.get(OLLAMA_BASE_URL)
+
+    # GENERACIÓN: Usa el modelo Phi-3 para crear la respuesta
+    llm = OllamaLLM(model=OLLAMA_MODEL_NAME, base_url=OLLAMA_BASE_URL, temperature=0.1)
+
+    # EMBEDDINGS: Usa el mismo modelo Phi-3 (o un modelo compatible) para vectorizar los documentos.
+    embeddings = OllamaEmbeddings(model=OLLAMA_MODEL_NAME, base_url=OLLAMA_BASE_URL)
+    print(f"Inicialización RAG Local completa. LLM: {OLLAMA_MODEL_NAME}")
+
+except Exception as e:
+    print(f"Error al conectar a Ollama: {e}")
+    raise ConnectionError(
+        "Fallo al conectar con el servidor Ollama. Asegúrate de que esté corriendo."
+    )
+
 
 # --- Inicialización de la Cadena RAG ---
 def initialize_rag_chain():
-    """
-    Construye la cadena RAG usando LLM y Embeddings del mismo servidor Ollama.
-    """
-    print("Inicializando LLM Local (Ollama) y Base Vectorial...")
-
-    # 1. Conectores LLM y Embeddings (Ambos usan Ollama y phi3)
-    try:
-        requests.get(OLLAMA_BASE_URL)
-
-        # GENERACIÓN: Usa el modelo Phi-3 para crear la respuesta
-        llm = OllamaLLM(
-            model=OLLAMA_MODEL_NAME, base_url=OLLAMA_BASE_URL, temperature=0.1
-        )
-
-        # EMBEDDINGS: Usa el mismo modelo Phi-3 (o un modelo compatible) para vectorizar los documentos.
-        embeddings = OllamaEmbeddings(model=OLLAMA_MODEL_NAME, base_url=OLLAMA_BASE_URL)
-
-    except Exception as e:
-        print(f"Error al conectar a Ollama: {e}")
-        return None
 
     # 2. Base de Conocimiento de Ejemplo
     docs = [
@@ -94,7 +96,6 @@ def initialize_rag_chain():
     # 4. Cadena Final: Combina la recuperación y la generación (Resuelve el AttributeError)
     qa_chain = create_retrieval_chain(retriever_chain, document_chain)
 
-    print(f"Inicialización RAG Local completa. LLM: {OLLAMA_MODEL_NAME}")
     return qa_chain
 
 
@@ -103,6 +104,9 @@ try:
 except ConnectionError as e:
     # Si la conexión falla, se detiene la carga del servidor
     print(e)
+
+    # --- Cadena RAG que usa un contexto de texto plano en lugar de la base vectorial ---
+    RAG_CHAIN_CONTEXT = None
 
 
 # --- ENDPOINT API DE RASA ---
@@ -151,3 +155,66 @@ def rag_query():
             ),
             500,
         )
+
+
+@app.route("/rag/query_with_context", methods=["POST"])
+def rag_query_with_context():
+    # GENERACIÓN: Usa el modelo Phi-3 para crear la respuesta
+    llm = OllamaLLM(model=OLLAMA_MODEL_NAME, base_url=OLLAMA_BASE_URL, temperature=0.1)
+
+    data = request.get_json()
+    context = data.get("context")
+    question = data.get("question")
+    history_data = data.get("history", [])
+
+    # print(f"RAG Consulta con contexto recibido. Pregunta: {question}, Contexto: {context}, Historial: {history_data}")
+
+    if not question or context is None:
+        return (
+            jsonify({"error": "Parámetros 'context' y 'question' son requeridos"}),
+            400,
+        )
+
+    chat_history_messages = []
+    # Inyecta el contexto como primer mensaje humano en el historial
+    chat_history_messages.append(
+        HumanMessage(content=f"Contexto proporcionado por el usuario:\n{context}")
+    )
+
+    for user_msg, bot_msg in history_data:
+        if user_msg:
+            chat_history_messages.append(HumanMessage(content=user_msg))
+        if bot_msg:
+            chat_history_messages.append(AIMessage(content=bot_msg))
+
+    try:
+        # Prompt: recibe explícitamente {context} y usa el historial si aplica
+        answer_prompt_with_context = ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    "Eres un agente de soporte técnico de El Salvador. Responde la pregunta del usuario basándote solo en el siguiente contexto:\n\n{context}\nSi el contexto no proporciona la respuesta, indica que no la sabes. Utiliza un tono amigable y salvadoreño.",
+                ),
+                MessagesPlaceholder(variable_name="history"),
+                ("user", "{input}"),
+            ]
+        )
+        print(
+            answer_prompt_with_context.format_prompt(
+                input=question,
+                history=chat_history_messages,
+                context=context,
+            ).to_messages()
+        )
+        response = llm.invoke(
+            answer_prompt_with_context.format_prompt(
+                input=question,
+                history=chat_history_messages,
+                context=context,
+            ).to_messages()
+        )
+
+        return jsonify({"answer": response})
+    except Exception as e:
+        print(f"ERROR RAG al procesar consulta con contexto: {e}")
+        return jsonify({"answer": "Lo siento, la consulta con contexto falló."}), 500
