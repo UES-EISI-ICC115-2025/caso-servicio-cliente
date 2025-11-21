@@ -1,0 +1,479 @@
+-- SQLBook: Code
+-- Active: 1763429712926@@127.0.0.1@5432@rasa_db@public
+-- Active: 1763429712926@@127.0.0.1@5432@rasa_db
+-- Crear la tabla de Intents
+CREATE TABLE intents (
+    intent_id SERIAL PRIMARY KEY,
+    intent_name VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla de Ejemplos de Entrenamiento
+CREATE TABLE training_examples (
+    example_id SERIAL PRIMARY KEY,
+    intent_id INT NOT NULL,
+    example_text TEXT NOT NULL,
+    language VARCHAR(10) DEFAULT 'es',
+    FOREIGN KEY (intent_id) REFERENCES intents(intent_id) ON DELETE CASCADE
+);
+
+-- SQLBook: Code
+-- 1. Verificar e Insertar el intent 'greet' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('greet', 'Saludos y bienvenidas del usuario')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- 2. Insertar los ejemplos de entrenamiento asociados al intent 'greet'
+-- Primero, obtenemos el intent_id correcto mediante una subconsulta
+
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'greet'
+),
+examples(example_text) AS (
+    VALUES
+    ('hola'),
+    ('qué onda'),
+    ('buenos días'),
+    ('qué tal'),
+    ('cómo estás'),
+    ('buenas tardes'),
+    ('saludos'),
+    ('holi'),
+    ('hey'),
+    ('buenas'),
+    ('qué hubo'),
+    ('saludos cordiales')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'request_internet_service' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('request_internet_service', 'Solicitud de contratación de servicio de internet')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'request_internet_service'
+),
+examples(example_text) AS (
+    VALUES
+    ('quiero contratar un plan nuevo'),
+    ('quiero un servicio nuevo'),
+    ('quiero contratar internet'),
+    ('un contrato nuevo de internet'),
+    ('ando viendo para inscribirme a un plan'),
+    ('inscribirme a internet'),
+    ('contratar un plan'),
+    ('quiero agarrar un plan nuevo'),
+    ('plan nuevo'),
+    ('inscribirme'),
+    ('comprar internet'),
+    ('contratar un servicio'),
+    ('ando buscando un plan'),
+    ('contrato de internet'),
+    ('que planes tienes disponibles'),
+    ('que planes hay'),
+    ('que ofertas tienen'),
+    ('que me puedes ofrecer')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'choose_plan' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('choose_plan', 'Elección de plan por parte del usuario')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'choose_plan'
+),
+examples(example_text) AS (
+    VALUES
+    ('[Plan 1](plan) porfa'),
+    ('Deme el [Plan 2](plan)'),
+    ('El [Estándar](plan), ese mero'),
+    ('Voy a agarrar el plan [Premium](plan)'),
+    ('Me quedo con el [Plan 3](plan)'),
+    ('El [Plan 1](plan) porfa'),
+    ('[Plan 1](plan) por favor'),
+    ('[Plan 2](plan)'),
+    ('[Plan 3](plan)'),
+    ('[Estándar](plan)'),
+    ('[Premium](plan)'),
+    ('[básico](plan)'),
+    ('[basico](plan)'),
+    ('plan [basico](plan)')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'provide_email' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('provide_email', 'Usuario proporciona su correo electrónico')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'provide_email'
+),
+examples(example_text) AS (
+    VALUES
+    ('mi correo es [usuario@ejemplo.com](email)'),
+    ('lo puede mandar a [prueba.usuario@correo.com](email)'),
+    ('[micorreo@servidor.net](email)'),
+    ('es [bandeja@empresa.org](email)'),
+    ('[moralesandrea.edr4@gmail.com](email)'),
+    ('claro, es [micorreo@aqui.com](email)'),
+    ('[juan.perez@correo.co](email) gracias'),
+    ('mi correo es [mal_escrito@gogle.com](email)'),
+    ('[midireccion@dominio.net](email) es mi dirección')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'provide_rating' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('provide_rating', 'Usuario proporciona una calificación (rating) - Inglés')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'provide_rating'
+),
+examples(example_text) AS (
+    VALUES
+    ('I would give it a [5](rating)'),
+    ('[4](rating) stars'),
+    ('a solid [5](rating)'),
+    ('"3"'),
+    ('my rating is [1](rating)'),
+    ('I give it a [five](rating)'),
+    ('my rating is [four](rating)'),
+    ('a great big [five](rating)'),
+    ('just a [one](rating)'),
+    ('it''s a [two](rating)'),
+    ('[three](rating) out of five'),
+    ('[five](rating)'),
+    ('[four](rating)'),
+    ('[three](rating)'),
+    ('[two](rating)'),
+    ('[one](rating)')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'en'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'affirm' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('affirm', 'Afirmación/confirmación del usuario')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'affirm'
+),
+examples(example_text) AS (
+    VALUES
+    ('sí'),
+    ('ajá'),
+    ('por supuesto'),
+    ('correcto'),
+    ('por favor'),
+    ('claro')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+
+-- Insertar el intent 'deny' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('deny', 'Negación o rechazo del usuario')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'deny'
+),
+examples(example_text) AS (
+    VALUES
+    ('no'),
+    ('nel'),
+    ('no quiero'),
+    ('la verdad no'),
+    ('saltar'),
+    ('ya no lo quiero'),
+    ('cancelar el pedido'),
+    ('cambié de opinión'),
+    ('parar el contrato'),
+    ('solamente'),
+    ('eso es todo')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'goodbye' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('goodbye', 'Despedida del usuario')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'goodbye'
+),
+examples(example_text) AS (
+    VALUES
+    ('adiós'),
+    ('hasta luego'),
+    ('nos vemos'),
+    ('hablamos pronto'),
+    ('gracias, adiós')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'thanks' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('thanks', 'Agradecimiento del usuario')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'thanks'
+),
+examples(example_text) AS (
+    VALUES
+    ('gracias'),
+    ('muchas gracias'),
+    ('se lo agradezco mucho'),
+    ('muchísimas gracias')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'out_of_scope' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('out_of_scope', 'Consultas fuera de alcance / soporte externo')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados (con idioma por ejemplo)
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'out_of_scope'
+),
+examples(example_text, language) AS (
+    VALUES
+    ('I need support', 'en'),
+    ('Necesito ayuda', 'es'),
+    ('Tengo otra consulta', 'es')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, e.language
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'request_support' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('request_support', 'Solicitud de soporte técnico por problemas de internet')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'request_support'
+),
+examples(example_text) AS (
+    VALUES
+    ('tengo problemas con mi internet'),
+    ('no me conecta el inter'),
+    ('el servicio está caído'),
+    ('necesito asistencia técnica'),
+    ('mi conexión es muy lenta'),
+    ('el internet no funciona'),
+    ('hay una falla en el servicio'),
+    ('quiero reportar un problema técnico'),
+    ('ayuda con mi conexión')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'request_billing' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('request_billing', 'Consultas sobre facturación y estado de cuenta')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'request_billing'
+),
+examples(example_text) AS (
+    VALUES
+    ('quiero consultar mi factura'),
+    ('mi factura está pagada?'),
+    ('chequear estado de cuenta'),
+    ('necesito ver si debo algo'),
+    ('consulta de saldo')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'inform_id' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('inform_id', 'Usuario proporciona su número de documento (DUI)')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'inform_id'
+),
+examples(example_text) AS (
+    VALUES
+    ('mi dui es [12345678-1](user_id)'),
+    ('soy [12345678-1](user_id)'),
+    ('es [12345678-1](user_id)'),
+    ('"55555555-5"')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'issue_fixed' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('issue_fixed', 'Usuario indica que el problema fue solucionado')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'issue_fixed'
+),
+examples(example_text) AS (
+    VALUES
+    ('sí, ya se arregló'),
+    ('ya funciona bien'),
+    ('todo está bien ahora'),
+    ('sí, gracias por la ayuda'),
+    ('ya está solucionado'),
+    ('ya sirve'),
+    ('se arregló'),
+    ('ahora sí funciona'),
+    ('ahora si, ya me conecta bien')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+CREATE TABLE if not exists regex_patterns (
+    regex_id SERIAL PRIMARY KEY,
+    entity_name VARCHAR(100) NOT NULL,
+    pattern VARCHAR(500) NOT NULL,
+    description TEXT
+);
+
+-- SQLBook: Code
+-- Active: 1763429712926@@127.0.0.1@5432@rasa_db@public
+INSERT INTO
+    regex_patterns (
+        entity_name,
+        pattern,
+        description
+    )
+VALUES (
+        'email',
+        '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}',
+        'Matches a standard email address format'
+    ),
+    (
+        'producto_id',
+        '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}',
+        'Matches a UUID (8-4-4-4-12 hexadecimal format)'
+    ),
+    (
+        'dui',
+        '^(\d{9})|(\d{8}-\d)$',
+        'DUI format: 8 digits, optional hyphen, and a check digit'
+    );
+-- SQLBook: Code
+select intent_name, example_text
+from intents
+    right join training_examples using (intent_id);
+-- SQLBook: Code
+select entity_name, pattern from regex_patterns;
