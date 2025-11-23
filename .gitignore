@@ -1,16 +1,8 @@
 # Entorno de python
-icc115-venv/
-rag_env/
-rasa_env/
-langchain_env/
-gradio-env/
-.venv
-app_env/
-test_venv/
-.data_env/
+gradio_env/
 rasa_rag_env/
-.env
-results/
+rasa_env/
+airflow_env/
 
 # Archivos compilados de Python
 __pycache__/
@@ -20,6 +12,7 @@ __pycache__/
 
 # Modelos entrenados de Rasa
 /models/
+results/
 
 # Caché de Rasa y logs
 /.rasa/cache/
