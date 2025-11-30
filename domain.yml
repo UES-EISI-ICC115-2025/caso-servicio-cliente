@@ -1,136 +1,227 @@
-version: "3.1"
-
-# 1. User Intents: What the user can say
+version: '3.1'
 intents:
-  - greet
-  - goodbye
-  - affirm # e.g., "yes", "that one"
-  - deny # e.g., "no", "not now"
-  - thanks
-  - out_of_scope # For additional requests outside the main task
-  - request_internet_service
-  - choose_plan
-  - provide_email
-  - provide_rating
-  - request_billing
-  - inform_id
-  - request_support
-  - issue_fixed
-
-# 2. Entities: Data the bot needs to extract
+- affirm
+- choose_plan
+- deny
+- goodbye
+- greet
+- negociacion_aceptar_oferta
+- negociacion_cancelar_desistir
+- negociacion_expresar_escepticismo
+- negociacion_postponer_decision
+- negociacion_solicitar_descuento
+- negociacion_solicitar_detalles
+- provide_apellido
+- provide_direccion
+- provide_dui
+- provide_email
+- provide_nombre
+- provide_rating
+- provide_telefono
+- request_billing
+- request_internet_service
+- request_support
+- stop
+- thanks
 entities:
-  - plan
-  - email
-  - rating
-  - user_id
-  - billing_status
-
-# 3. Slots: Memory for the conversation
+- dui
+- plan
+- email
+- rating
+- producto_id
+- nombre_producto
+- precio_producto
+- apellido
+- nombre
+- direccion
+- telefono
 slots:
   plan:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_entity
-        entity: plan
-  user_id:
+    - type: from_entity
+      entity: plan
+      conditions:
+      - active_loop: contrato_form
+  producto_id:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_entity
-        entity: user_id
+    - type: custom
+      conditions:
+      - active_loop: contrato_form
+  nombre_producto:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+      conditions:
+      - active_loop: contrato_form
+  precio_producto:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: custom
+      conditions:
+      - active_loop: contrato_form
+  nombre:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: contrato_form
+        requested_slot: nombre
+  apellido:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: contrato_form
+        requested_slot: apellido
+  direccion:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: contrato_form
+        requested_slot: direccion
   email:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: email
-  rating:
-    type: float
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: rating
-  billing_status: # Estado de la factura (ej: 'VENCIDA', 'PAGADA', 'PENDIENTE')
     type: text
     influence_conversation: false
     mappings:
-      - type: custom # Se llenará con la acción personalizada
-
+    - type: from_text
+      conditions:
+      - active_loop: contrato_form
+        requested_slot: email
+  dui:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: contrato_form
+        requested_slot: dui
+  telefono:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: contrato_form
+        requested_slot: telefono
+  rating:
+    type: float
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: rating
+      intent: provide_rating
+      conditions:
+      - active_loop: null
 forms:
-  user_verification_form: # Nuevo formulario para recolectar el DUI
+  contrato_form:
     required_slots:
-      - user_id
-
+    - plan
+    - producto_id
+    - nombre_producto
+    - precio_producto
+    - nombre
+    - apellido
+    - dui
+    - direccion
+    - telefono
+    - email
 actions:
-  - validate_user_verification_form
-  - action_check_billing_status
-  - action_technical_support_rag
-  - action_fetch_product_plans
-
-# 4. Bot Responses (Utterances)
+- utter_product_slots_summary
+- utter_personal_info_summary
+- utter_acknowledge_rating
+- utter_goodbye
+- utter_confirm_personal_info
+- utter_additional_request
+- utter_thanks_response
+- utter_ask_rating
+- action_send_email
+- utter_contract_sent
+- utter_contract_cancelled
+- action_fetch_product_plans
+- utter_ask_service
+- utter_ask_continue
+- utter_greet
+- utter_confirm_product_selection
+- validate_contrato_form
+- action_deactivate_contrato_form
 responses:
-  # Initial/Greeting
+  utter_thanks_response:
+  - text: De nada, para eso estoy.
   utter_greet:
-    - text: "¡Buenas! Bienvenido a nuestro servicio. ¿En qué te puedo ayudar?"
-    - text: "¡Qué onda! ¿Listo para que te ayude con algo?"
-  utter_ask_service:
-    - text: "¡Chivo! Te puedo ayudar con cosas como **contratar un servicio nuevo**, **chequear los detalles de un plan**, o **darte soporte técnico**."
-    - text: "¡De a galán! Te ayudo a **agarrar un plan nuevo**, **ver los detalles de los planes**, o con **soporte técnico**."
-
-  # Service Path Responses
-  utter_show_plans:
-    - text: |
-        Veo que querés contratar internet. Cabal, aquí están nuestros planes:
-        **Plan 1 (Básico):** 100 Mbps por $40/mes
-        **Plan 2 (Estándar):** 300 Mbps por $60/mes
-        **Plan 3 (Premium):** 1 Gbps por $90/mes
-        ¿Cuál plan te gusta más? (ej., Plan 2)
-    - text: |
-        Con gusto, aquí te muestro los planes que tenemos para que navegués:
-        **Plan 1 (Básico):** 100 Mbps por $40 al mes
-        **Plan 2 (Estándar):** 300 Mbps por $60 al mes
-        **Plan 3 (Premium):** 1 Gbps por $90 al mes
-        Decime, ¿cuál de estos te llega más?
-  utter_ask_email:
-    - text: "¡Excelente elección! Para mandarte los detalles del contrato, ¿me podrías dar tu **correo electrónico**, porfa?"
-    - text: "¡Chivísimo! ¿Me regalás tu **correo** para enviarte el contrato?"
-  utter_contract_sent:
-    - text: "Gracias por tu correo, **{email}**. ¡Ya va en camino el contrato a tu bandeja de entrada! Te agradecemos por preferirnos."
-    - text: "¡Cabal! Ya te mandé el contrato a **{email}**. ¡Gracias por elegirnos, estamos a la orden!"
-
-  # Post-Service Flow
-  utter_additional_request:
-    - text: "¿Necesitás algo más o ya estamos?"
-    - text: "¿Te puedo ayudar en alguna otra cosa?"
-  utter_ask_rating:
-    - text: "¡Gracias por usar nuestro servicio! Por último, ¿nos podrías regalar una calificación del **1 (malo) al 5 (excelente)** sobre tu experiencia de hoy?"
-    - text: "¡Ya casi terminamos! Solo te pido que califiqués la atención con una nota del **1 al 5**. ¡Gracias!"
-
-  # General/Ending
+  - text: ¡Buenas! Bienvenido a nuestro servicio. ¿En qué te puedo ayudar?
+  - text: ¡Qué onda! ¿Listo para que te ayude con algo?
   utter_goodbye:
-    - text: "¡Vaya pues, cuidate! ¡Feliz día!"
-    - text: "¡Adiós! Que tengas un buen día."
-  utter_thanks_answered:
-    - text: "¡A la orden! Me alegra haberte ayudado."
-    - text: "¡Ya sabés! Para eso estamos."
+  - text: ¡Vaya pues, cuidate! ¡Feliz día!
+  - text: ¡Adiós! Que tengas un buen día.
+  utter_ask_service:
+  - text: ¡Chivo! Te puedo ayudar con cosas como **contratar un servicio nuevo**, **chequear los detalles de un plan**, o **darte soporte técnico**.
+  - text: ¡De a galán! Te ayudo a **agarrar un plan nuevo**, **ver los detalles de los planes**, o con **soporte técnico**.
+  utter_additional_request:
+  - text: ¿Necesitás algo más o ya estamos?
+  - text: ¿Te puedo ayudar en alguna otra cosa?
+  utter_ask_rating:
+  - text: ¡Gracias por usar nuestro servicio! Por último, ¿nos podrías regalar una calificación del **1 (malo) al 5 (excelente)** sobre tu experiencia de hoy?
+  - text: ¡Ya casi terminamos! Solo te pido que califiqués la atención con una nota del **1 al 5**. ¡Gracias!
   utter_acknowledge_rating:
-    - text: "¡Te agradecemos tu opinión! ¡Que tengas un día chivo!"
-    - text: "¡Gracias por tu calificación! ¡Pasa un feliz día!"
+  - text: ¡Te agradecemos tu opinión! ¡Que tengas un día chivo!
+  - text: ¡Gracias por tu calificación! ¡Pasa un feliz día!
+  utter_ask_continue:
+  - text: ¿Seguro que quieres abandonar?
+  utter_confirm_product_selection:
+  - text: ¿es correcto?
+  - text: ¿confirmás esta selección?
+  utter_product_slots_summary:
+  - text: has elegido el plan {nombre_producto}, que cuesta {precio_producto} al mes.
+  - text: seleccionaste el plan {nombre_producto}, que cuesta {precio_producto} al mes.
+  - text: escogiste el plan {nombre_producto}, que cuesta {precio_producto} al mes.
+  - text: optaste por el plan {nombre_producto}, que cuesta {precio_producto} al mes.
+  - text: tu selección es el plan {nombre_producto}, que cuesta {precio_producto} al mes.
+  utter_personal_info_summary:
+  - text: Perfecto, **{nombre} {apellido}**, con DUI **{dui}**, que vive en **{direccion}** y tiene el teléfono **{telefono}**.
+  - text: Muy bien, **{nombre} {apellido}**, con DUI **{dui}**, que reside en **{direccion}** y su número de contacto es **{telefono}**.
+  utter_confirm_personal_info:
+  - text: ¿Confirmás que toda la información personal proporcionada es correcta y querés proceder con el contrato del plan?
+  - text: ¿Estás seguro de que la información personal es correcta y querés seguir adelante con el contrato del plan?
+  utter_ask_plan:
+  - text: ¿Qué **plan de internet** te gustaría contratar?
+  - text: ¿Cuál **plan de internet** querés elegir?
+  utter_ask_dui:
+  - text: ¿Me podés dar tu **DUI** por favor?
+  - text: Por favor, ¿cuál es tu **número de DUI**?
+  utter_ask_apellido:
+  - text: ¿Me podés dar tu **apellido**, por favor?
+  - text: Por favor, ¿cuál es tu **apellido**?
+  utter_ask_nombre:
+  - text: ¿Cuál es tu **nombre**?
+  - text: ¿Me decís tu **nombre**, porfa?
+  utter_ask_telefono:
+  - text: ¿Cuál es tu **número de teléfono**?
+  - text: ¿Me facilitás tu **teléfono** para contacto?
+  utter_ask_direccion:
+  - text: ¿Cuál es tu **dirección**?
+  - text: Por favor, indicá tu **dirección** completa.
+  utter_ask_email:
+  - text: me podrías dar tu **correo electrónico**, porfa?
+  - text: ¡Chivísimo! ¿Me regalás tu **correo**?
+  utter_confirmar_contrato_form:
+  - text: ¿Confirmás que toda la información proporcionada es correcta y querés proceder con el contrato del plan?
+  - text: ¿Estás seguro de que la información es correcta y querés seguir adelante con el contrato del plan?
+  utter_contract_sent:
+  - text: Gracias por tu correo, **{email}**. ¡Ya va en camino el contrato a tu bandeja de entrada! Te agradecemos por preferirnos.
+  - text: ¡Cabal! Ya te mandé el contrato a **{email}**. ¡Gracias por elegirnos, estamos a la orden!
   utter_contract_cancelled:
-    - text: "Entiendo, no hay problema. Si más adelante te animás, aquí vamos a estar. ¡Gracias por considerarnos! ¡Cuidate!"
-    - text: "Está bien, te entiendo. Cualquier cosa, ya sabés dónde encontrarnos. ¡Gracias y adiós!"
-
-  # Billing Path Responses
-  utter_ask_user_id:
-    - text: "Para consultar tu facturación, ¿me das tu **DUI**?" # Usado por el form
-  utter_billing_overdue:
-    - text: "Revisando... ¡Tenés una factura vencida! Por favor, revisá tu correo para los detalles de pago."
-  utter_billing_paid:
-    - text: "¡Revisando... Cheque! Tu facturación está al día. ¡Mil gracias por tu pago oportuno!"
-  utter_billing_pending:
-    - text: "Revisando... Tenés una factura pendiente de pago con fecha límite el 30 de este mes."
-# 5. Session Configuration
+  - text: Entiendo, hemos cancelado el proceso de contratación. Si necesitás algo más en el futuro, no dudes en contactarnos.
+  - text: No hay problema, hemos detenido el proceso de contratación. Estamos aquí para ayudarte cuando lo necesités.
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

@@ -1,50 +1,377 @@
 version: "3.1"
 
 stories:
-  - story: Internet Service Contracting Happy Path
+  - story: Solicitar contratar producto
     steps:
-      - action: utter_greet
       - intent: greet
+      - action: utter_greet
       - action: utter_ask_service
       - intent: request_internet_service
       - action: action_fetch_product_plans
-      - intent: choose_plan
+
+  - story: Interrumpción durante el llenado del formulario de producto
+    steps:
+      - action: contrato_form
+      - active_loop: contrato_form
       - slot_was_set:
-          - plan: "..."
-      - action: utter_ask_email
-      - intent: provide_email
+        - requested_slot: plan
+      - or:
+        - intent: stop
+        - intent: negociacion_postponer_decision
+        - intent: negociacion_cancelar_desistir
+      - action: utter_ask_continue
+      - or:
+        - intent: affirm
+        - intent: stop
+        - intent: thanks
+      - action: action_deactivate_loop
+      - active_loop: null
       - slot_was_set:
-        - email: "some_email@example.com" 
-      - action: utter_contract_sent
+        - requested_slot: null
+      - action: utter_contract_cancelled
       - action: utter_additional_request
       - intent: deny
       - action: utter_ask_rating
 
-  - story: User denies contract after seeing plans
+  - story: User successfully contracts an internet plan
     steps:
-    - action: utter_greet
-    - intent: greet
-    - action: utter_ask_service
-    - intent: request_internet_service
     - action: action_fetch_product_plans
-    - intent: deny
-    - action: utter_contract_cancelled
-    - action: utter_ask_rating
-
-  - story: Billing check and completion
-    steps:
-    - action: action_check_billing_status
+    - intent: negociacion_solicitar_detalles
+    - action: action_fetch_product_plans
+    - intent: negociacion_expresar_escepticismo
+    - action: action_fetch_product_plans
+    - intent: negociacion_solicitar_descuento
+    - action: action_fetch_product_plans
+    - or:
+      - intent: negociacion_aceptar_oferta
+      - intent: choose_plan
+    - action: contrato_form
+    - active_loop: contrato_form
+    - slot_was_set:
+        - plan: "..."
+        - producto_id: "..."
+        - nombre_producto: "..."
+        - precio_producto: "..."
+        - email: "some_email@example.com" 
+        - dui: "12345678-9"
+        # - apellido: "Perez"
+        # - nombre: "Juan"
+        # - direccion: "Calle Falsa 123"
+        - telefono: "5555-5555"
+    - active_loop: null
+    - action: utter_product_slots_summary
+    - action: utter_personal_info_summary
+    - action: utter_confirm_personal_info
+    - intent: affirm
+    - action: action_send_email
+    - action: utter_contract_sent
     - action: utter_additional_request
     - intent: deny
     - action: utter_ask_rating
 
-  - story: Technical Support RAG Flow
+  - story: User requests discount and accepts offer
     steps:
-    - intent: request_support
-    # - user: Tengo problemas con mi internet, ¿qué hago?
-    - action: action_technical_support_rag
-    - intent: issue_fixed
-    # Si no se establece un slot para continuar
-    - action: utter_additional_request 
+    - intent: greet
+    - action: utter_greet
+    - action: utter_ask_service
+    - intent: request_internet_service
+    - action: action_fetch_product_plans
+    - intent: negociacion_solicitar_descuento
+    - action: action_fetch_product_plans
+    - intent: negociacion_aceptar_oferta
+    - action: contrato_form
+    - active_loop: contrato_form
+    - slot_was_set:
+        - plan: "..."
+        - producto_id: "..."
+        - nombre_producto: "..."
+        - precio_producto: "..."
+        - email: "some_email@example.com" 
+        - dui: "12345678-9"
+        # - apellido: "Perez"
+        # - nombre: "Juan"
+        # - direccion: "Calle Falsa 123"
+        - telefono: "5555-5555"
+    - active_loop: null
+    - action: utter_product_slots_summary
+    - action: utter_personal_info_summary
+    - action: utter_confirm_personal_info
+    - intent: affirm
+    - action: action_send_email
+    - action: utter_contract_sent
+    - action: utter_additional_request
     - intent: deny
     - action: utter_ask_rating
+
+  - story: User expresses skepticism then requests details
+    steps:
+    - intent: request_internet_service
+    - action: action_fetch_product_plans
+    - intent: negociacion_expresar_escepticismo
+    - action: action_fetch_product_plans
+    - intent: negociacion_solicitar_detalles
+    - action: action_fetch_product_plans
+    - intent: negociacion_aceptar_oferta
+    - action: contrato_form
+    - active_loop: contrato_form
+    - slot_was_set:
+        - plan: "..."
+        - producto_id: "..."
+        - nombre_producto: "..."
+        - precio_producto: "..."
+        - email: "some_email@example.com" 
+        - dui: "12345678-9"
+        # - apellido: "Perez"
+        # - nombre: "Juan"
+        # - direccion: "Calle Falsa 123"
+        - telefono: "5555-5555"
+    - active_loop: null
+    - action: utter_product_slots_summary
+    - action: utter_personal_info_summary
+    - action: utter_confirm_personal_info
+    - intent: affirm
+    - action: action_send_email
+    - action: utter_contract_sent
+    - action: utter_additional_request
+    - intent: deny
+    - action: utter_ask_rating
+
+  - story: User postpones decision during negotiation
+    steps:
+    - intent: request_internet_service
+    - action: action_fetch_product_plans
+    - intent: negociacion_solicitar_descuento
+    - action: action_fetch_product_plans
+    - intent: negociacion_postponer_decision
+    - action: utter_ask_continue
+    - intent: affirm
+    - action: action_fetch_product_plans
+    - intent: negociacion_aceptar_oferta
+    - action: contrato_form
+    - active_loop: contrato_form
+    - slot_was_set:
+        - plan: "..."
+        - producto_id: "..."
+        - nombre_producto: "..."
+        - precio_producto: "..."
+        - email: "some_email@example.com" 
+        - dui: "12345678-9"
+        # - apellido: "Perez"
+        # - nombre: "Juan"
+        # - direccion: "Calle Falsa 123"
+        - telefono: "5555-5555"
+    - active_loop: null
+    - action: utter_product_slots_summary
+    - action: utter_personal_info_summary
+    - action: utter_confirm_personal_info
+    - intent: affirm
+    - action: action_send_email
+    - action: utter_contract_sent
+    - action: utter_additional_request
+    - intent: deny
+    - action: utter_ask_rating
+
+  - story: User cancels after expressing skepticism
+    steps:
+    - intent: request_internet_service
+    - action: action_fetch_product_plans
+    - intent: negociacion_expresar_escepticismo
+    - action: action_fetch_product_plans
+    - intent: negociacion_solicitar_detalles
+    - action: action_fetch_product_plans
+    - intent: negociacion_cancelar_desistir
+    - action: utter_contract_cancelled
+    - action: utter_ask_rating
+
+  - story: User requests details multiple times then accepts
+    steps:
+    - intent: request_internet_service
+    - action: action_fetch_product_plans
+    - intent: negociacion_solicitar_detalles
+    - action: action_fetch_product_plans
+    - intent: negociacion_solicitar_detalles
+    - action: action_fetch_product_plans
+    - intent: negociacion_solicitar_descuento
+    - action: action_fetch_product_plans
+    - intent: negociacion_aceptar_oferta
+    - action: contrato_form
+    - active_loop: contrato_form
+    - slot_was_set:
+        - plan: "..."
+        - producto_id: "..."
+        - nombre_producto: "..."
+        - precio_producto: "..."
+        - email: "some_email@example.com" 
+        - dui: "12345678-9"
+        - apellido: "Perez"
+        - nombre: "Juan"
+        - direccion: "Calle Falsa 123"
+        - telefono: "5555-5555"
+    - active_loop: null
+    - action: utter_product_slots_summary
+    - action: utter_personal_info_summary
+    - action: utter_confirm_personal_info
+    - intent: affirm
+    - action: action_send_email
+    - action: utter_contract_sent
+    - action: utter_additional_request
+    - intent: deny
+    - action: utter_ask_rating
+
+  - story: User postpones then cancels
+    steps:
+    - intent: request_internet_service
+    - action: action_fetch_product_plans
+    - intent: negociacion_solicitar_descuento
+    - action: action_fetch_product_plans
+    - intent: negociacion_postponer_decision
+    - action: utter_ask_continue
+    - intent: deny
+    - intent: negociacion_cancelar_desistir
+    - action: utter_contract_cancelled
+    - action: utter_ask_rating
+
+
+
+      # - action: utter_product_slots_summary
+#       - action: action_fetch_product_plans
+#       - intent: choose_plan
+#       - slot_was_set:
+#           - plan: "..."
+#       - action: contrato_form
+#       - active_loop: null
+#       - slot_was_set:
+#         - producto_id: "..."
+#         - nombre_producto: "..."
+#         - precio_producto: "..."
+#       - intent: affirm
+#       - action: utter_ask_email
+#       - intent: provide_email
+#       - slot_was_set:
+#         - email: "some_email@example.com" 
+#       - action: utter_contract_sent
+#       - action: utter_additional_request
+#       - intent: deny
+#       - action: utter_ask_rating
+
+  # - story: User denies contract after seeing plans
+  #   steps:
+  #   - action: utter_greet
+  #   - intent: greet
+  #   - action: utter_ask_service
+  #   - intent: request_internet_service
+#     - action: action_fetch_product_plans
+#     - intent: choose_plan
+#     - slot_was_set:
+#       - plan: "..."
+#     - action: contrato_form
+#     - active_loop: null
+#     - slot_was_set:
+#         - producto_id: null
+#     - intent: deny
+#     - action: utter_contract_cancelled
+#     - action: utter_ask_rating
+
+#   - story: Billing check and completion
+#     steps:
+#     - action: action_check_billing_status
+#     - action: utter_additional_request
+#     - intent: deny
+#     - action: utter_ask_rating
+
+#   - story: Technical Support RAG Flow
+#     steps:
+#     - intent: request_support
+#     # - user: Tengo problemas con mi internet, ¿qué hago?
+#     - action: action_technical_support_rag
+#     - intent: issue_fixed
+#     # Si no se establece un slot para continuar
+#     - action: utter_additional_request 
+#     - intent: deny
+#     - action: utter_ask_rating
+
+  - story: interactive_story_1
+    steps:
+    - intent: choose_plan
+      entities:
+      - plan: ultra
+    - action: contrato_form
+    - active_loop: contrato_form
+    - slot_was_set:
+      - plan: ultra
+    - slot_was_set:
+      - producto_id: f423af1a-f1ff-4e7d-a79a-f78812543f53
+    - slot_was_set:
+      - nombre_producto: Ultra Premium
+    - slot_was_set:
+      - precio_producto: 80.0
+    - slot_was_set:
+      - requested_slot: dui
+    - intent: provide_rating
+      entities:
+      - rating: '43243'
+    - slot_was_set:
+      - dui: '43243'
+    - action: contrato_form
+    - slot_was_set:
+      - dui: null
+    - slot_was_set:
+      - requested_slot: dui
+    - intent: provide_dui
+      entities:
+      - dui: '123456789'
+    - slot_was_set:
+      - dui: '123456789'
+    - action: contrato_form
+    - slot_was_set:
+      - dui: '123456789'
+    - slot_was_set:
+      - requested_slot: telefono
+    - intent: provide_dui
+      entities:
+      - dui: '229912456'
+    - slot_was_set:
+      - telefono: '229912456'
+    - action: contrato_form
+    - slot_was_set:
+      - telefono: null
+    - slot_was_set:
+      - requested_slot: telefono
+    - intent: provide_rating
+      entities:
+      - rating: '22345789'
+    - slot_was_set:
+      - telefono: '22345789'
+    - action: contrato_form
+    - slot_was_set:
+      - telefono: '22345789'
+    - slot_was_set:
+      - requested_slot: email
+    - intent: provide_email
+      entities:
+      - email: moralesandrea.edr4@gmail.com
+    - slot_was_set:
+      - email: moralesandrea.edr4@gmail.com
+    - action: contrato_form
+    - slot_was_set:
+      - email: moralesandrea.edr4@gmail.com
+    - slot_was_set:
+      - requested_slot: null
+    - active_loop: null
+    - action: utter_product_slots_summary
+    - action: utter_personal_info_summary
+    - action: utter_confirm_personal_info
+    - intent: affirm
+    - action: action_send_email
+    - action: utter_contract_sent
+    - action: utter_additional_request
+    - intent: thanks
+    - action: utter_thanks_response
+    - action: utter_ask_rating
+    - intent: provide_rating
+      entities:
+      - rating: cinco
+    - slot_was_set:
+      - rating: cinco
+    - action: utter_acknowledge_rating
+    - action: utter_goodbye

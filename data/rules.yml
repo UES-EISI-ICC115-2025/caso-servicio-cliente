@@ -1,12 +1,25 @@
 version: "3.1"
 
 rules:
-- rule: Respond to email after asking
-  steps:
-  - action: utter_ask_email
-  - intent: provide_email
-  - action: utter_contract_sent
-  - action: utter_additional_request
+# - rule: Respond to email after asking
+#   condition:
+#   - active_loop: contrato_form
+#   steps:
+#   - action: contrato_form
+#   - slot_was_set:
+#     - requested_slot: null
+#     - dui: ""
+#     - apellido: ""
+#     - nombre: ""
+#     - telefono: ""
+#     - direccion: ""
+#     - email: ""
+#   - active_loop: null
+#   - action: utter_personal_info_summary
+#   - action: utter_confirm_personal_info
+#   - intent: affirm
+#   - action: utter_contract_sent
+#   - action: utter_additional_request
 
 - rule: Show plans immediately after service request
   steps:
@@ -15,38 +28,94 @@ rules:
 
 - rule: Final action - say goodbye after acknowledgement
   steps:
-  - intent: provide_rating
-  - action: utter_acknowledge_rating
-  - action: utter_goodbye
-  - action: action_session_start
+    - intent: provide_rating
+    - action: utter_acknowledge_rating
+    - action: utter_goodbye
+    # - wait_for_user_input: false
 
-- rule: Activate user verification form on billing request
+# - rule: Activate user verification form on billing request
+#   steps:
+#   - intent: request_billing
+#   - action: user_verification_form
+#   - active_loop: user_verification_form
+
+# - rule: Submit user verification form
+#   condition:
+#   - active_loop: user_verification_form
+#   steps:
+#   - action: user_verification_form
+#   - active_loop: null
+#   - action: action_check_billing_status
+#   - action: utter_additional_request
+#   - intent: deny
+#   - action: utter_ask_rating
+
+# - rule: Activate RAG for technical questions
+#   steps:
+#   - intent: request_support             
+#   - action: action_technical_support_rag
+
+# # Para manejar preguntas técnicas adicionales dentro del mismo turno, si el usuario hace otra pregunta
+# - rule: RAG for follow-up technical questions
+#   steps:
+#   # El bot ya respondió algo técnico
+#   - action: action_technical_support_rag 
+#   # O cualquier intent que captures como "pregunta"
+#   - intent: out_of_scope 
+#   - action: action_technical_support_rag
+
+- rule: Activar el formulario de selección de producto
   steps:
-  - intent: request_billing
-  - action: user_verification_form
-  - active_loop: user_verification_form
+  # O el intent que uses para iniciar la compra
+  - or:
+    - intent: negociacion_aceptar_oferta
+    - intent: choose_plan   
+  - action: contrato_form
+  - active_loop: contrato_form
 
-- rule: Submit user verification form
+
+# - rule: Enviar confirmación después de completar el formulario de producto
+#   condition:
+#   - active_loop: contrato_form
+#   steps:
+#   - action: contrato_form
+#   - active_loop: null
+#   - slot_was_set:
+#     - requested_slot: null
+#   - action: utter_confirm_product_selection
+
+- rule: Enviar contrato después de completar el formulario de datos personales
   condition:
-  - active_loop: user_verification_form
+  - active_loop: contrato_form
   steps:
-  - action: user_verification_form
+  - action: contrato_form
+  - slot_was_set:
+    - requested_slot: null
+    # - email: ""
+    # - dui: ""
+    # - apellido: ""
+    # - nombre: ""
+    # - direccion: ""
+    # - telefono: ""
+    # - plan: ""
+    # - precio_producto: ""
+    # - nombre_producto: ""
+    # - producto_id: ""
   - active_loop: null
-  - action: action_check_billing_status
+  - action: utter_product_slots_summary
+  - action: utter_personal_info_summary
+  - action: utter_confirm_personal_info
+  - intent: affirm
+  - action: action_send_email
+  - action: utter_contract_sent
   - action: utter_additional_request
-  - intent: deny
-  - action: utter_ask_rating
 
-- rule: Activate RAG for technical questions
-  steps:
-  - intent: request_support             
-  - action: action_technical_support_rag
+# - rule: Interrupción en formulario de selección de producto
+#   condition:
+#   - active_loop: contrato_form
+#   steps:
+#   - intent: conversacion_elegir_plan
+#   - action: action_fetch_product_plans
+#   - action: contrato_form
+#   - active_loop: contrato_form
 
-# Para manejar preguntas técnicas adicionales dentro del mismo turno, si el usuario hace otra pregunta
-- rule: RAG for follow-up technical questions
-  steps:
-  # El bot ya respondió algo técnico
-  - action: action_technical_support_rag 
-  # O cualquier intent que captures como "pregunta"
-  - intent: out_of_scope 
-  - action: action_technical_support_rag

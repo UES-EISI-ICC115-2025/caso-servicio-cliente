@@ -477,3 +477,151 @@ from intents
     right join training_examples using (intent_id);
 -- SQLBook: Code
 select entity_name, pattern from regex_patterns;
+-- SQLBook: Code
+-- Insertar el intent 'negociacion_solicitar_descuento' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('negociacion_solicitar_descuento', 'El cliente está pidiendo un mejor precio o un beneficio adicional')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'negociacion_solicitar_descuento'
+),
+examples(example_text) AS (
+    VALUES
+    ('¿No me puede hacer un descuento?'),
+    ('Écheme la mano'),
+    ('¿Qué me ofrecen por ser cliente nuevo?'),
+    ('¿Me regala un descuento?'),
+    ('¿No me puede hacer una rebaja?'),
+    ('Ando cortito de lana, ¿me da una manita?'),
+    ('¿Me hace precio si agarro dos?'),
+    ('Deme un descuentito, porfa'),
+    ('¿No me puede tirar una rebaja?'),
+    ('¿Hay alguna promo para la raza?'),
+    ('¿No me puede bajar un poco el precio?')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar nuevos intents de negociación y sus ejemplos asociados (evitando duplicados)
+
+-- 1) Crear intents si no existen
+INSERT INTO intents (intent_name, description) VALUES
+('negociacion_expresar_escepticismo', 'El cliente duda de la calidad, la velocidad, o el cumplimiento de la empresa.'),
+('negociacion_solicitar_detalles', 'El cliente necesita más información técnica o de procedimiento antes de decidir.'),
+('negociacion_postponer_decision', 'El cliente no está listo para decidir y quiere tiempo para pensar.'),
+('negociacion_cancelar_desistir', 'El cliente decide no continuar con la compra en el momento.'),
+('negociacion_aceptar_oferta', 'El cliente está listo para proceder con la compra.')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- 2) Insertar ejemplos para cada intent evitando duplicados
+
+-- negociacion_expresar_escepticismo
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'negociacion_expresar_escepticismo'
+),
+examples(example_text) AS (
+    VALUES
+    ('No me están dando paja, ¿Quién me asegura a mí?'),
+    ('Me parece una gran falta de respeto.')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+
+-- negociacion_solicitar_detalles
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'negociacion_solicitar_detalles'
+),
+examples(example_text) AS (
+    VALUES
+    ('¿Y cuánto me cuesta esa gracia?'),
+    ('¿Cuánto se tardan en instalar?'),
+    ('¿Y si reclamo, qué?')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+
+-- negociacion_postponer_decision
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'negociacion_postponer_decision'
+),
+examples(example_text) AS (
+    VALUES
+    ('Voy a pensarlo bien'),
+    ('Mañana la llamo'),
+    ('No me urge hoy mismo'),
+    ('Si quiere mejor le llamo más tarde'),
+    ('Si quiere mejor le escribo mañana'),
+    ('le voy a avisar'),
+    ('le aviso más tarde'),
+    ('deme chance, ahorita no puedo decidir'),
+    ('si me da chance, puedo pensarlo')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+
+-- negociacion_cancelar_desistir
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'negociacion_cancelar_desistir'
+),
+examples(example_text) AS (
+    VALUES
+    ('Algo me dice que no'),
+    ('Estamos socados de pisto'),
+    ('No me siento conforme'),
+    ('Voy a seguir con el que tengo'),
+    ('Fijese que no, mejor no'),
+    ('Creo que no me conviene'),
+    ('No, gracias'),
+    ('Mejor no le hago caso'),
+    ('Prefiero no continuar'),
+    ('No voy a seguir adelante'),
+    ('Bueno, gracias igual')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+
+-- negociacion_aceptar_oferta
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'negociacion_aceptar_oferta'
+),
+examples(example_text) AS (
+    VALUES
+    ('¡Trato hecho!'),
+    ('Me parece justo y necesario'),
+    ('De volada')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);

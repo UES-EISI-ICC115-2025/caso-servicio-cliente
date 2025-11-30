@@ -9,3 +9,29 @@ SELECT
     beneficios
 FROM productos
 ORDER BY precio_mensual ASC
+-- SQLBook: Code
+-- Active: 1763429712926@@127.0.0.1@5432@clientes_db@public
+SELECT
+    producto_id,
+    nombre,
+    descripcion,
+    velocidad_bajada_mbps,
+    velocidad_subida_mbps,
+    precio_mensual,
+    beneficios
+FROM productos
+where
+    LOWER(
+        TRANSLATE(
+            nombre,
+            'áéíóúÁÉÍÓÚñÑ',
+            'aeiouAEIOUnN'
+        )
+    ) ILIKE LOWER(
+        TRANSLATE(
+            '%basico%',
+            'áéíóúÁÉÍÓÚñÑ',
+            'aeiouAEIOUnN'
+        )
+    )
+ORDER BY precio_mensual ASC

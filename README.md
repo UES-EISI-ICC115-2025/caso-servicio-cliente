@@ -35,6 +35,118 @@
 
 *Diagrama de Componentes de Arquitectura para Entrenamiento de IA*  
 
+# **Comandos rápidos**
+### Apache Airflow
+
+1. Activar entorno virtual (ajustar ruta si es diferente)
+   ```bash
+   source ~/apache-airflow/airflow_env/bin/activate
+   ```
+
+2. Establecer AIRFLOW_HOME
+   ```bash
+   export AIRFLOW_HOME=~/apache-airflow/airflow_data
+   ```
+
+3. Ejecutar Airflow en modo standalone (modo todo-en-uno para pruebas)
+   ```bash
+   airflow standalone
+   ```
+
+4. Listar DAGs disponibles
+   ```bash
+   airflow dags list
+   ```
+
+5. Ver errores de importación (CLI si está disponible)
+   ```bash
+   airflow dags list-import-errors
+   ```
+
+6. Monitorear logs en tiempo real (scheduler / webserver)
+   ```bash
+   sudo journalctl -u airflow-scheduler -f
+   sudo journalctl -u airflow-webserver -f
+   ```
+### Gradio
+1. Activar entorno virtual
+
+   ```bash
+   source gradio_env/bin/activate
+   ```
+2. Ejecutar servidor de frontend
+   ```bash
+   python app.py
+   ```
+### RASA
+
+1. Activar entorno virtual
+   ```bash
+   source /home/icc115/caso-servicio-cliente/rasa_env/bin/activate
+   ```
+1. Entrenar modelo
+   ```bash
+   rasa train
+   ```
+
+1. Run RASA actions API
+   ```bash
+   rasa run actions --debug
+   ```
+
+1. Run RASA API
+   ```bash
+   rasa run
+   ```
+
+1. Test model CLI
+   ```bash
+   rasa shell
+   ```
+
+1. Debugging
+   ```bash
+   rasa shell nlu
+   ```
+
+1. Interactive story building
+   ```bash
+   rasa interactive
+   ```
+### RAG API
+1. Activar entorno virtual
+   ```bash
+   source /home/icc115/caso-servicio-cliente/rasa_rag_env/bin/activate
+   ```
+2. Iniciar servidor
+   ```bash
+   gunicorn -w 1 -b 0.0.0.0:8000 rasa_rag_api_server:app --timeout 120
+
+   # -w cantidad de workers
+   ```
+### Monitoreo
+
+   1. Lista los modelos y procesos que Ollama tiene cargados y su estado (puede mostrar puerto, modelo y si está activo).  
+      ```bash
+      ollama ps
+      ```
+      
+
+   2. Visor interactivo de procesos en tiempo real para monitorizar CPU, memoria, carga y consumo por procesos; use las flechas para navegar y `q` para salir.  
+      ```bash
+      htop
+      ```
+      
+   3. Muestra métricas de las GPUs NVIDIA (utilización, memoria, temperatura) en un bucle cada 1 segundo; requiere controladores NVIDIA instalados.
+      ```bash
+      nvidia-smi -l 1
+      ```
+
+   4. Busca dispositivos PCI relacionados con NVIDIA y muestra las líneas siguientes (habitualmente el driver y módulo en uso), útil para verificar reconocimiento y controladores del GPU.
+      ```bash
+      lspci -nnk | grep -i nvidia -A3
+      ```
+
 # **Manual de Despliegue de Stack en Ubuntu Server 22.04**
 
 El presente documento detalla el procedimiento para la instalación y configuración del stack de para Inteligencia Artificial que se compone de Apache Airflow, Ollama, Postgresql, Chroma DB, RASA API Rest y Frontend App en un entorno de servidor Ubuntu 22.04, utilizando un entorno virtual de Python y PostgreSQL como base de datos de metadatos de producción
