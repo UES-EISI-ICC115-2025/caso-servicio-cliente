@@ -312,6 +312,12 @@ nlu:
     - claro
     - si
     - si, seguro
+    - si hombre
+    - segurisimo
+    - por supuesto
+    - demole con todo
+    - demosle con todo
+    - si, vamos a darle
 - intent: deny
   examples: |
     - no
@@ -723,6 +729,19 @@ nlu:
     - ¿cual es el más accesible?
     - ¿cual es el más conveniente?
     - ¿cual es el más barato?
+    - juela, que caro esta
+    - uy hoy si se pasaron
+    - no tengo tanto pisto
+    - estoy corto de pisto
+    - ando ajustado de pisto
+    - y porque tan caro?
+    - no hay algo más económico?
+    - no hay algo más barato?
+    - hey ese bolado si esta caro
+    - anda por las nubes ese precio
+    - que tremendo
+    - que caro esta eso
+
 - intent: negociacion_expresar_escepticismo
   examples: |
     - Es **más lento que mi abuela subiendo una cuesta**, ¡no me sirve!
@@ -740,6 +759,58 @@ nlu:
     - Si un día hay una tormenta y **se me va la luz**, ¿el internet queda funcionando?
     - ¿Y si reclamo, qué?
     - ¿Y si yo solo quiero 300 Megas? ¿Me baja mucho el precio?
+    - barato
+    - económico
+    - accesible
+    - conveniente
+    - cómodo
+    - rapido
+    - veloz
+    - que aguante
+    - que no se caiga
+    - uno potente
+    - uno fuerte
+    - para varios dispositivos
+    - para varios aparatos
+    - que no se trabe
+    - que agarre bien
+    - que no falle
+    - que agarre netflix
+    - que agarre youtube
+    - que agarre juegos en línea
+    - que agarre videollamadas
+    - para videollamadas
+    - para juegos en línea
+    - para netflix
+    - para youtube
+    - para trabajar desde casa
+    - para home office
+    - para jugar clash royale
+    - para jugar free fire
+    - para jugar call of duty
+    - para jugar league of legends
+    - para jugar fortnite
+    - para zoom
+    - para teams
+    - para meet
+    - para estudiar en línea
+    - para clases en línea
+    - para estar chateando
+    - facebook
+    - whatsapp
+    - instagram
+    - tiktok
+    - twitter
+    - telegram
+    - youtube
+    - netflix
+    - hbo max
+    - disney plus
+    - prime video
+    - hulu
+    - spotify
+    - apple music
+    - amazon music
 - intent: negociacion_postponer_decision
   examples: |
     - **Voy a pensarlo bien**.

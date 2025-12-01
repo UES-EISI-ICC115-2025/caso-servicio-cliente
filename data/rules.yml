@@ -1,25 +1,6 @@
 version: "3.1"
 
 rules:
-# - rule: Respond to email after asking
-#   condition:
-#   - active_loop: contrato_form
-#   steps:
-#   - action: contrato_form
-#   - slot_was_set:
-#     - requested_slot: null
-#     - dui: ""
-#     - apellido: ""
-#     - nombre: ""
-#     - telefono: ""
-#     - direccion: ""
-#     - email: ""
-#   - active_loop: null
-#   - action: utter_personal_info_summary
-#   - action: utter_confirm_personal_info
-#   - intent: affirm
-#   - action: utter_contract_sent
-#   - action: utter_additional_request
 
 - rule: Show plans immediately after service request
   steps:
@@ -78,17 +59,6 @@ rules:
     - intent: choose_plan   
   - action: contrato_form
   - active_loop: contrato_form
-
-
-# - rule: Enviar confirmación después de completar el formulario de producto
-#   condition:
-#   - active_loop: contrato_form
-#   steps:
-#   - action: contrato_form
-#   - active_loop: null
-#   - slot_was_set:
-#     - requested_slot: null
-#   - action: utter_confirm_product_selection
 
 - rule: Enviar contrato después de completar el formulario de datos personales
   condition:

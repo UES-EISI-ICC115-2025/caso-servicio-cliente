@@ -59,10 +59,11 @@ class ActionDeactivateContratoForm(Action):
             SlotSet("requested_slot", None),
         ]
 
+
 class ValidateContratoForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_contrato_form"
-    
+
     def validate_plan(
         self,
         slot_value: Any,
@@ -71,7 +72,7 @@ class ValidateContratoForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         """Validar que el producto seleccionado esté en nuestra lista de productos válidos."""
-        
+
         # Normalizamos el valor a minúsculas para la comparación
         product_normalized = str(slot_value).lower()
 
@@ -124,28 +125,41 @@ class ValidateContratoForm(FormValidationAction):
                         )
                     ORDER BY precio_mensual ASC
                     """,
-                    (pattern,)
+                    (pattern,),
                 )
 
                 resultado_busqueda_producto = cur.fetchone()
 
                 if not resultado_busqueda_producto:
-                    dispatcher.utter_message(text=f"Disculpa, el plan '{slot_value}' no lo tengo disponible.")
+                    dispatcher.utter_message(
+                        text=f"Disculpa, el plan '{slot_value}' no lo tengo disponible."
+                    )
                     dispatcher.utter_message(response="action_fetch_product_plans")
-                    return {"plan": None, "producto_id": None, "nombre_producto": None, "precio_producto": None}
+                    return {
+                        "plan": None,
+                        "producto_id": None,
+                        "nombre_producto": None,
+                        "precio_producto": None,
+                    }
                 else:
                     # DictCursor returns a mapping; access columns by name instead of by index
-                    print(f"Producto encontrado: {resultado_busqueda_producto['producto_id']} - {resultado_busqueda_producto['nombre']}")
+                    print(
+                        f"Producto encontrado: {resultado_busqueda_producto['producto_id']} - {resultado_busqueda_producto['nombre']}"
+                    )
                     return {
                         "plan": slot_value,
                         "producto_id": resultado_busqueda_producto["producto_id"],
                         "nombre_producto": resultado_busqueda_producto["nombre"],
-                        "precio_producto": resultado_busqueda_producto["precio_mensual"],
+                        "precio_producto": resultado_busqueda_producto[
+                            "precio_mensual"
+                        ],
                     }
-        
+
         except Exception as e:
             print(f"Error al conectar a la base de datos: {e}")
-            dispatcher.utter_message(text="Lo siento, estoy teniendo problemas para verificar el producto en este momento. Por favor, intenta más tarde.")
+            dispatcher.utter_message(
+                text="Lo siento, estoy teniendo problemas para verificar el producto en este momento. Por favor, intenta más tarde."
+            )
             return {"plan": None}
         finally:
             if conn:
@@ -161,20 +175,21 @@ class ValidateContratoForm(FormValidationAction):
 
         # 1. Definir el patrón RegEx de DUI (8 dígitos, guion opcional, 1 dígito)
         dui_pattern = r"^\d{8}-?\d$"
-        
+
         # 2. El valor que recibimos aquí es la entidad extraída (ej: "01234567-8" o "012345678")
         match = re.search(dui_pattern, value)
-        
+
         if match:
             # 3. Limpiar y almacenar (remover el guion para guardar un valor consistente)
-            dui_clean = value.replace('-', '')
+            dui_clean = value.replace("-", "")
             return {"dui": dui_clean}
         else:
-            if tracker.get_slot('requested_slot') == 'dui':
+            if tracker.get_slot("requested_slot") == "dui":
                 # 4. Falla la validación del formato (debe ser el usuario quien lo ingrese)
-                dispatcher.utter_message(text="El formato del DUI no es válido. Por favor, ingresa los 9 dígitos correctamente.")
+                dispatcher.utter_message(
+                    text="El formato del DUI no es válido. Por favor, ingresa los 9 dígitos correctamente."
+                )
             return {"dui": None}
-    
 
     def validate_telefono(
         self,
@@ -189,7 +204,7 @@ class ValidateContratoForm(FormValidationAction):
         telefono_pattern = r"^(?:\+?503)?(\d{4}-?\d{4})$"
         # intentar extraer desde el texto del mensaje si coincide con el patrón
         msg_text = tracker.latest_message.get("text", "")
-        text_match = re.search(telefono_pattern, msg_text.replace(' ', ''))
+        text_match = re.search(telefono_pattern, msg_text.replace(" ", ""))
         if not value and text_match:
             value = text_match.group(0)
 
@@ -197,65 +212,95 @@ class ValidateContratoForm(FormValidationAction):
         if not value:
             for ent in tracker.latest_message.get("entities", []):
                 ent_val = ent.get("value", "")
-                ent_match = re.search(telefono_pattern, ent_val.replace(' ', ''))
+                ent_match = re.search(telefono_pattern, ent_val.replace(" ", ""))
                 if ent_match:
                     value = ent_match.group(0)
                     break
-        
+
         # El valor (value) aquí es la entidad extraída por NLU/from_entity.
-        match = re.search(telefono_pattern, value.replace(' ', ''))
-        
+        match = re.search(telefono_pattern, value.replace(" ", ""))
+
         if match:
             # El grupo 1 de la expresión captura los 8 dígitos (sin el código 503 ni el guion final).
             # Esto reduce drásticamente el riesgo de un falso positivo con el DUI (9 dígitos).
-            
+
             # Obtenemos solo los 8 dígitos, eliminando cualquier separador interno
-            ocho_digitos = match.group(1).replace('-', '') 
-            
+            ocho_digitos = match.group(1).replace("-", "")
+
             # Verificación final de longitud (seguridad extra)
             if len(ocho_digitos) == 8:
                 return {"telefono": ocho_digitos}
-            
+
         # Si la validación falla (no es un patrón de 8 dígitos de teléfono)
-        if tracker.get_slot('requested_slot') == 'telefono':
-            dispatcher.utter_message(text="El formato del teléfono no es válido. Por favor, ingresa los 8 dígitos (ej. 7777-8888) o usa el formato +503.")
-                
+        if tracker.get_slot("requested_slot") == "telefono":
+            dispatcher.utter_message(
+                text="El formato del teléfono no es válido. Por favor, ingresa los 8 dígitos (ej. 7777-8888) o usa el formato +503."
+            )
+
         return {"telefono": None}
 
-    # def validate_nombre(
-    #     self,
-    #     value: Text,
-    #     dispatcher: CollectingDispatcher,
-    #     tracker: Tracker,
-    #     domain: Dict,
-    # ) -> Dict[Text, Any]:
+    def validate_nombre(
+        self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict,
+    ) -> Dict[Text, Any]:
 
-    #     apellido = tracker.get_slot("apellido")
-    #     telefono = tracker.get_slot("telefono")
-    #     email = tracker.get_slot("email")
-    #     dui = tracker.get_slot("dui")
-    #     direccion = tracker.get_slot("direccion")
+        # Intentar obtener la entidad nombre desde el mensaje más reciente
+        nombre_entity = next(
+            (
+                e.get("value")
+                for e in tracker.latest_message.get("entities", [])
+                if e.get("entity") == "nombre"
+            ),
+            None,
+        )
 
-    #     print(f"Validando nombre recibido: '{value}'")
+        apellido_entity = next(
+            (
+                e.get("value")
+                for e in tracker.latest_message.get("entities", [])
+                if e.get("entity") == "apellido"
+            ),
+            None,
+        )
 
-    #     palabras = value.split()
+        # el nombre debe ser diferente al apellido
+        if value in [apellido_entity]:
+            return {"nombre": None}
+        
+        # Si se encontró la entidad nombre y es válida, usarla; de lo contrario, usar el slot actual
+        if nombre_entity and len(nombre_entity.split()) > 1:
+            return {"nombre": nombre_entity.title()}
 
-    #     if len(palabras) == 0:
-    #         dispatcher.utter_message(
-    #             text="Necesito tu nombre. ¿Podrías ingresarlo de nuevo?"
-    #         )
-    #         return {"nombre": None}
+        print(f"Validando nombre recibido: '{value}'")
 
-    #     if len(palabras) > 3:
-    #         dispatcher.utter_message(
-    #             text="El nombre parece tener demasiadas palabras. Por favor, ingrésalo nuevamente."
-    #         )
-    #         return {"nombre": None}
+        palabras = value.split()
+        # Remover palabras no deseadas cuando aparecen aisladas
+        palabras_a_remover = {
+            "claro", "si", "sí", "no", "por", "supuesto", "aqui", "aquí", 
+            "tienes", "sipi", "mi", "apellido", "es", "nombre", ",", "me",
+            "llamo", "yo", "soy", "buenos", "dias", "buenas", "tardes", "noches", "mi"
+        }
+        palabras = [
+            p for p in palabras 
+            if p.lower() not in palabras_a_remover
+        ]
 
-    #     if value in [apellido, telefono, email, dui, direccion]:
-    #         return {"nombre": None}
+        if len(palabras) == 0:
+            dispatcher.utter_message(
+                text="Necesito tu nombre. ¿Podrías ingresarlo de nuevo?"
+            )
+            return {"nombre": None}
 
-    #     return {"nombre": value.title()}
+        if len(palabras) > 5:
+            dispatcher.utter_message(
+                text="El nombre parece tener demasiadas palabras. Por favor, ingrésalo nuevamente."
+            )
+            return {"nombre": None}
+
+        return {"nombre": value.title()}
 
     def validate_email(
         self,
@@ -284,75 +329,111 @@ class ValidateContratoForm(FormValidationAction):
 
         return {"email": value.lower()}
 
-    # def validate_direccion(
-    #     self,
-    #     value: Text,
-    #     dispatcher: CollectingDispatcher,
-    #     tracker: Tracker,
-    #     domain: Dict,
-    # ) -> Dict[Text, Any]:
+    def validate_direccion(
+        self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict,
+    ) -> Dict[Text, Any]:
 
-    #     print(f"Validando dirección recibida: '{value}'")
+        print(f"Validando dirección recibida: '{value}'")
 
-    #     if (
-    #         tracker.get_slot("direccion") is not None
-    #         and len(tracker.get_slot("direccion").strip().split()) >= 4
-    #     ):
-    #         return {"direccion": tracker.get_slot("direccion")}
+        direccion_entity = next(
+            (
+                e.get("value")
+                for e in tracker.latest_message.get("entities", [])
+                if e.get("entity") == "direccion"
+            ),
+            None,
+        )
 
-    #     # Validar longitud mínima
-    #     if len(value.strip().split()) < 4:
-    #         if tracker.get_slot("requested_slot") == "direccion":
-    #             dispatcher.utter_message(
-    #                 text="La dirección parece muy corta. Por favor, proporciona una dirección completa."
-    #             )
-    #         return {"direccion": None}
+        # Si se encontró la entidad dirección y es válida, usarla; de lo contrario, usar el slot actual
+        if direccion_entity and len(direccion_entity.split()) >= 4:
+            return {"direccion": direccion_entity.strip()}
+        
+        # Remover palabras de relleno comunes
+        palabras = value.split()
+        palabras_relleno = {
+            "claro", "si", "sí", "no", "por", "supuesto", "aqui", "aquí",
+            "tienes", "sipi", "mi", "es", "direccion", "dirección",
+            "vivo", "resido", "estoy", "me", "encuentro", "ubicado"
+        }
+        palabras = [
+            p for p in palabras
+            if p.lower() not in palabras_relleno
+        ]
+        value = " ".join(palabras)
 
-    #     return {"direccion": value.strip()}
+        # Validar longitud mínima
+        if len(value.strip().split()) < 4:
+            if tracker.get_slot("requested_slot") == "direccion":
+                dispatcher.utter_message(
+                    text="La dirección parece muy corta. Por favor, proporciona una dirección completa."
+                )
+            return {"direccion": None}
 
-    # def validate_apellido(
-    #     self,
-    #     value: Text,
-    #     dispatcher: CollectingDispatcher,
-    #     tracker: Tracker,
-    #     domain: Dict,
-    # ) -> Dict[Text, Any]:
+        return {"direccion": value.strip()}
 
-    #     # Esta es la validación si se usó from_text:
-    #     # Recuperar otros slots relevantes
-    #     nombre = tracker.get_slot("nombre")
-    #     telefono = tracker.get_slot("telefono")
-    #     email = tracker.get_slot("email")
-    #     dui = tracker.get_slot("dui")
-    #     direccion = tracker.get_slot("direccion")
-    #     print(f"Validando apellido recibido via from_text: '{value}'")
-    #     print(f"Slot 'telefono' recuperado: {telefono}")
-    #     print(f"Slot 'email' recuperado: {email}")
-    #     print(f"Slot 'nombre' recuperado: {nombre}")
-    #     print(f"Slot 'dui' recuperado: {dui}")
-    #     print(f"Slot 'direccion' recuperado: {direccion}")
+    def validate_apellido(
+        self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict,
+    ) -> Dict[Text, Any]:
 
-    #     palabras = value.split()
+        # Intentar obtener la entidad apellido desde el mensaje más reciente
+        nombre_entity = next(
+            (
+                e.get("value")
+                for e in tracker.latest_message.get("entities", [])
+                if e.get("entity") == "nombre"
+            ),
+            None,
+        )
 
-    #     # 2. Validación de Calidad: Se requiere al menos una o dos palabras
-    #     if len(palabras) == 0:
-    #         if tracker.get_slot("requested_slot") == "apellido":
-    #             dispatcher.utter_message(
-    #                 text="Necesito tu apellido. ¿Podrías ingresarlo de nuevo?"
-    #             )
-    #         return {"apellido": None}  # Falla la validación, pide de nuevo
+        apellido_entity = next(
+            (
+                e.get("value")
+                for e in tracker.latest_message.get("entities", [])
+                if e.get("entity") == "apellido"
+            ),
+            None,
+        )
 
-    #     if len(palabras) > 3:
-    #         if tracker.get_slot("requested_slot") == "apellido":
-    #             dispatcher.utter_message(
-    #                 text="El apellido parece tener demasiadas palabras. Por favor, ingrésalo nuevamente."
-    #             )
-    #         return {"apellido": None}  # Falla la validación, pide de nuevo
-    #     if value in [nombre, telefono, email, dui, direccion]:
-    #         # dispatcher.utter_message(
-    #         #     text="Parece que has ingresado tu nombre en lugar de tu apellido. Por favor, ingresa solo tu apellido."
-    #         # )
-    #         return {"apellido": None}  # Falla la validación, pide de nuevo
-    #     # 3. Éxito: El texto fue limpiado y se considera válido
-    #     #    Se almacena el texto limpio y Rasa avanza al siguiente slot
-    #     return {"apellido": value.title()}
+        # el apellido debe ser diferente al nombre
+        if value in [nombre_entity]:
+            return {"apellido": None}
+        
+        # Si se encontró la entidad apellido y es válida, usarla; de lo contrario, usar el slot actual
+        if apellido_entity and len(apellido_entity.split()) > 1:
+            return {"apellido": apellido_entity.title()}
+
+        print(f"Validando apellido recibido: '{value}'")
+
+        palabras = value.split()
+        # Remover palabras no deseadas cuando aparecen aisladas
+        palabras_a_remover = {
+            "claro", "si", "sí", "no", "por", "supuesto", "aqui", "aquí", 
+            "tienes", "sipi", "mi", "apellido", "es", "apellido", ",", "me",
+            "llamo", "yo", "soy", "buenos", "dias", "buenas", "tardes", "noches", "mi"
+        }
+        palabras = [
+            p for p in palabras 
+            if p.lower() not in palabras_a_remover
+        ]
+
+        if len(palabras) == 0:
+            dispatcher.utter_message(
+                text="Necesito tu nombre. ¿Podrías ingresarlo de nuevo?"
+            )
+            return {"apellido": None}
+
+        if len(palabras) > 5:
+            dispatcher.utter_message(
+                text="El apellido parece tener demasiadas palabras. Por favor, ingrésalo nuevamente."
+            )
+            return {"apellido": None}
+
+        return {"apellido": value.title()}
