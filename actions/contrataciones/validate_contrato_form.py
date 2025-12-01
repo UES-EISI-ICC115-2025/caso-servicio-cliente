@@ -1,5 +1,6 @@
 import re
-from typing import Any, Text, Dict, List, Tuple
+from rasa_sdk.events import ActiveLoop, SlotSet
+from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import EventType
@@ -8,7 +9,6 @@ import os
 import psycopg2
 import psycopg2.extras
 from dotenv import load_dotenv, find_dotenv
-from rasa_sdk.events import ActiveLoop, SlotSet
 
 # Cargar variables de entorno desde un archivo .env (si existe)
 dotenv_path = find_dotenv()
@@ -18,8 +18,6 @@ if dotenv_path:
 else:
     # fallback: intenta cargar .env desde el directorio de trabajo actual
     load_dotenv()
-
-import requests  # Necesario para la llamada HTTP
 
 # --- CONFIGURACIÓN DE LA API RAG LOCAL ---
 # Este es el puerto del servidor Gunicorn que corre rasa_rag_api_server.py
@@ -35,7 +33,33 @@ pg_password = os.getenv("PG_PASSWORD", "")
 print(pg_host, pg_port, pg_db, pg_user, pg_password)
 
 
-class ValidateDatosPersonalesContratoForm(FormValidationAction):
+class ActionDeactivateContratoForm(Action):
+    def name(self) -> Text:
+        return "action_deactivate_contrato_form"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[EventType]:
+        # dispatcher.utter_message(text="Has cancelado el proceso de contratación.")
+        return [
+            ActiveLoop(None),
+            SlotSet("plan", None),
+            SlotSet("producto_id", None),
+            SlotSet("nombre_producto", None),
+            SlotSet("precio_producto", None),
+            SlotSet("nombre", None),
+            SlotSet("email", None),
+            SlotSet("dui", None),
+            SlotSet("telefono", None),
+            SlotSet("direccion", None),
+            SlotSet("apellido", None),
+            SlotSet("requested_slot", None),
+        ]
+
+class ValidateContratoForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_contrato_form"
     
@@ -126,22 +150,6 @@ class ValidateDatosPersonalesContratoForm(FormValidationAction):
         finally:
             if conn:
                 conn.close()
-    
-    # def extract_dui(self, dispatcher, tracker, domain) -> Dict[Text, Any]:
-        
-    #     # 1. RETENER VALOR LLENO (Check de seguridad)
-    #     if tracker.get_slot('dui') is not None:
-    #         # Si el slot ya está lleno, no hacemos nada.
-    #         return {} 
-            
-    #     # 2. EXTRAER VALOR DEL MENSAJE ACTUAL (Solo si está vacío)
-    #     for entity in tracker.latest_message.get("entities", []):
-    #         if entity.get("entity") == "dui":
-    #             # Devolvemos el valor crudo de la entidad para que la validación lo limpie
-    #             return {"dui": entity.get("value")}
-                
-    #     # Si no se encuentra la entidad y el slot estaba vacío
-    #     return {}
 
     def validate_dui(
         self,
@@ -167,21 +175,6 @@ class ValidateDatosPersonalesContratoForm(FormValidationAction):
                 dispatcher.utter_message(text="El formato del DUI no es válido. Por favor, ingresa los 9 dígitos correctamente.")
             return {"dui": None}
     
-    # def extract_telefono(self, dispatcher, tracker, domain) -> Dict[Text, Any]:
-        
-    #     # 1. RETENER VALOR LLENO (Chequeo de seguridad)
-    #     if tracker.get_slot('telefono') is not None:
-    #         # Si el slot ya está lleno, no hacemos nada.
-    #         return {} 
-                
-    #     # 2. EXTRAER VALOR DEL MENSAJE ACTUAL (Solo si está vacío)
-    #     for entity in tracker.latest_message.get("entities", []):
-    #         if entity.get("entity") == "telefono":
-    #             # Devolvemos el valor crudo de la entidad
-    #             return {"telefono": entity.get("value")}
-                    
-    #     # Si no se encuentra la entidad y el slot estaba vacío
-    #     return {}
 
     def validate_telefono(
         self,

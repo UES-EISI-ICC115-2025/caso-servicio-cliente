@@ -1,14 +1,9 @@
-from typing import Any, Text, Dict, List, Tuple
-from rasa_sdk import Action, Tracker, FormValidationAction
+from typing import Any, Text, Dict, List
+from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
-from rasa_sdk.types import DomainDict
-import os
-import psycopg2
-import psycopg2.extras
 from dotenv import load_dotenv, find_dotenv
 
-from actions.fetch_product_plans import fetch_product_plans
+from actions.contrataciones.fetch_product_plans import fetch_product_plans
 from actions.utils import _get_chat_history
 
 # Cargar variables de entorno desde un archivo .env (si existe)

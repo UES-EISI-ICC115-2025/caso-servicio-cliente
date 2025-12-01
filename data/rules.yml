@@ -33,6 +33,12 @@ rules:
     - action: utter_goodbye
     # - wait_for_user_input: false
 
+- rule: Gracias
+  steps:
+    - action: utter_goodbye
+    - intent: thanks
+    - action: utter_thanks_response
+
 # - rule: Activate user verification form on billing request
 #   steps:
 #   - intent: request_billing
