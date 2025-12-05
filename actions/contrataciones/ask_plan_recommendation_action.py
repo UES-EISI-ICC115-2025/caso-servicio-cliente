@@ -22,9 +22,9 @@ import requests  # Necesario para la llamada HTTP
 RAG_API_URL = "http://localhost:8000/rag/query"
 RAG_API_REPHRASE_URL = "http://localhost:8000/rag/query_with_context"
 
-class ActionFetchProductPlans(Action):
+class AskPlanRecommendationAction(Action):
     def name(self) -> Text:
-        return "action_fetch_product_plans"
+        return "action_ask_plan"
 
     def run(
         self,

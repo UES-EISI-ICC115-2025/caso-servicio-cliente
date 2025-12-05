@@ -5,14 +5,9 @@ rules:
 - rule: Show plans immediately after service request
   steps:
   - intent: request_internet_service
-  - action: action_fetch_product_plans
-
-- rule: Final action - say goodbye after acknowledgement
-  steps:
-    - intent: provide_rating
-    - action: utter_acknowledge_rating
-    - action: utter_goodbye
-    # - wait_for_user_input: false
+  # - action: action_fetch_product_plans
+  - action: contrato_form
+  - active_loop: contrato_form
 
 - rule: Gracias
   steps:
@@ -35,7 +30,7 @@ rules:
 #   - action: action_check_billing_status
 #   - action: utter_additional_request
 #   - intent: deny
-#   - action: utter_ask_rating
+#   - action: calificacion_form
 
 # - rule: Activate RAG for technical questions
 #   steps:
@@ -51,14 +46,14 @@ rules:
 #   - intent: out_of_scope 
 #   - action: action_technical_support_rag
 
-- rule: Activar el formulario de selección de producto
-  steps:
-  # O el intent que uses para iniciar la compra
-  - or:
-    - intent: negociacion_aceptar_oferta
-    - intent: choose_plan   
-  - action: contrato_form
-  - active_loop: contrato_form
+# - rule: Activar el formulario de contratación
+#   steps:
+#   # O el intent que uses para iniciar la compra
+#   - or:
+#     - intent: negociacion_aceptar_oferta
+#     - intent: choose_plan   
+#   - action: contrato_form
+#   - active_loop: contrato_form
 
 - rule: Enviar contrato después de completar el formulario de datos personales
   condition:
@@ -67,23 +62,20 @@ rules:
   - action: contrato_form
   - slot_was_set:
     - requested_slot: null
-    # - email: ""
-    # - dui: ""
-    # - apellido: ""
-    # - nombre: ""
-    # - direccion: ""
-    # - telefono: ""
-    # - plan: ""
-    # - precio_producto: ""
-    # - nombre_producto: ""
-    # - producto_id: ""
   - active_loop: null
   - action: utter_product_slots_summary
   - action: utter_personal_info_summary
   - action: utter_confirm_personal_info
   - intent: affirm
   - action: action_send_email
-  - action: utter_contract_sent
+  # - action: utter_contract_sent
+  - action: utter_additional_request
+
+- rule: Reenviar correo electrónico del contrato si el usuario lo solicita
+  steps:
+  - action: utter_additional_request
+  - intent: request_resend_contract_email
+  - action: action_send_email
   - action: utter_additional_request
 
 # - rule: Interrupción en formulario de selección de producto
@@ -95,3 +87,28 @@ rules:
 #   - action: contrato_form
 #   - active_loop: contrato_form
 
+- rule: Activar el formulario de calificacion
+  steps:
+  - action: utter_additional_request
+  - intent: deny
+  - action: calificacion_form
+  - active_loop: calificacion_form
+
+- rule: Activar el formulario de calificacion
+  steps:
+  - action: utter_additional_request
+  - intent: thanks
+  - action: utter_thanks_response
+  - action: calificacion_form
+  - active_loop: calificacion_form
+
+- rule: Completar el formulario de calificacion
+  condition:
+  - active_loop: calificacion_form
+  steps:
+  - action: calificacion_form
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_acknowledge_rating
+  - action: utter_goodbye

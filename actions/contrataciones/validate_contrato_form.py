@@ -6,9 +6,9 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import EventType
 from rasa_sdk.types import DomainDict
 import os
-import psycopg2
-import psycopg2.extras
 from dotenv import load_dotenv, find_dotenv
+
+from actions.contrataciones.fetch_product_plans import fetch_product_plans, find_product
 
 # Cargar variables de entorno desde un archivo .env (si existe)
 dotenv_path = find_dotenv()
@@ -72,98 +72,107 @@ class ValidateContratoForm(FormValidationAction):
         domain: DomainDict,
     ) -> Dict[Text, Any]:
         """Validar que el producto seleccionado esté en nuestra lista de productos válidos."""
+        raw_product = None
+        # Verificar si el último intento fue 'choose_plan' o 'negociacion_aceptar_oferta'
+        last_intent = tracker.latest_message.get("intent", {}).get("name")
 
-        # Normalizamos el valor a minúsculas para la comparación
-        product_normalized = str(slot_value).lower()
-
-        # Leer credenciales desde variables de entorno
-        pg_host = os.getenv("PG_HOST", "localhost")
-        pg_port = os.getenv("PG_PORT", "5432")
-        pg_db = os.getenv("PG_DB", "mydb")
-        pg_user = os.getenv("PG_USER", "postgres")
-        pg_password = os.getenv("PG_PASSWORD", "")
-        print(pg_host, pg_port, pg_db, pg_user, pg_password)
-
-        conn = None
-        try:
-            conn = psycopg2.connect(
-                host=pg_host,
-                port=pg_port,
-                dbname=pg_db,
-                user=pg_user,
-                password=pg_password,
-                connect_timeout=5,
+        if last_intent == "choose_plan":
+            # Buscar la entidad 'plan' en el mensaje
+            plan_entity = next(
+                (
+                    e.get("value")
+                    for e in tracker.latest_message.get("entities", [])
+                    if e.get("entity") == "plan"
+                ),
+                None,
             )
 
-            with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
-                # build a safe ILIKE pattern and use parameterized query correctly
-                pattern = f"%{product_normalized}%"
-                cur.execute(
-                    """
-                    SELECT
-                        producto_id,
-                        nombre,
-                        descripcion,
-                        velocidad_bajada_mbps,
-                        velocidad_subida_mbps,
-                        precio_mensual,
-                        beneficios
-                    FROM productos
-                    WHERE
-                        LOWER(
-                            TRANSLATE(
-                                nombre,
-                                'áéíóúÁÉÍÓÚñÑ',
-                                'aeiouAEIOUnN'
-                            )
-                        ) ILIKE LOWER(
-                            TRANSLATE(
-                                %s,
-                                'áéíóúÁÉÍÓÚñÑ',
-                                'aeiouAEIOUnN'
-                            )
-                        )
-                    ORDER BY precio_mensual ASC
-                    """,
-                    (pattern,),
-                )
+            if plan_entity:
+                raw_product = plan_entity
 
-                resultado_busqueda_producto = cur.fetchone()
+        elif last_intent == "negociacion_aceptar_oferta":
+            # Obtener las últimas 3 mensajes que el bot envió
+            last_bot_utterances = [
+                event
+                for event in reversed(tracker.events)
+                if event.get("event") == "bot"
+            ]
+            last_five_texts = [u.get("text", "") for u in last_bot_utterances[:5]]
+            print(f"Últimas 5 utterances del bot: {last_five_texts}")
 
-                if not resultado_busqueda_producto:
-                    dispatcher.utter_message(
-                        text=f"Disculpa, el plan '{slot_value}' no lo tengo disponible."
-                    )
-                    dispatcher.utter_message(response="action_fetch_product_plans")
-                    return {
-                        "plan": None,
-                        "producto_id": None,
-                        "nombre_producto": None,
-                        "precio_producto": None,
-                    }
-                else:
-                    # DictCursor returns a mapping; access columns by name instead of by index
+            # Intentar extraer el nombre del producto buscando coincidencias en esas 5 utterances
+            productos_disponibles = fetch_product_plans()
+            raw_product = None
+            for texto in last_five_texts:
+                if not texto:
+                    continue
+                for producto in productos_disponibles:
                     print(
-                        f"Producto encontrado: {resultado_busqueda_producto['producto_id']} - {resultado_busqueda_producto['nombre']}"
+                        f"Buscando '{producto['nombre'].lower()}' en '{texto.lower()}'"
                     )
+                    producto_nombre = producto["nombre"].lower()
+                    if producto_nombre in texto.lower():
+                        print(
+                            f"¡Coincidencia encontrada! '{producto_nombre}' está en el texto."
+                        )
+                        raw_product = producto["nombre"]
+                        break
+                if raw_product:
                     return {
-                        "plan": slot_value,
-                        "producto_id": resultado_busqueda_producto["producto_id"],
-                        "nombre_producto": resultado_busqueda_producto["nombre"],
-                        "precio_producto": resultado_busqueda_producto[
-                            "precio_mensual"
-                        ],
+                        "plan": raw_product,
+                        "producto_id": producto["producto_id"],
+                        "nombre_producto": producto["nombre"],
+                        "precio_producto": producto["precio_mensual"],
                     }
+        elif (
+            last_intent == "negociacion_cancelar_desistir"
+            or last_intent == "negociacion_postponer_decision"
+        ):
+            # Si el usuario decide cancelar o postergar, no validamos el plan
+            # TODO: Manejar con otra acción si se desea cancelar el proceso como interrupción
+            return {"plan": None}
+        if not raw_product:
+            # Si no pudimos extraer el producto, retornar sin validar
+            return {"plan": None}
+
+        # Normalizamos el valor a minúsculas para la comparación
+        product_target = str(raw_product).lower()
+
+        try:
+            resultado_busqueda_producto = find_product(product_target)
+
+            if (
+                len(resultado_busqueda_producto) == 0
+                or len(resultado_busqueda_producto) > 1
+            ):
+                # dispatcher.utter_message(
+                #     text=f"Disculpa, el plan '{raw_product}' no lo tengo disponible."
+                # )
+                print(f"Producto no encontrado: '{raw_product}'")
+                return {
+                    "plan": None,
+                    "producto_id": None,
+                    "nombre_producto": None,
+                    "precio_producto": None,
+                }
+            else:
+                # DictCursor returns a mapping; access columns by name instead of by index
+                print(
+                    f"Producto encontrado: {resultado_busqueda_producto['producto_id']} - {resultado_busqueda_producto['nombre']}"
+                )
+                return {
+                    "plan": raw_product,
+                    "producto_id": resultado_busqueda_producto["producto_id"],
+                    "nombre_producto": resultado_busqueda_producto["nombre"],
+                    "precio_producto": resultado_busqueda_producto["precio_mensual"],
+                }
 
         except Exception as e:
-            print(f"Error al conectar a la base de datos: {e}")
+            print(f"Error al validar producto: {e}")
             dispatcher.utter_message(
                 text="Lo siento, estoy teniendo problemas para verificar el producto en este momento. Por favor, intenta más tarde."
             )
             return {"plan": None}
-        finally:
-            if conn:
-                conn.close()
 
     def validate_dui(
         self,
@@ -269,7 +278,7 @@ class ValidateContratoForm(FormValidationAction):
         # el nombre debe ser diferente al apellido
         if value in [apellido_entity]:
             return {"nombre": None}
-        
+
         # Si se encontró la entidad nombre y es válida, usarla; de lo contrario, usar el slot actual
         if nombre_entity and len(nombre_entity.split()) > 1:
             return {"nombre": nombre_entity.title()}
@@ -279,14 +288,33 @@ class ValidateContratoForm(FormValidationAction):
         palabras = value.split()
         # Remover palabras no deseadas cuando aparecen aisladas
         palabras_a_remover = {
-            "claro", "si", "sí", "no", "por", "supuesto", "aqui", "aquí", 
-            "tienes", "sipi", "mi", "apellido", "es", "nombre", ",", "me",
-            "llamo", "yo", "soy", "buenos", "dias", "buenas", "tardes", "noches", "mi"
+            "claro",
+            "si",
+            "sí",
+            "no",
+            "por",
+            "supuesto",
+            "aqui",
+            "aquí",
+            "tienes",
+            "sipi",
+            "mi",
+            "apellido",
+            "es",
+            "nombre",
+            ",",
+            "me",
+            "llamo",
+            "yo",
+            "soy",
+            "buenos",
+            "dias",
+            "buenas",
+            "tardes",
+            "noches",
+            "mi",
         }
-        palabras = [
-            p for p in palabras 
-            if p.lower() not in palabras_a_remover
-        ]
+        palabras = [p for p in palabras if p.lower() not in palabras_a_remover]
 
         if len(palabras) == 0:
             dispatcher.utter_message(
@@ -312,14 +340,28 @@ class ValidateContratoForm(FormValidationAction):
 
         print(f"Validando email recibido: '{value}'")
 
+        # Intentar obtener la entidad email desde el mensaje más reciente
+        email_entity = next(
+            (
+                e.get("value")
+                for e in tracker.latest_message.get("entities", [])
+                if e.get("entity") == "email"
+            ),
+            None,
+        )
         if (
-            tracker.get_slot("email") is not None
-            and "@" in tracker.get_slot("email")
-            and "." in tracker.get_slot("email").split("@")[-1]
+            email_entity is not None
+            and "@" in email_entity
+            and "." in email_entity.split("@")[-1]
         ):
-            return {"email": tracker.get_slot("email")}
+            return {"email": email_entity}
 
         # Validación básica de email
+        # Extraer email del value usando regex
+        email_pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+        email_match = re.search(email_pattern, value)
+        if email_match:
+            value = email_match.group(0)
         if "@" not in value or "." not in value.split("@")[-1]:
             if tracker.get_slot("requested_slot") == "email":
                 dispatcher.utter_message(
@@ -351,18 +393,32 @@ class ValidateContratoForm(FormValidationAction):
         # Si se encontró la entidad dirección y es válida, usarla; de lo contrario, usar el slot actual
         if direccion_entity and len(direccion_entity.split()) >= 4:
             return {"direccion": direccion_entity.strip()}
-        
+
         # Remover palabras de relleno comunes
         palabras = value.split()
         palabras_relleno = {
-            "claro", "si", "sí", "no", "por", "supuesto", "aqui", "aquí",
-            "tienes", "sipi", "mi", "es", "direccion", "dirección",
-            "vivo", "resido", "estoy", "me", "encuentro", "ubicado"
+            "claro",
+            "si",
+            "sí",
+            "no",
+            "por",
+            "supuesto",
+            "aqui",
+            "aquí",
+            "tienes",
+            "sipi",
+            "mi",
+            "es",
+            "direccion",
+            "dirección",
+            "vivo",
+            "resido",
+            "estoy",
+            "me",
+            "encuentro",
+            "ubicado",
         }
-        palabras = [
-            p for p in palabras
-            if p.lower() not in palabras_relleno
-        ]
+        palabras = [p for p in palabras if p.lower() not in palabras_relleno]
         value = " ".join(palabras)
 
         # Validar longitud mínima
@@ -405,7 +461,7 @@ class ValidateContratoForm(FormValidationAction):
         # el apellido debe ser diferente al nombre
         if value in [nombre_entity]:
             return {"apellido": None}
-        
+
         # Si se encontró la entidad apellido y es válida, usarla; de lo contrario, usar el slot actual
         if apellido_entity and len(apellido_entity.split()) > 1:
             return {"apellido": apellido_entity.title()}
@@ -415,14 +471,33 @@ class ValidateContratoForm(FormValidationAction):
         palabras = value.split()
         # Remover palabras no deseadas cuando aparecen aisladas
         palabras_a_remover = {
-            "claro", "si", "sí", "no", "por", "supuesto", "aqui", "aquí", 
-            "tienes", "sipi", "mi", "apellido", "es", "apellido", ",", "me",
-            "llamo", "yo", "soy", "buenos", "dias", "buenas", "tardes", "noches", "mi"
+            "claro",
+            "si",
+            "sí",
+            "no",
+            "por",
+            "supuesto",
+            "aqui",
+            "aquí",
+            "tienes",
+            "sipi",
+            "mi",
+            "apellido",
+            "es",
+            "apellido",
+            ",",
+            "me",
+            "llamo",
+            "yo",
+            "soy",
+            "buenos",
+            "dias",
+            "buenas",
+            "tardes",
+            "noches",
+            "mi",
         }
-        palabras = [
-            p for p in palabras 
-            if p.lower() not in palabras_a_remover
-        ]
+        palabras = [p for p in palabras if p.lower() not in palabras_a_remover]
 
         if len(palabras) == 0:
             dispatcher.utter_message(

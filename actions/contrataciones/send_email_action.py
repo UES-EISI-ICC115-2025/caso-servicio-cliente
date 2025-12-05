@@ -19,7 +19,7 @@ else:
     # fallback: intenta cargar .env desde el directorio de trabajo actual
     load_dotenv()
 
-class ActionSendEmail(Action):
+class SendEmailAction(Action):
     def name(self) -> Text:
         return "action_send_email"
 
@@ -251,7 +251,7 @@ Equipo de Atención al Cliente
             text = msg.as_string()
             server.sendmail(gmail_user, email_destinatario, text)
             print(f"Correo enviado exitosamente a {email_destinatario}")
-            dispatcher.utter_message(text=f"He enviado un correo de confirmación a {email_destinatario}.")
+            dispatcher.utter_message(text=f"He enviado un correo con el contrato a {email_destinatario}.")
             print(f"Email enviado exitosamente a {email_destinatario}")
 
         except Exception as e:

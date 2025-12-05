@@ -566,56 +566,56 @@ nlu:
     - el apellido que busco es [morales torres](apellido)
 - intent: provide_direccion
   examples: |
-    - mi direccion es [colonia escalon, 7a calle poniente y 85 avenida norte](dirección)
-    - la direccion es [bulevar los proceres, condominio el pedregal, casa 35](dirección)
-    - vivo en [residencial montebello, poligono a, pasaje 1, casa 10](dirección)
-    - es en [avenida bernal, frente a la iglesia don rua](dirección)
-    - la entrega debe ser en [zona rosa, calle el mirador, torre futura, piso 15](dirección)
-    - la direccion de envio es [colonia san francisco, avenida las camelias, calle los abetos 21](dirección)
-    - es [1a calle poniente, entre 60a avenida norte y bulevar constitucion 3549](dirección)
-    - es en [barrio san jacinto, 10a avenida sur y calle lara 934](dirección)
-    - la casa esta en [alameda manuel enrique araujo, cerca de la ex-feria internacional](dirección)
-    - [colonia centroamerica, diagonal centroamerica, avenida alvarado](dirección)
-    - la ubicacion es [colonia san benito, 79 avenida norte, pasaje 3, casa 8](dirección)
-    - es en [avenida monseñor romero y final calle 5 de noviembre](dirección)
-    - me encuentro en [colonia atlacatl, cerca del centro comercial metrocentro](dirección)
-    - la direccion es [avenida independencia y alameda juan pablo ii, numero 437](dirección)
-    - [bulevar del ejercito nacional, contiguo a plaza mundo soyapango](dirección)
-    - mi casa es [urbanizacion san antonio abad, 5a calle oriente, casa 12](dirección)
-    - la entrega en [colonia miramonte, bulevar tutunichapa, edificio d](dirección)
-    - la direccion completa es [17 avenida sur, condominios montemaria, torre b, apartamento 401](dirección)
-    - la direccion es [colonia buenos aires 3, diagonal centroamerica, contiguo a hacienda](dirección)
-    - es [49 avenida sur, calle sisimiles, edificio el dorado](dirección)
-    - estoy en [calle el volcan, kilometro 12, finca el espino](dirección)
-    - la direccion es [canton el carmen, calle principal, casa de porton rojo](dirección)
-    - [25 avenida norte, residencial altamira, poligono h, lote 14](dirección)
-    - mi ubicacion es [final calle los castaños, colonia escalon](dirección)
-    - es [10a calle oriente, cerca del mercado central de san salvador](dirección)
-    - la direccion de mi trabajo es [bulevar de los heroes, centro financiero gigante](dirección)
-    - [calle la mascota, edificio world trade center, torre 1, oficina 503](dirección)
-    - estoy en [colonia layco, 1a calle poniente, entre la 19 y 21 avenida norte](dirección)
-    - mi direccion es [avenida morazan, colonia flor blanca, cerca del parque cuscatlan](dirección)
-    - es [calle zacamil, centro urbano zacamil, bloque 7, apartamento 2b](dirección)
-    - la direccion es [colonia monserrat, centro urbano san judas tadeo, pasaje 3](dirección)
-    - [12a calle oriente, barrio candelaria, casa 25a](dirección)
-    - es en [residencial altavista, etapa 1, poligono 4, casa 3](dirección)
-    - la direccion es [bulevar venezuela, cerca del redondel del arbol de la paz](dirección)
-    - [final calle antigua a huizucar, residencial bosques de santa elena](dirección)
-    - la ubicacion es [avenida olimpica, entre 55 y 57 avenida sur](dirección)
-    - [alameda roosevelt, frente al hospital de la mujer](dirección)
-    - mi domicilio es [colonia la rabida, 2a avenida norte, pasaje san jose](dirección)
-    - es en [calle san antonio abad, contiguo a la universidad de el salvador](dirección)
-    - la direccion es [final 5a avenida sur, urbanizacion la cima 2](dirección)
-    - [avenida las amapolas, colonia san mateo, frente al super](dirección)
-    - es en [colonia san bartolo, poligono e, lote 9, calle principal](dirección)
-    - [29 calle poniente, barrio san miguelito, cerca del mercado](dirección)
-    - la direccion es [redondel masferrer, sobre paseo general escalon](dirección)
-    - [avenida washington, colonia satelite, 3a calle poniente](dirección)
-    - mi direccion es [calle gerardo barrios, centro historico de san salvador](dirección)
-    - [2a calle oriente, barrio el calvario, casa de esquina color celeste](dirección)
-    - la direccion es [calle concepcion, cerca del parque centenario](dirección)
-    - [final bulevar merliot, residencial tuscania, lote 14](dirección)
-    - [avenida dr emilio alvarez, colonia maquilishuat, casa con muro blanco](dirección)
+    - mi direccion es [colonia escalon, 7a calle poniente y 85 avenida norte](direccion)
+    - la direccion es [bulevar los proceres, condominio el pedregal, casa 35](direccion)
+    - vivo en [residencial montebello, poligono a, pasaje 1, casa 10](direccion)
+    - es en [avenida bernal, frente a la iglesia don rua](direccion)
+    - la entrega debe ser en [zona rosa, calle el mirador, torre futura, piso 15](direccion)
+    - la direccion de envio es [colonia san francisco, avenida las camelias, calle los abetos 21](direccion)
+    - es [1a calle poniente, entre 60a avenida norte y bulevar constitucion 3549](direccion)
+    - es en [barrio san jacinto, 10a avenida sur y calle lara 934](direccion)
+    - la casa esta en [alameda manuel enrique araujo, cerca de la ex-feria internacional](direccion)
+    - [colonia centroamerica, diagonal centroamerica, avenida alvarado](direccion)
+    - la ubicacion es [colonia san benito, 79 avenida norte, pasaje 3, casa 8](direccion)
+    - es en [avenida monseñor romero y final calle 5 de noviembre](direccion)
+    - me encuentro en [colonia atlacatl, cerca del centro comercial metrocentro](direccion)
+    - la direccion es [avenida independencia y alameda juan pablo ii, numero 437](direccion)
+    - [bulevar del ejercito nacional, contiguo a plaza mundo soyapango](direccion)
+    - mi casa es [urbanizacion san antonio abad, 5a calle oriente, casa 12](direccion)
+    - la entrega en [colonia miramonte, bulevar tutunichapa, edificio d](direccion)
+    - la direccion completa es [17 avenida sur, condominios montemaria, torre b, apartamento 401](direccion)
+    - la direccion es [colonia buenos aires 3, diagonal centroamerica, contiguo a hacienda](direccion)
+    - es [49 avenida sur, calle sisimiles, edificio el dorado](direccion)
+    - estoy en [calle el volcan, kilometro 12, finca el espino](direccion)
+    - la direccion es [canton el carmen, calle principal, casa de porton rojo](direccion)
+    - [25 avenida norte, residencial altamira, poligono h, lote 14](direccion)
+    - mi ubicacion es [final calle los castaños, colonia escalon](direccion)
+    - es [10a calle oriente, cerca del mercado central de san salvador](direccion)
+    - la direccion de mi trabajo es [bulevar de los heroes, centro financiero gigante](direccion)
+    - [calle la mascota, edificio world trade center, torre 1, oficina 503](direccion)
+    - estoy en [colonia layco, 1a calle poniente, entre la 19 y 21 avenida norte](direccion)
+    - mi direccion es [avenida morazan, colonia flor blanca, cerca del parque cuscatlan](direccion)
+    - es [calle zacamil, centro urbano zacamil, bloque 7, apartamento 2b](direccion)
+    - la direccion es [colonia monserrat, centro urbano san judas tadeo, pasaje 3](direccion)
+    - [12a calle oriente, barrio candelaria, casa 25a](direccion)
+    - es en [residencial altavista, etapa 1, poligono 4, casa 3](direccion)
+    - la direccion es [bulevar venezuela, cerca del redondel del arbol de la paz](direccion)
+    - [final calle antigua a huizucar, residencial bosques de santa elena](direccion)
+    - la ubicacion es [avenida olimpica, entre 55 y 57 avenida sur](direccion)
+    - [alameda roosevelt, frente al hospital de la mujer](direccion)
+    - mi domicilio es [colonia la rabida, 2a avenida norte, pasaje san jose](direccion)
+    - es en [calle san antonio abad, contiguo a la universidad de el salvador](direccion)
+    - la direccion es [final 5a avenida sur, urbanizacion la cima 2](direccion)
+    - [avenida las amapolas, colonia san mateo, frente al super](direccion)
+    - es en [colonia san bartolo, poligono e, lote 9, calle principal](direccion)
+    - [29 calle poniente, barrio san miguelito, cerca del mercado](direccion)
+    - la direccion es [redondel masferrer, sobre paseo general escalon](direccion)
+    - [avenida washington, colonia satelite, 3a calle poniente](direccion)
+    - mi direccion es [calle gerardo barrios, centro historico de san salvador](direccion)
+    - [2a calle oriente, barrio el calvario, casa de esquina color celeste](direccion)
+    - la direccion es [calle concepcion, cerca del parque centenario](direccion)
+    - [final bulevar merliot, residencial tuscania, lote 14](direccion)
+    - [avenida dr emilio alvarez, colonia maquilishuat, casa con muro blanco](direccion)
     - Mi direccion es [Colonia Escalón, 7a Calle Poniente y 85 Avenida Norte](direccion)
     - La direccion es [Bulevar Los Próceres, Condominio El Pedregal, Casa #35](direccion)
     - Vivo en [Residencial Montebello, Polígono A, Pasaje 1, Casa 10](direccion)
@@ -753,6 +753,21 @@ nlu:
     - El internet me está saliendo **carísimo**.
 - intent: negociacion_solicitar_detalles
   examples: |
+    -  y que incluye eso?
+    - que velocidades tiene ese?
+    - que velocidad es
+    - y ese es rápido?
+    - y ese es potente?
+    - y ese es estable?
+    - y ese es fuerte?
+    - y ese es bueno para varios dispositivos?
+    - y ese es bueno para varios aparatos?
+    - y ese es bueno para que no se trabe?
+    - y ese es bueno para que agarre bien?
+    - y para cuantas personas es ese?
+    - y para cuántos dispositivos es ese?
+    - y para cuántos aparatos es ese?
+    - y para que no se trabe es ese?
     - ¿Y **cuánto me cuesta** esa gracia?
     - ¿Tienen ustedes una línea directa o algo que sea **más rápido que el bus de la 42**?
     - ¿Cuánto **se tardan** en instalar?
@@ -839,6 +854,17 @@ nlu:
     - ese me sirve
     - ese esta bien
     - ese es el que andaba buscando
+
+- intent: retry_send_email
+  examples: |
+    - por favor, reenvíeme el correo
+    - envíeme de nuevo el email
+    - mándeme otra vez el correo
+    - necesito que me reenvíe el email
+    - por favor, envíeme otra vez el correo
+    - reenvíeme el email
+    - puedes reenviarme el correo nuevamente
+    - mandame de nuevo el correo
 - regex: dui
   examples: |
     - ^(\d{9})|(\d{8}-\d{1})$

@@ -40,10 +40,11 @@ slots:
     type: text
     influence_conversation: true
     mappings:
-    - type: from_entity
+    - type: from_text
       entity: plan
       conditions:
       - active_loop: contrato_form
+        requested_slot: plan
   producto_id:
     type: text
     influence_conversation: true
@@ -51,6 +52,7 @@ slots:
     - type: custom
       conditions:
       - active_loop: contrato_form
+        requested_slot: plan
   nombre_producto:
     type: text
     influence_conversation: true
@@ -58,6 +60,7 @@ slots:
     - type: custom
       conditions:
       - active_loop: contrato_form
+        requested_slot: plan
   precio_producto:
     type: text
     influence_conversation: true
@@ -65,6 +68,7 @@ slots:
     - type: custom
       conditions:
       - active_loop: contrato_form
+        requested_slot: plan
   nombre:
     type: text
     influence_conversation: true
@@ -105,6 +109,10 @@ slots:
       conditions:
       - active_loop: contrato_form
         requested_slot: dui
+    - type: from_text
+      conditions:
+      - active_loop: validar_user_info_form
+        requested_slot: dui 
   telefono:
     type: text
     influence_conversation: true
@@ -112,6 +120,10 @@ slots:
     - type: from_text
       conditions:
       - active_loop: contrato_form
+        requested_slot: telefono
+    - type: from_text
+      conditions:
+      - active_loop: validar_user_info_form
         requested_slot: telefono
   rating:
     type: float
@@ -121,7 +133,16 @@ slots:
       entity: rating
       intent: provide_rating
       conditions:
-      - active_loop: null
+      - active_loop: calificacion_form
+        requested_slot: rating
+  comentarios:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: calificacion_form
+        requested_slot: comentarios
 forms:
   contrato_form:
     required_slots:
@@ -135,6 +156,15 @@ forms:
     - direccion
     - telefono
     - email
+  calificacion_form:
+    required_slots:
+    - rating
+    - comentarios
+  validar_user_info_form:
+    required_slots:
+    - dui
+    - telefono
+
 actions:
 - utter_product_slots_summary
 - utter_personal_info_summary
@@ -144,16 +174,19 @@ actions:
 - utter_additional_request
 - utter_thanks_response
 - utter_ask_rating
+- utter_ask_comentarios
 - action_send_email
 - utter_contract_sent
 - utter_contract_cancelled
-- action_fetch_product_plans
 - utter_ask_service
 - utter_ask_continue
 - utter_greet
 - utter_confirm_product_selection
+- action_ask_plan
 - validate_contrato_form
 - action_deactivate_contrato_form
+- validate_calificacion_form
+
 responses:
   utter_thanks_response:
   - text: De nada, para eso estoy.
@@ -172,6 +205,9 @@ responses:
   utter_ask_rating:
   - text: ¡Gracias por usar nuestro servicio! Por último, ¿nos podrías regalar una calificación del **1 (malo) al 5 (excelente)** sobre tu experiencia de hoy?
   - text: ¡Ya casi terminamos! Solo te pido que califiqués la atención con una nota del **1 al 5**. ¡Gracias!
+  utter_ask_comentarios:
+  - text: ¿Querés dejarnos algún comentario adicional sobre tu experiencia?
+  - text: Si querés, podés agregar algún comentario extra sobre cómo te fue hoy.
   utter_acknowledge_rating:
   - text: ¡Te agradecemos tu opinión! ¡Que tengas un día chivo!
   - text: ¡Gracias por tu calificación! ¡Pasa un feliz día!
@@ -208,8 +244,8 @@ responses:
   - text: ¿Cuál es tu **número de teléfono**?
   - text: ¿Me facilitás tu **teléfono** para contacto?
   utter_ask_direccion:
-  - text: ¿Cuál es tu **dirección**?
-  - text: Por favor, indicá tu **dirección** completa.
+  - text: ¿Cuál es tu **direccion**?
+  - text: Por favor, indicá tu **direccion** completa.
   utter_ask_email:
   - text: me podrías dar tu **correo electrónico**, porfa?
   - text: ¡Chivísimo! ¿Me regalás tu **correo**?

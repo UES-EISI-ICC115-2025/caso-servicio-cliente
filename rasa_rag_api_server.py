@@ -13,8 +13,9 @@ from langchain_core.messages import HumanMessage, AIMessage
 
 # --- CONFIGURACIÓN RAG LOCAL ---
 # OLLAMA_MODEL_NAME = "phi3"
-# OLLAMA_MODEL_NAME = "deepseek-r1:1.5b"
-OLLAMA_MODEL_NAME = "deepseek-r1:1.5b-qwen-distill-q4_K_M"
+OLLAMA_MODEL_NAME = "deepseek-r1:1.5b"
+# OLLAMA_MODEL_NAME = "deepseek-r1:1.5b-qwen-distill-fp16"
+# OLLAMA_MODEL_NAME = "deepseek-r1:1.5b-qwen-distill-q8_0"
 OLLAMA_BASE_URL = "http://localhost:11434"
 RAG_API_PORT = 8000
 # -------------------------------------
