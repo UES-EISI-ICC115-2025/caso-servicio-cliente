@@ -82,7 +82,9 @@ examples(example_text) AS (
     ('que planes tienes disponibles'),
     ('que planes hay'),
     ('que ofertas tienen'),
-    ('que me puedes ofrecer')
+    ('que me puedes ofrecer'),
+    ('quiero un plan de internet'),
+    ('solo de esos planes tiene?')
 )
 INSERT INTO training_examples (intent_id, example_text, language)
 SELECT i.intent_id, e.example_text, 'es'
@@ -211,7 +213,16 @@ examples(example_text) AS (
     ('por supuesto'),
     ('correcto'),
     ('por favor'),
-    ('claro')
+    ('claro'),
+    ('si'),
+    ('si, seguro'),
+    ('si hombre'),
+    ('segurisimo'),
+    ('por supuesto'),
+    ('demole con todo'),
+    ('demosle con todo'),
+    ('si, vamos a darle')
+
 )
 INSERT INTO training_examples (intent_id, example_text, language)
 SELECT i.intent_id, e.example_text, 'es'
@@ -244,7 +255,8 @@ examples(example_text) AS (
     ('cambié de opinión'),
     ('parar el contrato'),
     ('solamente'),
-    ('eso es todo')
+    ('eso es todo'),
+    ('no, solamente gracias')
 )
 INSERT INTO training_examples (intent_id, example_text, language)
 SELECT i.intent_id, e.example_text, 'es'
@@ -295,7 +307,11 @@ examples(example_text) AS (
     ('gracias'),
     ('muchas gracias'),
     ('se lo agradezco mucho'),
-    ('muchísimas gracias')
+    ('muchísimas gracias'),
+    ('ahi estamos ya, muchas gracias'),
+    ('te lo agradezco'),
+    ('mil gracias'),
+    ('infinitas gracias')
 )
 INSERT INTO training_examples (intent_id, example_text, language)
 SELECT i.intent_id, e.example_text, 'es'
@@ -319,10 +335,88 @@ examples(example_text, language) AS (
     VALUES
     ('I need support', 'en'),
     ('Necesito ayuda', 'es'),
-    ('Tengo otra consulta', 'es')
+    ('Tengo otra consulta', 'es'),
+    ('Como te llamas?', 'es'),
+    ('quien te creo?', 'es')
 )
 INSERT INTO training_examples (intent_id, example_text, language)
 SELECT i.intent_id, e.example_text, e.language
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'provide_dui' y los ejemplos (idempotente)
+INSERT INTO intents (intent_name, description)
+VALUES ('provide_dui', 'Usuario proporciona su número de DUI (Documento Único de Identidad)')
+ON CONFLICT (intent_name) DO NOTHING;
+
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'provide_dui'
+),
+examples(example_text) AS (
+    VALUES
+    ('mi dui es [12345678-1](dui)'),
+    ('soy [12345678-1](dui)'),
+    ('es [12345678-1](dui)'),
+    ('"55555555-5"'),
+    ('[00123456-7](dui)'),
+    ('El número es [01010101-0](dui)'),
+    ('[05050505-5](dui)'),
+    ('Mi número de documento es [23456789-0](dui)'),
+    ('Es [09876543-2](dui)'),
+    ('El mío es [00010002-3](dui)'),
+    ('[04030201-9](dui)'),
+    ('Mi cédula es [11223344-5](dui)'),
+    ('[22334455-6](dui)'),
+    ('El DUI es [01234567-8](dui)'),
+    ('Mi número es [00001234-5](dui)'),
+    ('[08888888-8](dui)'),
+    ('El documento es [20202020-2](dui)'),
+    ('Mi DUI es [012345678](dui)'),
+    ('Es [098765432](dui)'),
+    ('[200000001](dui)'),
+    ('El número de documento es [000000000](dui)'),
+    ('[102030405](dui)'),
+    ('Mi DUI es [333333333](dui)'),
+    ('El número es [044444444](dui)'),
+    ('[159753852](dui)'),
+    ('Es [078945612](dui)'),
+    ('El mío es [06050403-1](dui)'),
+    ('[07777777-7](dui)'),
+    ('Mi documento es [10101010-1](dui)'),
+    ('[00009999-9](dui)'),
+    ('Es el [03030303-3](dui)'),
+    ('El número es [44445555-6](dui)'),
+    ('[56789012-3](dui)'),
+    ('Mi DUI es [00998877-6](dui)'),
+    ('El número es [024681357](dui)'),
+    ('Es [135792468](dui)'),
+    ('[090909090](dui)'),
+    ('Mi documento es [121212121](dui)'),
+    ('[252525252](dui)'),
+    ('Es [000000001](dui)'),
+    ('[987654321](dui)'),
+    ('Mi número es [019283746](dui)'),
+    ('El DUI que busco es [654321098](dui)'),
+    ('[001122334](dui)'),
+    ('Mi DUI es [00005555-5](dui)'),
+    ('Es el [01020304-5](dui)'),
+    ('[05005005-0](dui)'),
+    ('El número de mi documento es [10001000-1](dui)'),
+    ('Mi número es [00000002-2](dui)'),
+    ('[02222222-2](dui)'),
+    ('El documento es [01111111-1](dui)'),
+    ('Mi DUI es [03333333-3](dui)'),
+    ('Es el [04040404-4](dui)'),
+    ('[01234567-9](dui)'),
+    ('[123456789](dui)'),
+    ('[229912456](dui)')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
 FROM examples e
 CROSS JOIN intent i
 WHERE NOT EXISTS (
@@ -441,6 +535,31 @@ WHERE NOT EXISTS (
     WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
 );
 -- SQLBook: Code
+-- Insertar el intent 'stop' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('stop', 'Usuario cancela el proceso o decide no continuar')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'stop'
+),
+examples(example_text) AS (
+    VALUES
+    ('ya no quiero contratar un plan'),
+    ('creo que mejor no'),
+    ('muchas gracias, pero vere planes en otro lugar'),
+    ('gracias, bueno, mejor no')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
 CREATE TABLE if not exists regex_patterns (
     regex_id SERIAL PRIMARY KEY,
     entity_name VARCHAR(100) NOT NULL,
@@ -472,9 +591,39 @@ VALUES (
         'DUI format: 8 digits, optional hyphen, and a check digit'
     );
 -- SQLBook: Code
+-- Insertar patrones regex para 'rating' y 'telefono' evitando duplicados
+
+INSERT INTO regex_patterns (entity_name, pattern, description)
+SELECT 'rating', '^[1-5]$', 'Coincide con una calificación numérica del 1 al 5'
+WHERE NOT EXISTS (
+    SELECT 1 FROM regex_patterns rp
+    WHERE rp.entity_name = 'rating' AND rp.pattern = '^[1-5]$'
+);
+
+INSERT INTO regex_patterns (entity_name, pattern, description)
+SELECT 'rating', '^[a-zA-Z]{3,6}$', 'Coincide con palabras de 3 a 6 letras (ej. "one", "three")'
+WHERE NOT EXISTS (
+    SELECT 1 FROM regex_patterns rp
+    WHERE rp.entity_name = 'rating' AND rp.pattern = '^[a-zA-Z]{3,6}$'
+);
+
+INSERT INTO regex_patterns (entity_name, pattern, description)
+SELECT 'telefono', '^(\+503\s?)?(\d{4}[-\s]?\d{4}|\d{8})$', 'Formato de teléfono local/ +503 con o sin separador'
+WHERE NOT EXISTS (
+    SELECT 1 FROM regex_patterns rp
+    WHERE rp.entity_name = 'telefono' AND rp.pattern = '^(\+503\s?)?(\d{4}[-\s]?\d{4}|\d{8})$'
+);
+-- SQLBook: Code
 select intent_name, example_text
 from intents
-    right join training_examples using (intent_id);
+    right join training_examples using (intent_id)
+    order by intent_name;
+
+select intent_name, count(example_text)
+from intents
+    right join training_examples using (intent_id)
+group by
+    intent_name;
 -- SQLBook: Code
 select entity_name, pattern from regex_patterns;
 -- SQLBook: Code
@@ -530,7 +679,14 @@ WITH intent AS (
 examples(example_text) AS (
     VALUES
     ('No me están dando paja, ¿Quién me asegura a mí?'),
-    ('Me parece una gran falta de respeto.')
+    ('Me parece una gran falta de respeto.'),
+    ('Es más lento que mi abuela subiendo una cuesta, ¡no me sirve!'),
+    ('Mire, no me salga con eso de "velocidad real".'),
+    ('La verdad, ya he pasado por tres empresas de internet aquí y todas son iguales.'),
+    ('La cosa se pone fea y se nos traba el internet a cada rato.'),
+    ('¿Cómo puedo saber yo que no me están dando paja con eso?'),
+    ('¡Me parece una gran falta de respeto!'),
+    ('El internet me está saliendo carísimo.')
 )
 INSERT INTO training_examples (intent_id, example_text, language)
 SELECT i.intent_id, e.example_text, 'es'
@@ -548,7 +704,80 @@ examples(example_text) AS (
     VALUES
     ('¿Y cuánto me cuesta esa gracia?'),
     ('¿Cuánto se tardan en instalar?'),
-    ('¿Y si reclamo, qué?')
+    ('¿Y si reclamo, qué?'),
+    ('y que incluye eso?'),
+    ('que velocidades tiene ese?'),
+    ('que velocidad es'),
+    ('y ese es rápido?'),
+    ('y ese es potente?'),
+    ('y ese es estable?'),
+    ('y ese es fuerte?'),
+    ('y ese es bueno para varios dispositivos?'),
+    ('y ese es bueno para varios aparatos?'),
+    ('y ese es bueno para que no se trabe?'),
+    ('y ese es bueno para que agarre bien?'),
+    ('y para cuantas personas es ese?'),
+    ('y para cuántos dispositivos es ese?'),
+    ('y para cuántos aparatos es ese?'),
+    ('y para que no se trabe es ese?'),
+    ('¿Y **cuánto me cuesta** esa gracia?'),
+    ('¿Tienen ustedes una línea directa o algo que sea **más rápido que el bus de la 42**?'),
+    ('¿Cuánto **se tardan** en instalar?'),
+    ('Si un día hay una tormenta y **se me va la luz**, ¿el internet queda funcionando?'),
+    ('¿Y si reclamo, qué?'),
+    ('¿Y si yo solo quiero 300 Megas? ¿Me baja mucho el precio?'),
+    ('barato'),
+    ('económico'),
+    ('accesible'),
+    ('conveniente'),
+    ('cómodo'),
+    ('rapido'),
+    ('veloz'),
+    ('que aguante'),
+    ('que no se caiga'),
+    ('uno potente'),
+    ('uno fuerte'),
+    ('para varios dispositivos'),
+    ('para varios aparatos'),
+    ('que no se trabe'),
+    ('que agarre bien'),
+    ('que no falle'),
+    ('que agarre netflix'),
+    ('que agarre youtube'),
+    ('que agarre juegos en línea'),
+    ('que agarre videollamadas'),
+    ('para videollamadas'),
+    ('para juegos en línea'),
+    ('para netflix'),
+    ('para youtube'),
+    ('para trabajar desde casa'),
+    ('para home office'),
+    ('para jugar clash royale'),
+    ('para jugar free fire'),
+    ('para jugar call of duty'),
+    ('para jugar league of legends'),
+    ('para jugar fortnite'),
+    ('para zoom'),
+    ('para teams'),
+    ('para meet'),
+    ('para estudiar en línea'),
+    ('para clases en línea'),
+    ('para estar chateando'),
+    ('facebook'),
+    ('whatsapp'),
+    ('instagram'),
+    ('tiktok'),
+    ('twitter'),
+    ('telegram'),
+    ('youtube'),
+    ('netflix'),
+    ('hbo max'),
+    ('disney plus'),
+    ('prime video'),
+    ('hulu'),
+    ('spotify'),
+    ('apple music'),
+    ('amazon music')
 )
 INSERT INTO training_examples (intent_id, example_text, language)
 SELECT i.intent_id, e.example_text, 'es'
@@ -616,11 +845,472 @@ examples(example_text) AS (
     VALUES
     ('¡Trato hecho!'),
     ('Me parece justo y necesario'),
-    ('De volada')
+    ('De volada'),
+    ('Me parece excelente.'),
+    ('Sí, ese me gusta'),
+    ('ese me sirve'),
+    ('ese está bien'),
+    ('ese es el que andaba buscando')
 )
 INSERT INTO training_examples (intent_id, example_text, language)
 SELECT i.intent_id, e.example_text, 'es'
 FROM examples e CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'provide_dui' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('provide_dui', 'Usuario proporciona su número de DUI (Documento Único de Identidad)')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'provide_dui'
+),
+examples(example_text) AS (
+    VALUES
+    ('mi dui es [12345678-1](dui)'),
+    ('soy [12345678-1](dui)'),
+    ('es [12345678-1](dui)'),
+    ('"55555555-5"'),
+    ('[00123456-7](dui)'),
+    ('El número es [01010101-0](dui)'),
+    ('[05050505-5](dui)'),
+    ('Mi número de documento es [23456789-0](dui)'),
+    ('Es [09876543-2](dui)'),
+    ('El mío es [00010002-3](dui)'),
+    ('[04030201-9](dui)'),
+    ('Mi cédula es [11223344-5](dui)'),
+    ('[22334455-6](dui)'),
+    ('El DUI es [01234567-8](dui)'),
+    ('Mi número es [00001234-5](dui)'),
+    ('[08888888-8](dui)'),
+    ('El documento es [20202020-2](dui)'),
+    ('Mi DUI es [012345678](dui)'),
+    ('Es [098765432](dui)'),
+    ('[200000001](dui)'),
+    ('El número de documento es [000000000](dui)'),
+    ('[102030405](dui)'),
+    ('Mi DUI es [333333333](dui)'),
+    ('El número es [044444444](dui)'),
+    ('[159753852](dui)'),
+    ('Es [078945612](dui)'),
+    ('El mío es [06050403-1](dui)'),
+    ('[07777777-7](dui)'),
+    ('Mi documento es [10101010-1](dui)'),
+    ('[00009999-9](dui)'),
+    ('Es el [03030303-3](dui)'),
+    ('El número es [44445555-6](dui)'),
+    ('[56789012-3](dui)'),
+    ('Mi DUI es [00998877-6](dui)'),
+    ('El número es [024681357](dui)'),
+    ('Es [135792468](dui)'),
+    ('[090909090](dui)'),
+    ('Mi documento es [121212121](dui)'),
+    ('[252525252](dui)'),
+    ('Es [000000001](dui)'),
+    ('[987654321](dui)'),
+    ('Mi número es [019283746](dui)'),
+    ('El DUI que busco es [654321098](dui)'),
+    ('[001122334](dui)'),
+    ('Mi DUI es [00005555-5](dui)'),
+    ('Es el [01020304-5](dui)'),
+    ('[05005005-0](dui)'),
+    ('El número de mi documento es [10001000-1](dui)'),
+    ('Mi número es [00000002-2](dui)'),
+    ('[02222222-2](dui)'),
+    ('El documento es [01111111-1](dui)'),
+    ('Mi DUI es [03333333-3](dui)'),
+    ('Es el [04040404-4](dui)'),
+    ('[01234567-9](dui)'),
+    ('[123456789](dui)'),
+    ('[229912456](dui)')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'provide_nombre' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('provide_nombre', 'Usuario proporciona su nombre')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'provide_nombre'
+),
+examples(example_text) AS (
+    VALUES
+    ('mi nombre es [jose luis](nombre)'),
+    ('me llamo [maria jose](nombre)'),
+    ('soy [carlos alberto](nombre)'),
+    ('[ana sofia](nombre) es mi primer nombre'),
+    ('mi nombre de pila es [juan carlos](nombre)'),
+    ('el nombre es [flor de maria](nombre)'),
+    ('me identifico como [miguel angel](nombre)'),
+    ('soy conocido como [fatima beatriz](nombre)'),
+    ('mi nombre completo es [luis alfredo](nombre)'),
+    ('el mio es [wendy carolina](nombre)'),
+    ('solo dime [oscar antonio](nombre)'),
+    ('mi nombre es [blanca estela](nombre)'),
+    ('me llamo [manuel de jesus](nombre)'),
+    ('soy [nelson javier](nombre)'),
+    ('[silvia elena](nombre)'),
+    ('[gladys mireya](nombre)'),
+    ('el nombre a usar es [rafael antonio](nombre)'),
+    ('[rosa evelyn](nombre)'),
+    ('mi nombre es [marta alicia](nombre)'),
+    ('[vilma guadalupe](nombre)'),
+    ('[hector rolando](nombre)'),
+    ('el nombre que tengo es [jessica maria](nombre)'),
+    ('se escribe [julio cesar](nombre)'),
+    ('[karla vanessa](nombre)'),
+    ('mi nombre es [mario alexander](nombre)'),
+    ('me llamo [erick josue](nombre)'),
+    ('soy [brenda lizeth](nombre)'),
+    ('mi primer nombre es [ricardo david](nombre)'),
+    ('la persona es [andrea michelle](nombre)'),
+    ('el nombre es [roberto carlos](nombre)'),
+    ('me llamo [Juan Erickson](nombre)'),
+    ('mi nombre es [Ana Daniela](nombre)'),
+    ('soy [Carlos Jose](nombre)'),
+    ('[María Rosa](nombre)'),
+    ('Mi nombre es [José Luis](nombre)'),
+    ('Me llamo [María José](nombre)'),
+    ('Soy [Carlos Alberto](nombre)'),
+    ('[Ana Sofía](nombre) es mi primer nombre'),
+    ('Mi nombre de pila es [Juan Carlos](nombre)'),
+    ('El nombre es [Flor De María](nombre)'),
+    ('Me identifico como [Miguel Ángel](nombre)'),
+    ('Soy conocido como [Fátima Beatriz](nombre)'),
+    ('Mi nombre completo es [Luis Alfredo](nombre)'),
+    ('El mío es [Wendy Carolina](nombre)'),
+    ('Solo dime [Oscar Antonio](nombre)'),
+    ('Mi nombre es [Blanca Estela](nombre)'),
+    ('Me llamo [Manuel De Jesús](nombre)'),
+    ('Soy [Nelson Javier](nombre)'),
+    ('[Silvia Elena](nombre)'),
+    ('[Gladys Mireya](nombre)'),
+    ('El nombre a usar es [Rafael Antonio](nombre)'),
+    ('[Rosa Evelyn](nombre)'),
+    ('Mi nombre es [Marta Alicia](nombre)'),
+    ('[Vilma Guadalupe](nombre)'),
+    ('[Héctor Rolando](nombre)'),
+    ('El nombre que tengo es [Jessica María](nombre)'),
+    ('Se escribe [Julio César](nombre)'),
+    ('[Karla Vanessa](nombre)'),
+    ('Mi nombre es [Mario Alexander](nombre)'),
+    ('Me llamo [Erick Josué](nombre)'),
+    ('Soy [Brenda Lizeth](nombre)'),
+    ('Mi primer nombre es [Ricardo David](nombre)'),
+    ('La persona es [Andrea Michelle](nombre)'),
+    ('El nombre es [Roberto Carlos](nombre)')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+INSERT INTO intents (intent_name, description)
+VALUES ('provide_apellido', 'Usuario proporciona su(s) apellido(s)')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'provide_apellido'
+),
+examples(example_text) AS (
+    VALUES
+    ('mi apellido es [garcia marquez](apellido)'),
+    ('mis apellidos son [perez de leon](apellido)'),
+    ('el apellido que busco es [lopez portillo](apellido)'),
+    ('me llamo de apellido [martinez serrano](apellido)'),
+    ('mi apellido paterno es [sanchez flores](apellido)'),
+    ('el apellido es [hernandez torres](apellido)'),
+    ('mi nombre de familia es [vasquez cruz](apellido)'),
+    ('me apellido [diaz ruiz](apellido)'),
+    ('[gomez palacios](apellido) es el apellido'),
+    ('mi apellido materno es [rivas sorto](apellido)'),
+    ('el que necesito es [abarca ramos](apellido)'),
+    ('el apellido es [castillo pineda](apellido)'),
+    ('soy [flores de paz](apellido)'),
+    ('mi segundo apellido es [linares ayala](apellido)'),
+    ('apellido [mejia ventura](apellido)'),
+    ('[mendoza quintanilla](apellido)'),
+    ('me dijeron [orantes guevara](apellido)'),
+    ('mi apellido es [quintanilla solis](apellido)'),
+    ('los apellidos son [rodriguez herrera](apellido)'),
+    ('se escribe [salinas campos](apellido)'),
+    ('el apellido es [vargas lopez](apellido)'),
+    ('mis apellidos son [zelaya chavez](apellido)'),
+    ('el apellido para el registro es [alvarado de jesus](apellido)'),
+    ('mi apellido es [chavez alvarado](apellido)'),
+    ('[escobar rivas](apellido)'),
+    ('el mio es [figueroa santos](apellido)'),
+    ('apellido [melendez garcia](apellido)'),
+    ('soy [orellana amaya](apellido)'),
+    ('[ramirez cruz](apellido)'),
+    ('mi apellido es [sosa escobar](apellido)'),
+    ('mi apellido es [García Moran](apellido)'),
+    ('soy [Fernández Gutierrez](apellido)'),
+    ('me llamo [Martínez Polanco](apellido)'),
+    ('[López Echeverria](apellido)'),
+    ('Mi apellido es [García Márquez](apellido)'),
+    ('Mis apellidos son [Pérez De León](apellido)'),
+    ('El apellido que busco es [López Portillo](apellido)'),
+    ('Me llamo de apellido [Martínez Serrano](apellido)'),
+    ('Mi apellido paterno es [Sánchez Flores](apellido)'),
+    ('El apellido es [Hernández Torres](apellido)'),
+    ('Mi nombre de familia es [Vásquez Cruz](apellido)'),
+    ('Me apellido [Díaz Ruíz](apellido)'),
+    ('[Gómez Palacios](apellido) es el apellido'),
+    ('Mi apellido materno es [Rivas Sorto](apellido)'),
+    ('El que necesito es [Abarca Ramos](apellido)'),
+    ('El apellido es [Castillo Pineda](apellido)'),
+    ('Soy [Flores De Paz](apellido)'),
+    ('Mi segundo apellido es [Linares Ayala](apellido)'),
+    ('Apellido [Mejía Ventura](apellido)'),
+    ('[Mendoza Quintanilla](apellido)'),
+    ('Me dijeron [Orantes Guevara](apellido)'),
+    ('Mi apellido es [Quintanilla Solís](apellido)'),
+    ('Los apellidos son [Rodríguez Herrera](apellido)'),
+    ('Se escribe [Salinas Campos](apellido)'),
+    ('El apellido es [Vargas López](apellido)'),
+    ('Mis apellidos son [Zelaya Chávez](apellido)'),
+    ('El apellido para el registro es [Alvarado De Jesús](apellido)'),
+    ('Mi apellido es [Chávez Alvarado](apellido)'),
+    ('[Escobar Rivas](apellido)'),
+    ('El mío es [Figueroa Santos](apellido)'),
+    ('Apellido [Meléndez García](apellido)'),
+    ('Soy [Orellana Amaya](apellido)'),
+    ('[Ramírez Cruz](apellido)'),
+    ('Mi apellido es [Sosa Escobar](apellido)'),
+    ('[monterrosa Quintanilla](apellido)'),
+    ('mi apellido es [Cruz Lopez](apellido)'),
+    ('soy [Salazar Mendoza](apellido)'),
+    ('me llamo de apellido [Fuentes Rivas](apellido)'),
+    ('el apellido que busco es [morales torres](apellido)')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'provide_direccion' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('provide_direccion', 'Usuario proporciona su dirección / ubicación')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'provide_direccion'
+),
+examples(example_text) AS (
+    VALUES
+    ('mi direccion es [colonia escalon, 7a calle poniente y 85 avenida norte](direccion)'),
+    ('la direccion es [bulevar los proceres, condominio el pedregal, casa 35](direccion)'),
+    ('vivo en [residencial montebello, poligono a, pasaje 1, casa 10](direccion)'),
+    ('es en [avenida bernal, frente a la iglesia don rua](direccion)'),
+    ('la entrega debe ser en [zona rosa, calle el mirador, torre futura, piso 15](direccion)'),
+    ('la direccion de envio es [colonia san francisco, avenida las camelias, calle los abetos 21](direccion)'),
+    ('es [1a calle poniente, entre 60a avenida norte y bulevar constitucion 3549](direccion)'),
+    ('es en [barrio san jacinto, 10a avenida sur y calle lara 934](direccion)'),
+    ('la casa esta en [alameda manuel enrique araujo, cerca de la ex-feria internacional](direccion)'),
+    ('[colonia centroamerica, diagonal centroamerica, avenida alvarado](direccion)'),
+    ('la ubicacion es [colonia san benito, 79 avenida norte, pasaje 3, casa 8](direccion)'),
+    ('es en [avenida monseñor romero y final calle 5 de noviembre](direccion)'),
+    ('me encuentro en [colonia atlacatl, cerca del centro comercial metrocentro](direccion)'),
+    ('la direccion es [avenida independencia y alameda juan pablo ii, numero 437](direccion)'),
+    ('[bulevar del ejercito nacional, contiguo a plaza mundo soyapango](direccion)'),
+    ('mi casa es [urbanizacion san antonio abad, 5a calle oriente, casa 12](direccion)'),
+    ('la entrega en [colonia miramonte, bulevar tutunichapa, edificio d](direccion)'),
+    ('la direccion completa es [17 avenida sur, condominios montemaria, torre b, apartamento 401](direccion)'),
+    ('la direccion es [colonia buenos aires 3, diagonal centroamerica, contiguo a hacienda](direccion)'),
+    ('es [49 avenida sur, calle sisimiles, edificio el dorado](direccion)'),
+    ('estoy en [calle el volcan, kilometro 12, finca el espino](direccion)'),
+    ('la direccion es [canton el carmen, calle principal, casa de porton rojo](direccion)'),
+    ('[25 avenida norte, residencial altamira, poligono h, lote 14](direccion)'),
+    ('mi ubicacion es [final calle los castanos, colonia escalon](direccion)'),
+    ('es [10a calle oriente, cerca del mercado central de san salvador](direccion)'),
+    ('la direccion de mi trabajo es [bulevar de los heroes, centro financiero gigante](direccion)'),
+    ('[calle la mascota, edificio world trade center, torre 1, oficina 503](direccion)'),
+    ('estoy en [colonia layco, 1a calle poniente, entre la 19 y 21 avenida norte](direccion)'),
+    ('mi direccion es [avenida morazan, colonia flor blanca, cerca del parque cuscatlan](direccion)'),
+    ('es [calle zacamil, centro urbano zacamil, bloque 7, apartamento 2b](direccion)'),
+    ('la direccion es [colonia monserrat, centro urbano san judas tadeo, pasaje 3](direccion)'),
+    ('[12a calle oriente, barrio candelaria, casa 25a](direccion)'),
+    ('es en [residencial altavista, etapa 1, poligono 4, casa 3](direccion)'),
+    ('la direccion es [bulevar venezuela, cerca del redondel del arbol de la paz](direccion)'),
+    ('[final calle antigua a huizucar, residencial bosques de santa elena](direccion)'),
+    ('la ubicacion es [avenida olimpica, entre 55 y 57 avenida sur](direccion)'),
+    ('[alameda roosevelt, frente al hospital de la mujer](direccion)'),
+    ('mi domicilio es [colonia la rabida, 2a avenida norte, pasaje san jose](direccion)'),
+    ('es en [calle san antonio abad, contiguo a la universidad de el salvador](direccion)'),
+    ('la direccion es [final 5a avenida sur, urbanizacion la cima 2](direccion)'),
+    ('[avenida las amapolas, colonia san mateo, frente al super](direccion)'),
+    ('es en [colonia san bartolo, poligono e, lote 9, calle principal](direccion)'),
+    ('[29 calle poniente, barrio san miguelito, cerca del mercado](direccion)'),
+    ('la direccion es [redondel masferrer, sobre paseo general escalon](direccion)'),
+    ('[avenida washington, colonia satelite, 3a calle poniente](direccion)'),
+    ('mi direccion es [calle gerardo barrios, centro historico de san salvador](direccion)'),
+    ('[2a calle oriente, barrio el calvario, casa de esquina color celeste](direccion)'),
+    ('la direccion es [calle concepcion, cerca del parque centenario](direccion)'),
+    ('[final bulevar merliot, residencial tuscania, lote 14](direccion)'),
+    ('[avenida dr emilio alvarez, colonia maquilishuat, casa con muro blanco](direccion)'),
+    ('Mi direccion es [Colonia Escalón, 7a Calle Poniente y 85 Avenida Norte](direccion)'),
+    ('La direccion es [Bulevar Los Próceres, Condominio El Pedregal, Casa #35](direccion)'),
+    ('Vivo en [Residencial Montebello, Polígono A, Pasaje 1, Casa 10](direccion)'),
+    ('Es en [Avenida Bernal, frente a la Iglesia Don Rúa](direccion)'),
+    ('La entrega debe ser en [Zona Rosa, Calle El Mirador, Edificio Torre Futura, Piso 15](direccion)'),
+    ('La direccion de envío es [Colonia San Francisco, Avenida Las Camelias, Calle Los Abetos #21](direccion)'),
+    ('Es [1a Calle Poniente, entre 60a Avenida Norte y Bulevar Constitución #3549](direccion)'),
+    ('Es en [Barrio San Jacinto, 10a Avenida Sur y Calle Lara #934](direccion)'),
+    ('La casa está en [Alameda Manuel Enrique Araujo, cerca de la ex-Feria Internacional](direccion)'),
+    ('La ubicación es [Colonia San Benito, 79 Avenida Norte, Pasaje 3, Casa #8](direccion)'),
+    ('Es en [Avenida Monseñor Romero y Final Calle 5 de Noviembre](direccion)'),
+    ('Me encuentro en [Colonia Atlacatl, cerca del Centro Comercial Metrocentro](direccion)'),
+    ('La direccion es [Avenida Independencia y Alameda Juan Pablo II, número 437](direccion)'),
+    ('[Bulevar Del Ejército Nacional, contiguo a Plaza Mundo Soyapango](direccion)'),
+    ('Mi casa es [Urbanización San Antonio Abad, 5a Calle Oriente, Casa 12](direccion)'),
+    ('La entrega en [Colonia Miramonte, Bulevar Tutunichapa, Edificio D](direccion)'),
+    ('La direccion completa es [17 Avenida Sur, Condominios Montemaría, Torre B, Apartamento 401](direccion)'),
+    ('La direccion es [Colonia Buenos Aires 3, Diagonal Centroamérica, contiguo a Hacienda](direccion)'),
+    ('Es [49 Avenida Sur, Calle Sisimiles, Edificio El Dorado](direccion)'),
+    ('Estoy en [Calle El Volcán, Kilómetro 12, Finca El Espino](direccion)'),
+    ('La direccion es [Cantón El Carmen, Calle Principal, casa de portón rojo](direccion)'),
+    ('[25 Avenida Norte, Residencial Altamira, Polígono H, Lote 14](direccion)'),
+    ('Mi ubicación es [Final Calle Los Castaños, Colonia Escalón](direccion)'),
+    ('Es [10a Calle Oriente, cerca del Mercado Central de San Salvador](direccion)'),
+    ('La direccion de mi trabajo es [Bulevar de Los Héroes, Centro Financiero Gigante](direccion)'),
+    ('[Calle La Mascota, Edificio World Trade Center, Torre 1, oficina 503](direccion)'),
+    ('Estoy en [Colonia Layco, 1a Calle Poniente, entre la 19 y 21 Avenida Norte](direccion)'),
+    ('Mi direccion es [Avenida Morazán, Colonia Flor Blanca, cerca del Parque Cuscatlán](direccion)'),
+    ('Es [Calle Zacamil, Centro Urbano Zacamil, Bloque 7, Apartamento 2B](direccion)'),
+    ('La direccion es [Colonia Monserrat, Centro Urbano San Judas Tadeo, Pasaje 3](direccion)'),
+    ('[12a Calle Oriente, Barrio Candelaria, Casa #25A](direccion)'),
+    ('Es en [Residencial Altavista, Etapa 1, Polígono 4, Casa 3](direccion)'),
+    ('La direccion es [Bulevar Venezuela, cerca del redondel del Árbol de la Paz](direccion)'),
+    ('[Final Calle Antigua a Huizúcar, Residencial Bosques de Santa Elena](direccion)'),
+    ('La ubicación es [Avenida Olímpica, entre 55 y 57 Avenida Sur](direccion)'),
+    ('[Alameda Roosevelt, frente al Hospital de la Mujer](direccion)'),
+    ('Mi domicilio es [Colonia La Rábida, 2a Avenida Norte, Pasaje San José](direccion)'),
+    ('Es en [Calle San Antonio Abad, contiguo a la Universidad de El Salvador](direccion)'),
+    ('La direccion es [Final 5a Avenida Sur, Urbanización La Cima 2](direccion)'),
+    ('[Avenida Las Amapolas, Colonia San Mateo, frente al súper](direccion)'),
+    ('Es en [Colonia San Bartolo, Polígono E, Lote 9, calle principal](direccion)'),
+    ('[29 Calle Poniente, Barrio San Miguelito, cerca del Mercado](direccion)'),
+    ('La direccion es [Redondel Masferrer, sobre Paseo General Escalón](direccion)'),
+    ('[Avenida Washington, Colonia Satélite, 3a Calle Poniente](direccion)'),
+    ('Mi direccion es [Calle Gerardo Barrios, Centro Histórico de San Salvador](direccion)'),
+    ('[2a Calle Oriente, Barrio El Calvario, casa de esquina color celeste](direccion)'),
+    ('La direccion es [Calle Concepción, cerca del Parque Centenario](direccion)'),
+    ('[Final Bulevar Merliot, Residencial Tuscania, Lote 14](direccion)'),
+    ('[Avenida Dr. Emilio Álvarez, Colonia Maquilishuat, casa con muro blanco](direccion)')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'provide_telefono' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('provide_telefono', 'Usuario proporciona su número de teléfono')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'provide_telefono'
+),
+examples(example_text) AS (
+    VALUES
+    ('mi teléfono es [5555-5555](telefono)'),
+    ('me puede llamar al [7777-7777](telefono)'),
+    ('mi número es [8888-8888](telefono)'),
+    ('[9999-9999](telefono) es mi contacto'),
+    ('por favor, llámeme al [6666-6666](telefono)'),
+    ('mi teléfono es [55555555](telefono)'),
+    ('me puede llamar al [77777777](telefono)'),
+    ('mi número es [88888888](telefono)'),
+    ('[99999999](telefono) es mi contacto'),
+    ('por favor, llámeme al [66666666](telefono)'),
+    ('Mi teléfono es [7845-1234](telefono)'),
+    ('El número de contacto es [503 6060 6060](telefono)'),
+    ('Es el [2222 3333](telefono)'),
+    ('Mi celular es [7777-1111](telefono)'),
+    ('El número fijo es [21009900](telefono)'),
+    ('Te doy el [65656565](telefono)'),
+    ('Mi número de teléfono es [+503 7000 0000](telefono)'),
+    ('Es [50323456789](telefono)'),
+    ('Mi teléfono móvil es [7987 6543](telefono)'),
+    ('Es [2345 - 6789](telefono)'),
+    ('El contacto es [70707070](telefono)'),
+    ('El número es [+50322501000](telefono)'),
+    ('Mi teléfono es [503 7845 1234](telefono)'),
+    ('Puedes llamar al [2222-2222](telefono)'),
+    ('Mi número celular es [6060-6060](telefono)'),
+    ('Es [+503 2100 9900](telefono)'),
+    ('El contacto es [77771111](telefono)'),
+    ('Mi número es [23456789](telefono)'),
+    ('Puedes contactarme al [503 65656565](telefono)'),
+    ('Mi teléfono es el [70000000](telefono)'),
+    ('Es [2222-3333](telefono)'),
+    ('El número de teléfono es [79876543](telefono)'),
+    ('[23456789] es mi teléfono'),
+    ('Mi número de contacto es [7070-7070](telefono)'),
+    ('Es el [50377771111](telefono)')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
+WHERE NOT EXISTS (
+    SELECT 1 FROM training_examples te
+    WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
+);
+-- SQLBook: Code
+-- Insertar el intent 'retry_send_email' si no existe
+INSERT INTO intents (intent_name, description)
+VALUES ('retry_send_email', 'Solicitud de reenvío de correo electrónico')
+ON CONFLICT (intent_name) DO NOTHING;
+
+-- Insertar ejemplos asociados evitando duplicados
+WITH intent AS (
+    SELECT intent_id FROM intents WHERE intent_name = 'retry_send_email'
+),
+examples(example_text) AS (
+    VALUES
+    ('por favor, reenvíeme el correo'),
+    ('envíeme de nuevo el email'),
+    ('mándeme otra vez el correo'),
+    ('necesito que me reenvíe el email'),
+    ('por favor, envíeme otra vez el correo'),
+    ('reenvíeme el email'),
+    ('¿puedes reenviarme el correo nuevamente?'),
+    ('mandame de nuevo el correo')
+)
+INSERT INTO training_examples (intent_id, example_text, language)
+SELECT i.intent_id, e.example_text, 'es'
+FROM examples e
+CROSS JOIN intent i
 WHERE NOT EXISTS (
     SELECT 1 FROM training_examples te
     WHERE te.intent_id = i.intent_id AND te.example_text = e.example_text
