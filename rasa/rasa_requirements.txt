@@ -34,6 +34,7 @@ cymem==2.0.11
 dask==2022.10.2
 dnspython==2.3.0
 docopt==0.6.2
+dotenv==0.9.9
 es-core-news-sm @ https://github.com/explosion/spacy-models/releases/download/es_core_news_sm-3.5.0/es_core_news_sm-3.5.0-py3-none-any.whl#sha256=13b909bac0de5f5338f4327b14a9cc9736cf51f07131a3cfcb688dbeb8608bdd
 fbmessenger==6.0.0
 filelock==3.19.1
@@ -107,6 +108,7 @@ pyparsing==3.2.5
 pyrsistent==0.20.0
 python-crfsuite==0.9.11
 python-dateutil==2.8.2
+python-dotenv==1.2.1
 python-engineio==4.12.3
 python-socketio==5.14.1
 pytz==2022.7.1

@@ -9,7 +9,7 @@ CREATE DATABASE icc115
     WITH
     ENCODING = 'UTF8';
 -- SQLBook: Code
--- Active: 1760903346765@@127.0.0.1@5432@icc115@public
+-- Active: 1760903346765@@127.0.0.1@5432@clients_db@public
 
 -- 2. CREACIÓN DE LA TABLA 'users'
 CREATE TABLE users (
@@ -109,7 +109,6 @@ CREATE TABLE feedback (
     FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 -- SQLBook: Code
--- Active: 1760903346765@@127.0.0.1@5432@icc115@public
--- Active: 1760903346765@@127.0.0.1@5432@icc115@public
--- ALTER TABLE support_tickets ALTER COLUMN descripcion TYPE TEXT;
+-- Active: 1760903346765@@127.0.0.1@5432@clients_db@public
+
 ALTER TABLE technical_visits ALTER COLUMN tecnico TYPE TEXT;

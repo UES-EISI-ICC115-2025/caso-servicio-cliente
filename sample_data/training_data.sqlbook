@@ -1,6 +1,6 @@
 -- SQLBook: Code
--- Active: 1763429712926@@127.0.0.1@5432@rasa_db@public
--- Active: 1763429712926@@127.0.0.1@5432@rasa_db
+-- Active: 1765141831372@@127.0.0.1@5432@rasa_db@public
+
 -- Crear la tabla de Intents
 CREATE TABLE intents (
     intent_id SERIAL PRIMARY KEY,
