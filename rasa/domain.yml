@@ -23,6 +23,7 @@ intents:
 - request_support
 - stop
 - thanks
+- request_resend_contract_email
 entities:
 - dui
 - plan
@@ -197,8 +198,8 @@ responses:
   - text: ¡Vaya pues, cuidate! ¡Feliz día!
   - text: ¡Adiós! Que tengas un buen día.
   utter_ask_service:
-  - text: ¡Chivo! Te puedo ayudar con cosas como **contratar un servicio nuevo**, **chequear los detalles de un plan**, o **darte soporte técnico**.
-  - text: ¡De a galán! Te ayudo a **agarrar un plan nuevo**, **ver los detalles de los planes**, o con **soporte técnico**.
+  - text: ¡Chivo! Te puedo ayudar con **chequear los detalles de un plan**, o **darte soporte técnico**.
+  - text: ¡De a galán! Te ayudo a **agarrar un plan nuevo** o con **soporte técnico**.
   utter_additional_request:
   - text: ¿Necesitás algo más o ya estamos?
   - text: ¿Te puedo ayudar en alguna otra cosa?

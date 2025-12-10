@@ -123,3 +123,53 @@ class AskPlanRecommendationAction(Action):
             )
 
         return []
+
+class AskQAAction(Action):
+    def name(self) -> Text:
+        return "action_ask_qa"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+
+        # Obtener la pregunta actual del usuario (si existe)
+        user_question = (
+            tracker.latest_message.get("text") or "¿como puedo repararlo?"
+        )
+
+        # Preparar payload para la API RAG: enviamos la pregunta y el contexto (los planes)
+        chat_history_rasa_format = _get_chat_history(tracker)
+        payload = {
+            "question": user_question,
+            "context": [],
+            "history": chat_history_rasa_format,
+        }
+        print(f"Payload RAG con contexto de planes: {payload}")
+
+        try:
+            resp = requests.post(RAG_API_URL, json=payload, timeout=60)
+            resp.raise_for_status()
+            rag_json = resp.json()
+            answer = rag_json.get(
+                "answer", "Lo siento, no obtuve una recomendación clara."
+            )
+            dispatcher.utter_message(text=answer)
+        except requests.exceptions.ConnectionError:
+            print(f"ERROR RAG: conexión fallida a {RAG_API_URL}")
+            dispatcher.utter_message(
+                text="No puedo conectar con el motor de conocimiento ahora mismo"
+            )
+           
+        except requests.exceptions.HTTPError as e:
+            print(f"ERROR RAG API: status {resp.status_code} - {e}")
+            
+        except Exception as e:
+            print(f"ERROR al consultar RAG o procesar planes: {e}")
+            dispatcher.utter_message(
+                text="Ocurrió un error inesperado al obtener la recomendación."
+            )
+
+        return []

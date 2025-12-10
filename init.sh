@@ -76,6 +76,11 @@ source ./rasa/rasa_env/bin/activate
 pip install -r ./rasa/rasa_requirements.txt
 deactivate
 
+~/.pyenv/versions/3.10.12/bin/python -m venv ./rasa_rag/rasa_rag_env
+source ./rasa_rag/rasa_rag_env/bin/activate
+pip install -r ./rasa_rag/rasa_rag_requirements.txt
+deactivate
+
 ~/.pyenv/versions/3.10.12/bin/python -m venv ./airflow/airflow_env
 source ./airflow/airflow_env/bin/activate
 pip install -r ./airflow/airflow_requirements.txt
@@ -126,24 +131,45 @@ sudo ss -tuln | grep 5432 # Verificar que PostgreSQL esté escuchando en el puer
 # local   all             all                             peer
 
 # Creación del servicio de Airflow
-sudo nano /etc/systemd/system/airflow.service
+sudo nano /etc/systemd/system/airflow-scheduler.service
 
 [Unit]
-Description=Apache Airflow
+Description=Apache Airflow Scheduler
 After=network.target postgresql.service
 Wants=postgresql.service
 [Service]
-Environment=AIRFLOW_HOME=/home/icc115/caso-servicio-cliente/airflow/airflow
-Environment="PATH=/home/icc115/caso-servicio-cliente/airflow/airflow_env/bin:$PATH"
+WorkingDirectory=/home/icc115/caso-servicio-cliente/airflow/airflow/
+EnvironmentFile=/home/icc115/caso-servicio-cliente/.env
 User=icc115
 Group=icc115
 Type=simple
-ExecStart=/home/icc115/caso-servicio-cliente/airflow/airflow_env/bin/airflow standalone
+ExecStart=/home/icc115/caso-servicio-cliente/airflow/airflow_env/bin/python3.10 /home/icc115/caso-servicio-cliente/airflow/airflow_env/bin/airflow scheduler
 Restart=on-failure
 RestartSec=5s
 StandardOutput=journal
 
+sudo nano /etc/systemd/system/airflow.service
+
+[Unit]
+Description=Apache Airflow Webserver
+After=network.target postgresql.service
+Wants=postgresql.service
+[Service]
+EnvironmentFile=/home/icc115/caso-servicio-cliente/.env
+WorkingDirectory=/home/icc115/caso-servicio-cliente/airflow/airflow/
+User=icc115
+Group=icc115
+Type=simple
+ExecStart=/home/icc115/caso-servicio-cliente/airflow/airflow_env/bin/python3.10 /home/icc115/caso-servicio-cliente/airflow/airflow_env/bin/airflow api-server
+Restart=on-failure
+RestartSec=5s
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
+
 systemctl daemon-reload
+sudo systemctl enable airflow.service
 sudo systemctl start airflow.service
 sudo systemctl status airflow.service
 
@@ -153,7 +179,7 @@ sudo nano /etc/nginx/sites-available/airflow
 
 server {
     listen 80;
-    server_name dominio.com [IP_DEL_SERVIDOR]; # El dominio o IP principal
+    server_name 203.0.113.201; # El dominio o IP principal
     # Bloque de ubicación para manejar la subruta /airflow/
     location /airflow/ {
         # Se requiere el trailing slash ('/') aquí y en base_url de Airflow
@@ -185,13 +211,13 @@ Description=Frontend Gradio
 After=network.target
 [Service]
 # Usuario bajo el cual se ejecuta el servicio (debe tener permisos en el directorio)
-User=demo
-Group=demo
+User=icc115
+Group=icc115
 # Ruta absoluta al directorio donde reside app.py
 WorkingDirectory=/home/icc115/caso-servicio-cliente/
 # Comando de Inicio: Ejecuta el script app.py con el intérprete de Python del venv
 # Gradio está configurado internamente para usar el puerto 8081.
-ExecStart=/home/icc115/caso-servicio-cliente/gradio/gradio_env/bin/python3.10 /home/icc115/caso-servicio-cliente/gradio>
+ExecStart=/home/icc115/caso-servicio-cliente/gradio/gradio_env/bin/python3.10 /home/icc115/caso-servicio-cliente/gradio
 StandardOutput=journal
 StandardError=journal
 # El servicio debe reiniciarse automáticamente en caso de fallo
@@ -216,3 +242,47 @@ WantedBy=multi-user.target
 
 # Instalando ollama
 curl -fsSL https://ollama.com/install.sh | sh
+
+ollama pull deepseek-r1:1.5b
+
+
+~/.pyenv/versions/3.10.12/bin/python -m venv ./chroma_db/chroma_env
+source ./chroma_db/chroma_env/bin/activate
+pip install -r ./chroma_db/chroma_requirements.txt
+# deactivate
+
+
+# Obtiene el nombre de usuario y la ruta $HOME para el script
+USER_NAME=$(whoami)
+USER_HOME=$(eval echo ~$USER_NAME) # Obtiene la ruta /home/nombre_usuario
+
+# 1. Definir y escribir el archivo de servicio (chroma.service)
+sudo sh -c "cat > /etc/systemd/system/chroma.service" <<EOF
+[Unit]
+Description=ChromaDB Vector Store Server
+After=network.target
+[Service]
+# Usuario que ejecuta el servicio
+User=$USER_NAME
+Group=$USER_NAME
+# Directorio de trabajo y configuracion del entorno virtual
+WorkingDirectory=$USER_HOME/caso-servicio-cliente/chroma_db/
+# Definicion del PATH completo al VENV (necesario para encontrar el binario 'chroma')
+Environment=PATH=$USER_HOME/caso-servicio-cliente/chroma_db/chroma_env/bin:\$PATH
+# Comando de Ejecucion: Inicia el servidor Chroma
+# La ruta de persistencia se fija dentro de $HOME/caso-servicio-cliente/chroma_db/data
+ExecStart=$USER_HOME/caso-servicio-cliente/chroma_db/chroma_env/bin/chroma run --host 0.0.0.0 --port 8000 --path
+$USER_HOME/caso-servicio-cliente/chroma_db/data
+# Opciones de reinicio
+Restart=alwaysRestartSec=5
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# 2. Recargar Systemd Daemon
+sudo systemctl daemon-reload
+# 3. Habilitar e Iniciar el Servicio
+sudo systemctl enable chroma.service
+sudo systemctl start chroma.service
+# 4. Verificar el Estado
+sudo systemctl status chroma.service

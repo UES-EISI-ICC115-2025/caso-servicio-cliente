@@ -36,7 +36,7 @@ class SendEmailAction(Action):
         y = 760  # start near top of page
         stream_lines: List[str] = []
         for line in lines:
-            esc = ActionSendEmail._escape_pdf_text(line)
+            esc = SendEmailAction._escape_pdf_text(line)
             stream_lines.append(f"BT /F1 12 Tf 72 {y} Td ({esc}) Tj ET\n")
             y -= 18
         stream_data = "".join(stream_lines).encode("latin-1", errors="ignore")
@@ -141,7 +141,7 @@ class SendEmailAction(Action):
             "Gracias por su preferencia.",
             "Este documento fue generado automaticamente."
         ]
-        return ActionSendEmail._minimal_pdf_from_lines(lines)
+        return SendEmailAction._minimal_pdf_from_lines(lines)
 
     def run(
         self,
@@ -178,7 +178,7 @@ class SendEmailAction(Action):
 
             # Generar PDF con datos disponibles
             fecha_creacion = datetime.now().strftime("%Y-%m-%d %H:%M")
-            pdf_bytes = ActionSendEmail.generate_fake_contract_pdf(
+            pdf_bytes = SendEmailAction.generate_fake_contract_pdf(
                 nombre=nombre,
                 apellido=apellido,
                 dui=dui,

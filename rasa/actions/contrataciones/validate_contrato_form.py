@@ -158,13 +158,13 @@ class ValidateContratoForm(FormValidationAction):
             else:
                 # DictCursor returns a mapping; access columns by name instead of by index
                 print(
-                    f"Producto encontrado: {resultado_busqueda_producto['producto_id']} - {resultado_busqueda_producto['nombre']}"
+                    f"Producto encontrado: {resultado_busqueda_producto[0]['producto_id']} - {resultado_busqueda_producto[0]['nombre']}"
                 )
                 return {
                     "plan": raw_product,
-                    "producto_id": resultado_busqueda_producto["producto_id"],
-                    "nombre_producto": resultado_busqueda_producto["nombre"],
-                    "precio_producto": resultado_busqueda_producto["precio_mensual"],
+                    "producto_id": resultado_busqueda_producto[0]["producto_id"],
+                    "nombre_producto": resultado_busqueda_producto[0]["nombre"],
+                    "precio_producto": resultado_busqueda_producto[0]["precio_mensual"],
                 }
 
         except Exception as e:
@@ -183,14 +183,14 @@ class ValidateContratoForm(FormValidationAction):
     ) -> Dict[Text, Any]:
 
         # 1. Definir el patrón RegEx de DUI (8 dígitos, guion opcional, 1 dígito)
-        dui_pattern = r"^\d{8}-?\d$"
+        dui_pattern = r"?^\d{8}-?\d{1}$"
 
-        # 2. El valor que recibimos aquí es la entidad extraída (ej: "01234567-8" o "012345678")
+        # 2. El valor que recibimos aquí es la entidad extraída (ej: "01234567-8" o "0123456789")
         match = re.search(dui_pattern, value)
 
         if match:
             # 3. Limpiar y almacenar (remover el guion para guardar un valor consistente)
-            dui_clean = value.replace("-", "")
+            dui_clean = match.group(0).replace("-", "")
             return {"dui": dui_clean}
         else:
             if tracker.get_slot("requested_slot") == "dui":

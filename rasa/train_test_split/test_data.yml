@@ -1,0 +1,228 @@
+version: "3.1"
+nlu:
+- intent: inform_id
+  examples: |
+    - es [12345678-1](user_id)
+- intent: stop
+  examples: |
+    - muchas gracias, pero vere planes en otro lugar
+- intent: goodbye
+  examples: |
+    - nos vemos
+- intent: out_of_scope
+  examples: |
+    - I need support
+- intent: request_billing
+  examples: |
+    - quiero consultar mi factura
+- intent: retry_send_email
+  examples: |
+    - necesito que me reenvíe el email
+    - mándeme otra vez el correo
+- intent: provide_email
+  examples: |
+    - [micorreo@servidor.net](email)
+- intent: thanks
+  examples: |
+    - muchas gracias
+    - te lo agradezco
+- intent: request_support
+  examples: |
+    - quiero reportar un problema técnico
+    - mi conexión es muy lenta
+- intent: negociacion_expresar_escepticismo
+  examples: |
+    - Mire, no me salga con eso de "velocidad real".
+    - No me están dando paja, ¿Quién me asegura a mí?
+- intent: negociacion_postponer_decision
+  examples: |
+    - si me da chance, puedo pensarlo
+    - Si quiere mejor le llamo más tarde
+- intent: negociacion_aceptar_oferta
+  examples: |
+    - ese me sirve
+- intent: issue_fixed
+  examples: |
+    - ahora si, ya me conecta bien
+    - ahora sí funciona
+- intent: negociacion_cancelar_desistir
+  examples: |
+    - Mejor no le hago caso
+    - No, gracias
+    - Creo que no me conviene
+- intent: greet
+  examples: |
+    - cómo estás
+    - qué onda
+- intent: deny
+  examples: |
+    - parar el contrato
+    - cambié de opinión
+- intent: affirm
+  examples: |
+    - sí
+    - demole con todo
+    - si, seguro
+- intent: provide_rating
+  examples: |
+    - [three](rating) out of five
+    - my rating is [1](rating)
+    - "3"
+- intent: request_internet_service
+  examples: |
+    - que planes hay
+    - contratar un plan
+    - contratar un servicio
+    - que me puedes ofrecer
+    - contrato de internet
+- intent: provide_telefono
+  examples: |
+    - Puedes contactarme al [503 65656565](telefono)
+    - Mi número de teléfono es [+503 7000 0000](telefono)
+    - Es [2345 - 6789](telefono)
+    - Puedes llamar al [2222-2222](telefono)
+    - mi número es [88888888](telefono)
+    - por favor, llámeme al [6666-6666](telefono)
+    - me puede llamar al [77777777](telefono)
+- intent: provide_dui
+  examples: |
+    - Es [078945612](dui)
+    - mi dui es [123456789](dui)
+    - claro, mi dui es [123456789](dui)
+    - Es el [03030303-3](dui)
+    - [229958944](dui)
+    - es [12345678-1](dui)
+    - [00009999-9](dui)
+    - Mi número de documento es [23456789-0](dui)
+    - El número es [024681357](dui)
+    - [08888888-8](dui)
+    - [56789012-3](dui)
+    - [123456789](dui)
+- intent: provide_nombre
+  examples: |
+    - me llamo [Juan Erickson](nombre)
+    - Se escribe [Julio César](nombre)
+    - soy [carlos alberto](nombre)
+    - El nombre es [Flor De María](nombre)
+    - Me llamo [María José](nombre)
+    - [Vilma Guadalupe](nombre)
+    - [Rosa Evelyn](nombre)
+    - soy [brenda lizeth](nombre)
+    - Mi nombre de pila es [Juan Carlos](nombre)
+    - Soy [Brenda Lizeth](nombre)
+    - El nombre es [Roberto Carlos](nombre)
+    - El nombre que tengo es [Jessica María](nombre)
+    - Mi nombre es [Mario Alexander](nombre)
+- intent: provide_apellido
+  examples: |
+    - mi apellido es [García Moran](apellido)
+    - Mi segundo apellido es [Linares Ayala](apellido)
+    - mi nombre de familia es [vasquez cruz](apellido)
+    - el que necesito es [abarca ramos](apellido)
+    - Se escribe [Salinas Campos](apellido)
+    - [López Echeverria](apellido)
+    - los apellidos son [rodriguez herrera](apellido)
+    - Mi apellido es [Sosa Escobar](apellido)
+    - mi apellido es [sosa escobar](apellido)
+    - mi apellido materno es [rivas sorto](apellido)
+    - [Ramírez Cruz](apellido)
+    - el apellido es [vargas lopez](apellido)
+    - mi apellido es [chavez alvarado](apellido)
+    - El apellido para el registro es [Alvarado De Jesús](apellido)
+- intent: negociacion_solicitar_detalles
+  examples: |
+    - para meet
+    - para netflix
+    - ¿Y cuánto me cuesta esa gracia?
+    - rapido
+    - para jugar fortnite
+    - facebook
+    - para juegos en línea
+    - ¿Cuánto **se tardan** en instalar?
+    - y para cuántos dispositivos es ese?
+    - accesible
+    - que agarre bien
+    - amazon music
+    - netflix
+    - uno potente
+    - prime video
+- intent: provide_direccion
+  examples: |
+    - La direccion es [Cantón El Carmen, Calle Principal, casa de portón rojo](direccion)
+    - [colonia centroamerica, diagonal centroamerica, avenida alvarado](direccion)
+    - estoy en [colonia layco, 1a calle poniente, entre la 19 y 21 avenida norte](direccion)
+    - Mi ubicación es [Final Calle Los Castaños, Colonia Escalón](direccion)
+    - Es en [Calle San Antonio Abad, contiguo a la Universidad de El Salvador](direccion)
+    - [Bulevar Del Ejército Nacional, contiguo a Plaza Mundo Soyapango](direccion)
+    - la direccion es [final 5a avenida sur, urbanizacion la cima 2](direccion)
+    - mi domicilio es [colonia la rabida, 2a avenida norte, pasaje san jose](direccion)
+    - mi direccion es [colonia escalon, 7a calle poniente y 85 avenida norte](direccion)
+    - es en [barrio san jacinto, 10a avenida sur y calle lara 934](direccion)
+    - La direccion de mi trabajo es [Bulevar de Los Héroes, Centro Financiero Gigante](direccion)
+    - la direccion de mi trabajo es [bulevar de los heroes, centro financiero gigante](direccion)
+    - [alameda roosevelt, frente al hospital de la mujer](direccion)
+    - La direccion es [Bulevar Los Próceres, Condominio El Pedregal, Casa #35](direccion)
+    - [Avenida Dr. Emilio Álvarez, Colonia Maquilishuat, casa con muro blanco](direccion)
+    - es [49 avenida sur, calle sisimiles, edificio el dorado](direccion)
+    - La direccion es [Redondel Masferrer, sobre Paseo General Escalón](direccion)
+    - [avenida dr emilio alvarez, colonia maquilishuat, casa con muro blanco](direccion)
+    - La ubicación es [Colonia San Benito, 79 Avenida Norte, Pasaje 3, Casa #8](direccion)
+    - la direccion es [colonia buenos aires 3, diagonal centroamerica, contiguo a hacienda](direccion)
+- intent: choose_plan
+  examples: |
+    - [Familiar Estándar](plan)
+    - [básico hogar](plan) por favor
+    - [básico](plan)
+    - [ultra](plan) porfa
+    - El [basico hogar](plan), ese mero
+    - El [Estándar](plan), ese mero
+    - El [Estándar](plan) porfa
+    - El [básico hogar](plan) porfa
+    - [premium](plan)
+    - El [Premium](plan), ese mero
+    - [Estándar](plan) porfa
+    - Me quedo con el [básico hogar](plan)
+    - El [premium](plan), ese mero
+    - [estandar](plan) porfa
+    - Me quedo con el [familiar estandar](plan)
+    - [ultra](plan) por favor
+    - El [Familiar Estándar](plan) porfa
+    - [Estándar](plan) por favor
+    - Voy a agarrar el plan [Premium](plan)
+    - Me quedo con el [Básico Hogar](plan)
+    - [ultra](plan)
+    - Voy a agarrar el plan [Hogar](plan)
+    - Me quedo con el [Básico](plan)
+    - Me quedo con el [Premium](plan)
+    - El [estándar](plan), ese mero
+    - [básico](plan) por favor
+    - Me quedo con el [ultra](plan)
+    - plan [Hogar](plan)
+    - Deme el [Familiar](plan)
+    - Deme el [Hogar](plan)
+    - Voy a agarrar el plan [Ultra Premium](plan)
+    - plan [basico hogar](plan)
+    - Voy a agarrar el plan [familiar](plan)
+    - Me quedo con el [basico](plan)
+    - [familiar estandar](plan) porfa
+    - [hogar](plan) por favor
+    - [estandar](plan) por favor
+    - El [basico](plan) porfa
+    - Me quedo con el [basico hogar](plan)
+    - [hogar](plan) porfa
+- regex: dui
+  examples: |
+    - ^(\d{9})|(\d{8}-\d)$
+- regex: email
+  examples: |
+    - [a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}
+- regex: producto_id
+  examples: |
+    - [0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}
+- regex: rating
+  examples: |
+    - ^[1-5]$
+    - ^[a-zA-Z]{3,6}$
+- regex: telefono
+  examples: |
+    - ^(\+503\s?)?(\d{4}[-\s]?\d{4}|\d{8})$

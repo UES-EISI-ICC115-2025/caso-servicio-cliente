@@ -1,0 +1,156 @@
+
+version: "3.1"
+stories:
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_ask_service
+  - intent: request_internet_service
+  - action: contrato_form
+  - active_loop: contrato_form
+  - slot_was_set:
+    - requested_slot: plan
+  - intent: negociacion_solicitar_detalles
+  - slot_was_set:
+    - plan: me gustaria uno barato
+  - action: contrato_form
+  - slot_was_set:
+    - plan: null
+  - slot_was_set:
+    - requested_slot: plan
+  - intent: negociacion_aceptar_oferta
+  - slot_was_set:
+    - plan: ese me viene bien
+  - action: contrato_form
+  - slot_was_set:
+    - plan: Básico Hogar
+  - slot_was_set:
+    - producto_id: 6d34f272-2d45-4489-bc18-ab9b4f543ddf
+  - slot_was_set:
+    - nombre_producto: Básico Hogar
+  - slot_was_set:
+    - precio_producto: 35.0
+  - slot_was_set:
+    - requested_slot: nombre
+  - intent: provide_nombre
+    entities:
+    - nombre: Andrea Melissa
+  - slot_was_set:
+    - nombre: Andrea Melissa
+  - action: contrato_form
+  - slot_was_set:
+    - nombre: Andrea Melissa
+  - slot_was_set:
+    - requested_slot: apellido
+  - intent: provide_apellido
+    entities:
+    - apellido: Monterrosa Morales
+  - slot_was_set:
+    - apellido: mi apellido es Monterrosa Morales
+  - action: contrato_form
+  - slot_was_set:
+    - apellido: Monterrosa Morales
+  - slot_was_set:
+    - requested_slot: dui
+  - intent: provide_dui
+    entities:
+    - dui: '123456789'
+  - slot_was_set:
+    - dui: claro, mi dui es 123456789
+  - action: contrato_form
+  - slot_was_set:
+    - dui: null
+  - slot_was_set:
+    - requested_slot: dui
+  - intent: provide_dui
+    entities:
+    - dui: '123456789'
+  - slot_was_set:
+    - dui: 123456789
+  - action: contrato_form
+  - slot_was_set:
+    - dui: null
+  - slot_was_set:
+    - requested_slot: dui
+  - intent: provide_dui
+    entities:
+    - dui: '123456789'
+  - slot_was_set:
+    - dui: 123456789
+  - action: contrato_form
+  - slot_was_set:
+    - dui: 123456789
+  - slot_was_set:
+    - requested_slot: direccion
+  - intent: provide_direccion
+    entities:
+    - direccion: San Salvador
+    - direccion: Soyapango
+  - slot_was_set:
+    - direccion: San Salvador, Soyapango
+  - action: contrato_form
+  - slot_was_set:
+    - direccion: null
+  - slot_was_set:
+    - requested_slot: direccion
+  - intent: provide_direccion
+    entities:
+    - direccion: San Salvador
+    - direccion: San Salvador
+  - slot_was_set:
+    - direccion: San Salvador, San Salvador
+  - action: contrato_form
+  - slot_was_set:
+    - direccion: San Salvador, San Salvador
+  - slot_was_set:
+    - requested_slot: telefono
+  - intent: provide_dui
+    entities:
+    - dui: '229958944'
+  - slot_was_set:
+    - telefono: '229958944'
+  - action: contrato_form
+  - slot_was_set:
+    - telefono: null
+  - slot_was_set:
+    - requested_slot: telefono
+  - intent: provide_dui
+    entities:
+    - dui: '22993059'
+  - slot_was_set:
+    - telefono: '22993059'
+  - action: contrato_form
+  - slot_was_set:
+    - telefono: '22993059'
+  - slot_was_set:
+    - requested_slot: email
+  - intent: issue_fixed
+  - slot_was_set:
+    - email: sipi, mm18057@ues.edu.sv
+  - action: contrato_form
+  - slot_was_set:
+    - email: mm18057@ues.edu.sv
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_product_slots_summary
+  - action: utter_personal_info_summary
+  - action: utter_confirm_personal_info
+  - intent: affirm
+  - action: action_send_email
+  - action: utter_additional_request
+  - intent: stop
+  - intent: thanks
+  - action: utter_thanks_response
+  - action: calificacion_form
+  - active_loop: calificacion_form
+  - slot_was_set:
+    - requested_slot: rating
+  - intent: provide_dui
+    entities:
+    - dui: '5'
+  - intent: provide_rating
+    entities:
+    - rating: '5'
+  - action: utter_goodbye

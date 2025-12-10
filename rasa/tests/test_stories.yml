@@ -1,165 +1,90 @@
-# tests/test_stories.yml
 version: "3.1"
 
-stories:
-- story: Test Case - Happy Path Internet Contract
-  steps:
-  # 1. Bot Greets
-  - action: utter_greet
+# - story: Test Case - Billing Check and Successful Verification
+#   steps:
+#   - action: utter_greet
+#   - user: hola
+#     intent: greet
+#   - action: utter_ask_service
   
-  # 2. User Greets & Bot explains capabilities
-  - user: qué onda
-    intent: greet
-  - action: utter_ask_service
+#   # 2. Activación del formulario
+#   - user: quiero chequear mi estado de cuenta
+#     intent: request_billing
+#   - action: user_verification_form
+#   - active_loop: user_verification_form
   
-  # 3. User states goal & Bot shows plans
-  - user: quiero agarrar un plan de internet
-    intent: request_internet_service
-  - action: action_fetch_product_plans
+#   # 2.5. PREDICCIÓN DE PROMPT: El validador se ejecuta primero para ver el estado del slot
+#   # - action: utter_ask_user_id
   
-  # 4. User chooses a plan & Bot asks for email
-  - user: Yo quiero el plan basico
-    intent: choose_plan
-    entities:
-      - plan: "Plan 1"
-  - slot_was_set:
-      - plan: "Plan 1"
-  - action: utter_ask_email
-  
-  # 5. User provides email (Rule will handle the next actions)
-  - user: mi correo es test.user@mail.com
-    intent: provide_email
-    entities:
-      - email:
-  - slot_was_set:
-      - email:
-  
-  # 6. Bot confirms contract and asks for additional request (Actions from the Rule)
-  - action: utter_contract_sent
-  - action: utter_additional_request
-
-  # 7. User says no more requests & Bot asks for rating
-  - user: solamente
-    intent: deny
-  
-  # 8. User provides rating & Bot acknowledges and says goodbye
-  - action: utter_ask_rating
-  - user: le doy un 5
-    intent: provide_rating
-    entities:
-      - rating:
-  - action: utter_acknowledge_rating
-  - action: utter_goodbye
-  - action: action_session_start
-
-- story: Test Case - Contract Denial Path
-  steps:
-  - action: utter_greet
-  - user: buenas
-    intent: greet
-  - action: utter_ask_service
-  - user: quiero internet
-    intent: request_internet_service
-  - action: action_fetch_product_plans
-  - user: no, no me gusto ninguno
-    intent: deny
-  - action: utter_contract_cancelled
-  - action: utter_ask_rating         # Bot asks for rating
-# User provides rating
-  - user: "4"
-    intent: provide_rating
-    entities:
-      - rating:
+#   # 3. Usuario proporciona el ID
+#   # - user: mi dui es 12556479-5
+#   #   intent: inform_id
+#   #   entities:
+#   #     - user_id: "12556479-5"
       
-  - action: utter_acknowledge_rating # Bot acknowledges
-  - action: utter_goodbye
-  - action: action_session_start
-
-- story: Test Case - Billing Check and Successful Verification
-  steps:
-  - action: utter_greet
-  - user: hola
-    intent: greet
-  - action: utter_ask_service
-  
-  # 2. Activación del formulario
-  - user: quiero chequear mi estado de cuenta
-    intent: request_billing
-  - action: user_verification_form
-  - active_loop: user_verification_form
-  
-  # 2.5. PREDICCIÓN DE PROMPT: El validador se ejecuta primero para ver el estado del slot
-  # - action: utter_ask_user_id
-  
-  # 3. Usuario proporciona el ID
-  # - user: mi dui es 12556479-5
-  #   intent: inform_id
-  #   entities:
-  #     - user_id: "12556479-5"
+#   # 3.5. EJECUCIÓN DE VALIDACIÓN
+#   # - action: validate_user_verification_form
       
-  # 3.5. EJECUCIÓN DE VALIDACIÓN
-  # - action: validate_user_verification_form
-      
-  # 4. Eventos internos (Core)
-  - slot_was_set:
-    - user_id: "12556479-5"
-  - slot_was_set:
-    - requested_slot: null
-  - active_loop: null
+#   # 4. Eventos internos (Core)
+#   - slot_was_set:
+#     - user_id: "12556479-5"
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
   
-  # 4.5. Acciones de Form Submission (Rule)
-  - action: action_check_billing_status
-  - action: utter_additional_request
+#   # 4.5. Acciones de Form Submission (Rule)
+#   - action: action_check_billing_status
+#   - action: utter_additional_request
   
-  # 6. Usuario niega peticiones adicionales (Aquí el Rule de Rating toma control)
-  - user: nope
-    intent: deny
+#   # 6. Usuario niega peticiones adicionales (Aquí el Rule de Rating toma control)
+#   - user: nope
+#     intent: deny
     
-  # 7. Secuencia de Calificación (Fix 3: Forzado por Rule)
-  - action: utter_ask_rating 
-  - user: un cinco
-    intent: provide_rating
-    entities:
-      - rating:
+#   # 7. Secuencia de Calificación (Fix 3: Forzado por Rule)
+#   - action: utter_ask_rating 
+#   - user: un cinco
+#     intent: provide_rating
+#     entities:
+#       - rating:
       
-  # 8. Fin de la conversación
-  - action: utter_acknowledge_rating
-  - action: utter_goodbye
-  - action: action_session_start
+#   # 8. Fin de la conversación
+#   - action: utter_acknowledge_rating
+#   - action: utter_goodbye
+#   - action: action_session_start
 
-- story: Test Case - Technical Support RAG Success Flow
-  steps:
-  # 1. Inicio de la conversación
-  - action: utter_greet
-  - user: hola
-    intent: greet
-  - action: utter_ask_service
+# - story: Test Case - Technical Support RAG Success Flow
+#   steps:
+#   # 1. Inicio de la conversación
+#   - action: utter_greet
+#   - user: hola
+#     intent: greet
+#   - action: utter_ask_service
   
-  # 2. Usuario pide soporte (Inicia el flujo)
-  - user: necesito ayuda, no me conecta el inter
-    intent: request_support
+#   # 2. Usuario pide soporte (Inicia el flujo)
+#   - user: necesito ayuda, no me conecta el inter
+#     intent: request_support
 
-  # 4. EJECUCIÓN RAG: El bot llama al microservicio
-  - action: action_technical_support_rag
+#   # 4. EJECUCIÓN RAG: El bot llama al microservicio
+#   - action: action_technical_support_rag
 
-  - user: ya funciona, gracias
-    intent: issue_fixed
+#   - user: ya funciona, gracias
+#     intent: issue_fixed
   
-  # 5. TRANSICIÓN CONDICIONAL: La acción Python dispara la pregunta de seguimiento si el RAG fue exitoso
-  - action: utter_additional_request # Bot pregunta:
+#   # 5. TRANSICIÓN CONDICIONAL: La acción Python dispara la pregunta de seguimiento si el RAG fue exitoso
+#   - action: utter_additional_request # Bot pregunta:
   
-  # 6. Usuario niega peticiones adicionales (Inicia la calificación)
-  - user: no, solamente, ahi estamos, solo eso necesitaba
-    intent: deny
+#   # 6. Usuario niega peticiones adicionales (Inicia la calificación)
+#   - user: no, solamente, ahi estamos, solo eso necesitaba
+#     intent: deny
   
-  # 7. Secuencia de Calificación (Forzado por Rule)
-  - action: utter_ask_rating
-  - user: "4"
-    intent: provide_rating
-    entities:
-      - rating: "4"
+#   # 7. Secuencia de Calificación (Forzado por Rule)
+#   - action: utter_ask_rating
+#   - user: "4"
+#     intent: provide_rating
+#     entities:
+#       - rating: "4"
       
-  # 8. Fin de la conversación (Reglas de Goodbye)
-  - action: utter_acknowledge_rating
-  - action: utter_goodbye
-  - action: action_session_start
+#   # 8. Fin de la conversación (Reglas de Goodbye)
+#   - action: utter_acknowledge_rating
+#   - action: utter_goodbye
+#   - action: action_session_start

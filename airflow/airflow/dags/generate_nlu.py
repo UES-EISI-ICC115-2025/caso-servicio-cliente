@@ -12,8 +12,9 @@ import re
 import unicodedata
 
 # Define the absolute path to your Rasa virtual environment's Python binary
-RASA_PYTHON_BIN = "/home/icc115/caso-servicio-cliente/rasa_env/bin/python"
-RASA_PROJECT_DIR = "/home/icc115/caso-servicio-cliente"
+RASA_PYTHON_BIN = "/home/icc115/caso-servicio-cliente/rasa/rasa_env/bin/python3.10"
+RASA_PROJECT_DIR = "/home/icc115/caso-servicio-cliente/rasa"
+
 
 @dag(
     start_date=pendulum.datetime(2025, 1, 1, tz="UTC"),
@@ -64,10 +65,9 @@ def generate_nlu():
 
     def _remove_accents(s: str) -> str:
         return (
-            unicodedata.normalize("NFKD", s)
-            .encode("ASCII", "ignore")
-            .decode("ASCII")
+            unicodedata.normalize("NFKD", s).encode("ASCII", "ignore").decode("ASCII")
         )
+
     @task
     def update_productos_disponibles_intents(**context):
         # Retrieve nlu examples from XCom
@@ -95,7 +95,11 @@ def generate_nlu():
                         # - lowercase
                         # - lowercase sin tildes
                         full_name = producto[0].strip()
-                        variants = {full_name, full_name.lower(), _remove_accents(full_name.lower())}
+                        variants = {
+                            full_name,
+                            full_name.lower(),
+                            _remove_accents(full_name.lower()),
+                        }
 
                         # Adicionalmente, agrega fragmentos del nombre del producto en caso sea un nombre largo
                         # Ej: "Plan Premium Anual" -> "Plan", "Premium", "Anual" (y sus variantes)
@@ -109,7 +113,9 @@ def generate_nlu():
 
                         # Reemplaza el placeholder en el ejemplo por cada variante y evita duplicados
                         for variant in variants:
-                            intent_text = re.sub(r"\[([^\]]+)\]", "[" + variant + "]", old_example)
+                            intent_text = re.sub(
+                                r"\[([^\]]+)\]", "[" + variant + "]", old_example
+                            )
                             if intent_text not in examples:
                                 examples.append(intent_text)
             updated_nlu_examples.append((intent, examples))
@@ -168,9 +174,35 @@ def generate_nlu():
                 nlu_content += f"    - {pattern}\n"
 
         # Write to a YAML file
-        with open("/home/icc115/caso-servicio-cliente/data/nlu.yml", "w") as f:
+        with open("/home/icc115/caso-servicio-cliente/rasa/data/nlu.yml", "w") as f:
             f.write(nlu_content)
 
+    split_data = BashOperator(
+        task_id="split_rasa_data",
+        bash_command=f"""
+        cd {RASA_PROJECT_DIR}
+        # Use the python binary from the venv to run the rasa command
+        {RASA_PYTHON_BIN} -m rasa data split nlu
+        """,
+    )
+    
+    train_nlu = BashOperator(
+        task_id="train_nlu",
+        bash_command=f"""
+        cd {RASA_PROJECT_DIR}
+        # Use the python binary from the venv to run the rasa command
+        {RASA_PYTHON_BIN} -m rasa train nlu -u train_test_split/training_data.yml
+        """,
+    )
+
+    test_nlu = BashOperator(
+        task_id="test_nlu",
+        bash_command=f"""
+        cd {RASA_PROJECT_DIR}
+        # Use the python binary from the venv to run the rasa command
+        {RASA_PYTHON_BIN} -m rasa test nlu -u train_test_split/test_data.yml
+        """,
+    )
 
     train_model_task = BashOperator(
         task_id="train_rasa_model",
@@ -178,8 +210,25 @@ def generate_nlu():
         cd {RASA_PROJECT_DIR}
         # Use the python binary from the venv to run the rasa command
         {RASA_PYTHON_BIN} -m rasa train --out models/ --force
-        """
+        """,
     )
+
+    test_model = BashOperator(
+        task_id="test_model",
+        bash_command=f"""
+        cd {RASA_PROJECT_DIR}
+        # Use the python binary from the venv to run the rasa command
+        {RASA_PYTHON_BIN} -m rasa test --stories tests/test_contratacion.yml
+        """,
+    )
+
+    # restart_rasa_service = BashOperator(
+    #     task_id="restart_rasa_service",
+    #     bash_command=f"""
+    #     cd {RASA_PROJECT_DIR}
+    #     sudo systemctl restart rasa-core
+    #     """,
+    # )
 
     # Define task dependencies
     # create_tables >> load_sample_data >> fetch_nlu() >> generar_nlu_yml
@@ -188,7 +237,12 @@ def generate_nlu():
         >> update_productos_disponibles_intents()
         >> generar_nlu_yml()
         << fetch_regex_patterns()
+        >> split_data
+        >> train_nlu
+        >> test_nlu
         >> train_model_task
+        >> test_model
+        # >> restart_rasa_service
     )
 
 

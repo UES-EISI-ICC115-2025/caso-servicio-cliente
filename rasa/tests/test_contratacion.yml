@@ -1,0 +1,172 @@
+version: "3.1"
+
+stories:
+- story: test_contratacion_plan_basico
+  steps:
+  - user: |
+      hola
+    intent: greet
+  - action: utter_greet
+  - action: utter_ask_service
+  - user: |
+      quiero contratar internet
+    intent: request_internet_service
+  - action: contrato_form
+  - slot_was_set:
+    - requested_slot: plan
+  - user: |
+      no tienen uno mas barato?
+    intent: negociacion_solicitar_detalles
+  - user: |
+      ese plan me gusta
+    intent: negociacion_aceptar_oferta
+  - slot_was_set:
+    - plan: Básico Hogar
+    - producto_id: 6d34f272-2d45-4489-bc18-ab9b4f543ddf
+    - nombre_producto: Básico Hogar
+    - precio_producto: 35.0
+    - requested_slot: nombre
+  - user: |
+      Claro, mi nombre es Andrea Melissa
+    intent: provide_nombre
+  - slot_was_set:
+    - nombre: Andrea Melissa
+    - requested_slot: apellido
+  - user: |
+      es Arevalo Mejia
+    intent: provide_apellido
+  - slot_was_set:
+    - apellido: Arevalo Mejia
+    - requested_slot: dui
+  - user: |
+      es 1234567890
+    intent: provide_dui
+  - slot_was_set:
+    - dui: '234567890'
+    - requested_slot: direccion
+  - user: |
+      San Salvador, Ilopango, Col. Bosques de Prusia
+    intent: provide_direccion
+  - slot_was_set:
+    - direccion: San Salvador, Ilopango, Col. Bosques de Prusia
+    - requested_slot: telefono
+  - user: |
+      22335678
+    intent: provide_dui
+  - slot_was_set:
+    - telefono: '22335678'
+    - requested_slot: email
+  - user: |
+      mi correo es mm18057@ues.edu.sv
+    intent: issue_fixed
+  - slot_was_set:
+    - email: mm18057@ues.edu.sv
+  - action: utter_product_slots_summary
+  - action: utter_personal_info_summary
+  - action: utter_confirm_personal_info
+  - user: |
+      sí
+    intent: affirm
+  - action: action_send_email
+  - action: utter_additional_request
+  - user: |
+      no
+    intent: deny
+  - slot_was_set:
+    - requested_slot: rating
+  - user: |
+      5
+    intent: provide_rating
+  - slot_was_set:
+    - rating: 5.0
+    - requested_slot: comentarios
+  - user: |
+      me gusto la atencion recibida
+    intent: request_support
+  - user: |
+      no
+    intent: deny
+  - action: utter_acknowledge_rating
+  - action: utter_goodbye
+
+- story: test_contratacion_directo_sin_negociacion
+  steps:
+  - user: |
+      buenos dias
+    intent: greet
+  - action: utter_greet
+  - action: utter_ask_service
+  - user: |
+      necesito internet
+    intent: request_internet_service
+  - action: contrato_form
+  - slot_was_set:
+    - requested_slot: plan
+  - user: |
+      quiero el plan premium
+    intent: negociacion_aceptar_oferta
+  - slot_was_set:
+    - plan: Premium
+    - requested_slot: nombre
+  - user: |
+      Juan Carlos
+    intent: provide_nombre
+  - slot_was_set:
+    - nombre: Juan Carlos
+    - requested_slot: apellido
+  - user: |
+      Rodriguez Lopez
+    intent: provide_apellido
+  - slot_was_set:
+    - apellido: Rodriguez Lopez
+    - requested_slot: dui
+  - user: |
+      98765432-1
+    intent: provide_dui
+  - slot_was_set:
+    - dui: '98765432-1'
+    - requested_slot: direccion
+  - user: |
+      Santa Tecla, Urbanización Las Palmas
+    intent: provide_direccion
+  - slot_was_set:
+    - direccion: Santa Tecla, Urbanización Las Palmas
+    - requested_slot: telefono
+  - user: |
+      7890-1234
+    intent: provide_dui
+  - slot_was_set:
+    - telefono: '7890-1234'
+    - requested_slot: email
+  - user: |
+      juan.rodriguez@gmail.com
+    intent: issue_fixed
+  - slot_was_set:
+    - email: juan.rodriguez@gmail.com
+  - action: utter_product_slots_summary
+  - action: utter_personal_info_summary
+  - action: utter_confirm_personal_info
+  - user: |
+      correcto
+    intent: affirm
+  - action: action_send_email
+
+- story: test_calificacion_negativa
+  steps:
+  - user: |
+      hola
+    intent: greet
+  - action: utter_greet
+  - action: calificacion_form
+  - slot_was_set:
+    - requested_slot: rating
+  - user: |
+      2
+    intent: provide_rating
+  - slot_was_set:
+    - rating: 2.0
+    - requested_slot: comentarios
+  - user: |
+      el servicio fue lento
+    intent: request_support
+  - action: utter_acknowledge_rating

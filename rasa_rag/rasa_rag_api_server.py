@@ -5,6 +5,8 @@ import requests
 from langchain_ollama import OllamaLLM, OllamaEmbeddings
 from langchain_chroma import Chroma
 from langchain.schema import Document
+import chromadb
+from langchain.chains import RetrievalQA
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
 from langchain.chains import create_history_aware_retriever
@@ -39,6 +41,19 @@ try:
     embeddings = OllamaEmbeddings(model=OLLAMA_MODEL_NAME, base_url=OLLAMA_BASE_URL)
     print(f"Inicialización RAG Local completa. LLM: {OLLAMA_MODEL_NAME}")
 
+    # -------------------------------
+    # Conexión a Chroma remoto (se ejecuta al iniciar el bot)
+    # -------------------------------
+    client = chromadb.HttpClient(host="localhost", port=3000, ssl=False)
+
+    vector_store = Chroma(
+        collection_name="qa_servicio_internet_manuales",  # tu colección
+        client=client,
+        embedding_function=embeddings,  # crucial for remote queries!
+    )
+
+    print(f"Inicialización RAG Local completa. LLM: {OLLAMA_MODEL_NAME}")
+
 except Exception as e:
     print(f"Error al conectar a Ollama: {e}")
     raise ConnectionError(
@@ -50,17 +65,17 @@ except Exception as e:
 def initialize_rag_chain():
 
     # 2. Base de Conocimiento de Ejemplo
-    docs = [
-        {
-            "page_content": "Para reiniciar tu router, desconecta el cable de alimentación por 30 segundos y vuelve a conectarlo. Espera 2 minutos para que se estabilice la conexión."
-        },
-        {
-            "page_content": "Si el internet está lento, verifica las luces. Si la luz 'Internet' está roja, hay una falla en la línea."
-        },
-    ]
-    documents = [Document(page_content=t["page_content"]) for t in docs]
-    vectorstore = Chroma.from_documents(documents, embeddings)
-    retriever = vectorstore.as_retriever()
+    # docs = [
+    #     {
+    #         "page_content": "Para reiniciar tu router, desconecta el cable de alimentación por 30 segundos y vuelve a conectarlo. Espera 2 minutos para que se estabilice la conexión."
+    #     },
+    #     {
+    #         "page_content": "Si el internet está lento, verifica las luces. Si la luz 'Internet' está roja, hay una falla en la línea."
+    #     },
+    # ]
+    # documents = [Document(page_content=t["page_content"]) for t in docs]
+    # vectorstore = Chroma.from_documents(documents, embeddings)
+    retriever = vector_store.as_retriever()
 
     # 3. PROMTPTS y CADENAS MODULARES
 

@@ -62,6 +62,31 @@ stories:
     - action: calificacion_form
     - active_loop: calificacion_form
 
+  - story: Interrumpción durante el llenado del formulario de calificacion
+    steps:
+      - action: calificacion_form
+      - active_loop: calificacion_form
+      - slot_was_set:
+        - requested_slot: plan
+      - or:
+        - intent: stop
+        - intent: negociacion_postponer_decision
+        - intent: negociacion_cancelar_desistir
+      - action: utter_ask_continue
+      - or:
+        - intent: affirm
+        - intent: stop
+        - intent: thanks
+      - action: action_deactivate_loop
+      - active_loop: null
+      - slot_was_set:
+        - requested_slot: null
+      - action: utter_contract_cancelled
+      - action: utter_additional_request
+      - intent: deny
+      - action: calificacion_form
+      - active_loop: calificacion_form
+
 #   - story: Billing check and completion
 #     steps:
 #     - action: action_check_billing_status

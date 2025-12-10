@@ -18,7 +18,7 @@ default_args = {
 
 # locate the SQL "sqlbook" file relative to this DAG file:
 sql_path = (
-    Path(__file__).resolve().parent.parent.parent
+    Path(__file__).resolve().parent.parent.parent.parent
     / "sample_data"
     / "create_database_postgresql.sqlbook"
 )

@@ -1,0 +1,105 @@
+Este documento te guiará para ubicar correctamente tu módem, cambiar tu contraseña Wi-Fi y solucionar fallas comunes.
+
+--------------------------------------------------------------------------------
+1. ¿Dónde colocar tu módem? (Ubicación Óptima)
+Para garantizar que la señal llegue a toda tu casa, la ubicación del equipo es clave.
+✅ Lo que SÍ debes hacer:
+• Altura: Coloca el módem a una altura aproximada de 1.5 metros (6 pies) del suelo, por ejemplo, encima de un estante
+.
+• Centro: Ubícalo en un lugar abierto y céntrico de la casa, similar a donde pondrías una bocina si quisieras que se escuchara en todas las habitaciones
+.
+• Repetidores: Si tu casa es muy grande o de dos plantas, se recomienda usar un amplificador de Wi-Fi donde la señal empiece a bajar
+.
+❌ Lo que NO debes hacer:
+• No lo escondas: No lo metas dentro de muebles, gavetas o estantes cerrados; esto bloquea las ondas
+.
+• Evita interferencias: Aléjalo de microondas, teléfonos inalámbricos, monitores de bebé y cámaras inalámbricas, ya que usan la misma frecuencia y "ensucian" la señal
+.
+• Lejos de ventanas: No lo pongas cerca de ventanas que den a la calle, ya que desperdicias señal enviándola hacia afuera
+.
+
+--------------------------------------------------------------------------------
+2. Configuración y Cambio de Contraseña Wi-Fi
+Para personalizar tu red, primero debes conectar tu computadora al módem con un cable de red (recomendado) y abrir tu navegador web en la dirección: http://10.0.0.1
+.
+A continuación, busca tu modelo de equipo para saber cómo ingresar:
+🔹 Para equipos Huawei
+• Modelo HG8245H:
+    1. Usuario y Contraseña: En ambos campos coloca el SN (Número de Serie) que aparece en la etiqueta detrás del equipo
+.
+    2. Configurar: Ve a la tuerca de configuraciones Básico > WLAN
+.
+    3. Cambia el nombre en SSID y la clave en Clave precompartida WPA. Haz clic en Enviar
+.
+• Modelo HG8245H5:
+    1. Usuario: admin / Contraseña: El SN (Número de Serie) de la etiqueta trasera
+.
+    2. Configurar: Ve a la tuerca de configuraciones WLAN > WLAN Basic Configuration
+.
+    3. Cambia el nombre en SSID Name y la clave en WPA PreShareKey. Haz clic en Apply
+.
+• Modelo HG8145X6:
+    1. Account y Password: En ambos usa el SN (Número de Serie) del equipo
+.
+    2. Configurar: Ve a la tuerca WLAN > 2.4G Basic Network
+.
+    3. Coloca tu nueva clave en WPA PreShareKey y da clic en Apply
+.
+🔹 Para equipos ZTE
+• Modelo H108N (Cobre/ADSL):
+    1. Usuario: admin / Contraseña: El SN (Número de Serie)
+.
+    2. Configurar: Ve a Red > WLAN > Configuraciones de SSID para cambiar el nombre
+.
+    3. Luego ve a Seguridad > WPA Frase de Acceso para cambiar la clave. Haz clic en Aplicar
+.
+• Modelo H167A:
+    1. Usuario: admin / Contraseña: El SN (Número de Serie)
+.
+    2. Configurar: Ve a la tuerca Básico > WLAN
+.
+    3. Cambia el nombre en SSID y la clave en Clave precompartida WPA. Haz clic en Enviar
+.
+    ◦ Nota: Este equipo tiene doble banda (2.4 y 5GHz). Puedes ponerles el mismo nombre y clave a ambas para que tus dispositivos elijan la mejor automáticamente
+.
+
+--------------------------------------------------------------------------------
+3. Solución de Problemas (Luz Roja)
+Si ves una luz roja en tu módem, sigue estos pasos según tu tipo de conexión:
+📡 Si tienes Internet por Cobre (ADSL)
+Si la luz de "Internet" está roja:
+1. Desconecta el cable de corriente del módem
+.
+2. Espera 30 segundos
+.
+3. Vuelve a conectarlo y espera 2 a 3 minutos a que las luces se estabilicen
+.
+4. Si persiste, contacta al servicio técnico
+.
+🌐 Si tienes Fibra Óptica
+Si el indicador LOS parpadea en rojo o está fijo (indica falta de señal óptica):
+1. Revisa que el cable de fibra (delgado, puntas verde/azul) no esté doblado excesivamente ni dañado
+.
+2. Desconecta y vuelve a conectar el cable de fibra con cuidado en el puerto verde (asegura que haga "clic")
+.
+3. Limpia suavemente el conector con un paño seco si parece sucio
+.
+4. Reinicia el módem (desconecta corriente 30 segundos)
+.
+
+--------------------------------------------------------------------------------
+4. ¿Cómo medir tu velocidad real?
+Para saber si recibes la velocidad contratada:
+1. Conecta tu computadora al módem con cable Ethernet (es más preciso que el Wi-Fi)
+.
+2. Si usas Wi-Fi, ponte muy cerca del módem
+.
+3. Cierra programas que consuman internet (Netflix, descargas, YouTube)
+.
+4. Ingresa a la herramienta oficial: https://www.claro.com.co/personas/servicios/servicios-hogar/internet/internet-fijo/mide-tu-velocidad/
+.
+5. Revisa los resultados de Descarga, Carga y Ping
+.
+
+--------------------------------------------------------------------------------
+Una analogía para entender tu Wi-Fi: Imagina que tu módem es como una bombilla de luz y la señal de internet es la luz que emite. Si escondes la bombilla dentro de un cajón (un mueble cerrado), la luz no alumbrará el cuarto. Si la pones detrás de una cortina gruesa (una pared o ventana), la luz se desperdicia. Para que "alumbre" bien toda la casa, debes colgar la bombilla en lo alto y en el centro de la habitación, lejos de otros aparatos que "deslumbren" (interferencias).
