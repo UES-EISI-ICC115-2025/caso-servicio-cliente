@@ -5,6 +5,7 @@ rasa_env/
 airflow_env/
 training_env/
 chroma_env/
+locust_env/
 
 # Archivos compilados de Python
 __pycache__/

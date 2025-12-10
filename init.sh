@@ -249,7 +249,7 @@ ollama pull deepseek-r1:1.5b
 ~/.pyenv/versions/3.10.12/bin/python -m venv ./chroma_db/chroma_env
 source ./chroma_db/chroma_env/bin/activate
 pip install -r ./chroma_db/chroma_requirements.txt
-# deactivate
+deactivate
 
 
 # Obtiene el nombre de usuario y la ruta $HOME para el script
@@ -286,3 +286,9 @@ sudo systemctl enable chroma.service
 sudo systemctl start chroma.service
 # 4. Verificar el Estado
 sudo systemctl status chroma.service
+
+
+~/.pyenv/versions/3.10.12/bin/python -m venv ./locust/locust_env
+source ./locust/locust_env/bin/activate
+pip install -r ./locust/locust_requirements.txt
+# deactivate

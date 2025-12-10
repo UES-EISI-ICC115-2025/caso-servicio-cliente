@@ -20,7 +20,7 @@ pdf_loader = DirectoryLoader("../documentos/pdfs/manuales", glob="*.pdf", loader
 docs = pdf_loader.load()
 
 # Dividir en fragmentos
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=5000, chunk_overlap=500)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=200)
 chunks = text_splitter.split_documents(docs)
 embeddings = OllamaEmbeddings(model=OLLAMA_MODEL_NAME, base_url=OLLAMA_BASE_URL)
 
