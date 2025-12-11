@@ -1,0 +1,16 @@
+[Unit]
+Description=Locust Load Testing Service
+After=network.target
+[Service]
+# Usuario que ejecuta el servicio
+User=icc115
+Group=icc115
+# Directorio de trabajo: donde se encuentra el script ollama_stress_test.py
+WorkingDirectory=/home/icc115/caso-servicio-cliente/locust/
+
+ExecStart=/home/icc115/caso-servicio-cliente/locust/locust_env/bin/python3.10 /home/icc115/caso-servicio-cliente/locust/locust_env/bin/locust -f ollama_stress_test.py --web-host 127.0.0.1 --web-port 8089
+# Opciones de reinicio
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target

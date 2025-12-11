@@ -1,0 +1,18 @@
+[Unit]
+Description=Rasa RAG
+After=network.target
+[Service]
+# Usuario bajo el cual se ejecuta el servicio (debe tener permisos en el directorio)
+User=icc115
+Group=icc115
+# Ruta absoluta al directorio donde reside app.py
+WorkingDirectory=/home/icc115/caso-servicio-cliente/rasa_rag/
+# Comando de Inicio: Ejecuta el script app.py con el intérprete de Python del venv
+# Gradio está configurado internamente para usar el puerto 8081.
+ExecStart=/home/icc115/caso-servicio-cliente/rasa_rag/rasa_rag_env/bin/python3.10 /home/icc115/caso-servicio-cliente/rasa_rag/rasa_rag_env/bin/gunicorn -b 0.0.0.0:8000 rasa_rag_api_server:app
+StandardOutput=journal
+StandardError=journal
+# El servicio debe reiniciarse automáticamente en caso de fallo
+Restart=always
+[Install]
+WantedBy=multi-user.target

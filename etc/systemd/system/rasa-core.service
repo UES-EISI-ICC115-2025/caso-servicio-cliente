@@ -1,0 +1,20 @@
+[Unit]
+Description=Rasa Core
+After=network.target
+[Service]
+# Usuario bajo el cual se ejecutará el servicio (cambia a tu usuario)
+User=icc115
+Group=icc115
+# Directorio de trabajo: la raíz de tu proyecto Rasa
+WorkingDirectory=/home/icc115/caso-servicio-cliente/rasa/
+# Comando de Inicio: Usa la ruta absoluta al ejecutable de Rasa
+ExecStart=/home/icc115/caso-servicio-cliente/rasa/rasa_env/bin/rasa run \
+--m models \
+--enable-api \
+--endpoints endpoints.yml \
+--port 5005
+StandardOutput=journal
+StandardError=journal
+Restart=always
+[Install]
+WantedBy=multi-user.target

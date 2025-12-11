@@ -1,0 +1,16 @@
+[Unit]
+Description=Apache Airflow Scheduler
+After=network.target postgresql.service
+Wants=postgresql.service
+[Service]
+EnvironmentFile=/home/icc115/caso-servicio-cliente/.env
+WorkingDirectory=/home/icc115/caso-servicio-cliente/airflow/airflow/
+User=icc115
+Group=icc115
+Type=simple
+ExecStart=/home/icc115/caso-servicio-cliente/airflow/airflow_env/bin/python3.10 /home/icc115/caso-servicio-cliente/airflow/airflow_env/bin/airflow scheduler
+Restart=always
+RestartSec=5s
+StandardOutput=journal
+[Install]
+WantedBy=multi-user.target

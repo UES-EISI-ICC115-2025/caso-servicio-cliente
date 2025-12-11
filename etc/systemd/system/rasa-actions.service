@@ -1,0 +1,15 @@
+[Unit]
+Description=Servidor de Acciones de Rasa
+After=network.target
+[Service]
+User=icc115
+Group=icc115
+WorkingDirectory=/home/icc115/caso-servicio-cliente/rasa/
+EnvironmentFile=/home/icc115/caso-servicio-cliente/.env
+# Comando de Inicio: Asegura que se ejecuta el 'rasa run actions'
+ExecStart=/home/icc115/caso-servicio-cliente/rasa/rasa_env/bin/python3.10 /home/icc115/caso-servicio-cliente/rasa/rasa_env/bin/rasa run actions --debug
+StandardOutput=journal
+StandardError=journal
+Restart=always
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+[Unit]
+Description=ChromaDB Vector Store Server
+After=network.target
+[Service]
+# Usuario que ejecuta el servicio
+User=icc115
+Group=icc115
+# Directorio de trabajo y configuracion del entorno virtual
+WorkingDirectory=/home/icc115/caso-servicio-cliente/chroma_db/
+# Definicion del PATH completo al VENV (necesario para encontrar el binario 'chroma')
+Environment=PATH=/home/icc115/cas-servicio-cliente/chroma_db/chroma_env/bin:$PATH
+# Comando de Ejecucion: Inicia el servidor Chroma
+# La ruta de persistencia se fija dentro de /home/icc115/chroma_server/data
+ExecStart=/home/icc115/caso-servicio-cliente/chroma_db/chroma_env/bin/python3.10 /home/icc115/caso-servicio-cliente/chroma_db/chroma_env/bin/chroma run --host 0.0.0.0 --port 3000 --path /home/icc115/caso-servicio-cliente/chroma_db/data
+# Opciones de reinicio
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
